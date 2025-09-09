@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>TypeShit</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'><rect x='5' y='5' width='90' height='50' rx='5' fill='%23B8B8B8' stroke='black' stroke-width='4'/><rect x='15' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='28' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='41' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='54' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='67' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='80' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='15' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='28' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='41' y='28' width='20' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='67' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='80' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='15' y='41' width='30' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='50' y='41' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='63' y='41' width='25' height='8' fill='white' stroke='black' stroke-width='2'/></svg>" type="image/svg+xml">
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <h1>TypeShit</h1>
+        </div>
+        <div class="header">
+            <select id="timeSelect">
+                <option value="10">10 seconds</option>
+                <option value="15">15 seconds</option>
+                <option value="30">30 seconds</option>
+                <option value="60">1 minute</option>
+                <option value="120">2 minutes</option>
+            </select>
+            <div class="stats">
+                <div class="stat"><span class="label">WPM</span><span id="wpm">0</span></div>
+                <div class="stat"><span class="label">Accuracy</span><span id="accuracy">0%</span></div>
+                <div class="stat"><span class="label">Time</span><span id="time">30s</span></div>
+            </div>
+            <select id="themeSelect">
+                <option value="dark">Dark</option>
+                <option value="light">Light</option>
+                <option value="pastel">Pastel</option>
+                <option value="mint">Mint</option>
+                <option value="sunshine">Sunshine</option>
+                <option value="lavender">Lavender</option>
+                <option value="synthwave">Synthwave</option>
+                <option value="matrix">Matrix</option>
+                <option value="sunset">Sunset</option>
+                <option value="ocean">Ocean</option>
+                <option value="coffee">Coffee</option>
+                <option value="terminal">Terminal</option>
+                <option value="neon">Neon</option>
+                <option value="forest">Forest</option>
+            </select>
+        </div>
+        <div class="typing-area" tabindex="-1">
+            <div id="text-display"></div>
+        </div>
+        <div class="restart-container">
+            <button id="restart" title="restart test">
+                <span class="material-icons">refresh</span>
+            </button>
+        </div>
+    </div>
+
+    <div id="resultsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">
+                <h1>TypeShit</h1>
+            </div>
+            <div class="graph-section">
+                <canvas id="accuracyGraph"></canvas>
+            </div>
+            
+            <div class="stats-container">
+                <div class="stat-card primary">
+                    <div class="stat-value" id="wpmResult">0</div>
+                    <div class="stat-label">WPM</div>
+                </div>
+                <div class="stat-card primary">
+                    <div class="stat-value" id="accuracyResult">0%</div>
+                    <div class="stat-label">Accuracy</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalCharsResult">0</div>
+                    <div class="stat-label">Total</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="correctCharsResult">0</div>
+                    <div class="stat-label">Correct</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="incorrectCharsResult">0</div>
+                    <div class="stat-label">Incorrect</div>
+                </div>
+            </div>
+
+            <button id="playAgainBtn">
+                <span class="material-icons">replay</span>
+                Try Again
+            </button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+
+    <div class="virtual-keyboard" id="virtualKeyboard">
+        <input type="text" 
+               id="mobileInput" 
+               autocomplete="off" 
+               autocorrect="off" 
+               autocapitalize="off" 
+               spellcheck="false"
+               style="opacity: 0; position: absolute; pointer-events: none;">
+    </div>
+</body>
+</html>
