@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - TypeCraft</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="login.css">
+</head>
+<body class="login-body">
+    <div class="container">
+        <div class="flip-card">
+            <div class="flip-card-inner" id="flipCard">
+                <!-- Login Side -->
+                <div class="flip-card-front">
+                    <div class="card-content">
+                        <h1 class="logo">TypeCraft</h1>
+                        <h2>Welcome Back</h2>
+
+                        <div id="alertContainerFront"></div>
+
+                        <form id="loginForm">
+                            <div class="form-group">
+                                <input type="email" class="form-control" id="email" name="email" required placeholder="Email address">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" id="password" name="password" required placeholder="Password">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Sign In</button>
+                        </form>
+
+                        <div class="divider">
+                            <span>OR</span>
+                        </div>
+
+                        <div class="social-login">
+                            <button class="btn-icon btn-google" id="googleLogin" title="Continue with Google">
+                                <i class="fab fa-google"></i>
+                            </button>
+                            <button class="btn-icon btn-github" id="githubLogin" title="Continue with GitHub">
+                                <i class="fab fa-github"></i>
+                            </button>
+                        </div>
+
+                        <div class="form-footer">
+                            <p>Don't have an account? <a href="#" id="showSignup">Sign up</a></p>
+                            <p><a href="#" class="forgot-link">Forgot password?</a></p>
+                            <div class="skip-auth">
+                                <button onclick="skipAuth()" class="btn btn-skip">Continue as Guest</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Signup Side -->
+                <div class="flip-card-back">
+                    <div class="card-content">
+                        <h1 class="logo">TypeCraft</h1>
+                        <h2>Create Account</h2>
+
+                        <div id="alertContainerBack"></div>
+
+                        <form id="signupForm">
+                            <div class="form-group">
+                                <input type="email" class="form-control" id="signupEmail" name="email" required placeholder="Email address">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" id="signupPassword" name="password" required placeholder="Create password">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Sign Up</button>
+                        </form>
+
+                        <div class="divider">
+                            <span>OR</span>
+                        </div>
+
+                        <div class="social-login">
+                            <button class="btn-icon btn-google" id="googleSignup" title="Sign up with Google">
+                                <i class="fab fa-google"></i>
+                            </button>
+                            <button class="btn-icon btn-github" id="githubSignup" title="Sign up with GitHub">
+                                <i class="fab fa-github"></i>
+                            </button>
+                        </div>
+
+                        <div class="form-footer">
+                            <p>Already have an account? <a href="#" id="showLogin">Sign in</a></p>
+                            <div class="skip-auth">
+                                <button onclick="skipAuth()" class="btn btn-skip">Continue as Guest</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="auth.js"></script>
+</body>
+</html>

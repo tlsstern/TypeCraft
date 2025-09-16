@@ -6,7 +6,7 @@ class TypingTest {
             "this", "but", "his", "by", "from", "they", "we", "say", "her", "she",
             "or", "an", "will", "my", "one", "all", "would", "there", "their", "what",
             "so", "up", "out", "if", "about", "who", "get", "which", "go", "me",
-            "when", "make", "can", "like", "time", "no", "just", "him", "know", "take",
+            "whe n", "make", "can", "like", "time", "no", "just", "him", "know", "take",
             "people", "into", "year", "your", "good", "some", "could", "them", "see", "other",
             "than", "then", "now", "look", "only", "come", "its", "over", "think", "also",
             "back", "after", "use", "two", "how", "our", "work", "first", "well", "way",
@@ -231,25 +231,25 @@ class TypingTest {
 
         this.typingArea = document.querySelector('.typing-area');
 
-        // Load saved preferences
+        
         const savedTime = localStorage.getItem('selectedTime');
         const savedTheme = localStorage.getItem('selectedTheme');
 
         if (savedTime) {
             this.timeSelect.value = savedTime;
-            this.timeLimit = parseInt(savedTime); // Update timeLimit with saved value
+            this.timeLimit = parseInt(savedTime); 
         }
 
         if (savedTheme) {
-            console.log(`Loading saved theme: ${savedTheme}`); // Debugging
+            console.log(`Loading saved theme: ${savedTheme}`); 
             this.themeSelect.value = savedTheme;
-            this.applyTheme(savedTheme); // Apply the saved theme
+            this.applyTheme(savedTheme); 
         } else {
             console.log('No saved theme found, applying default theme');
-            this.applyTheme('dark'); // Set default theme
+            this.applyTheme('dark'); 
         }
 
-        // Update event listeners
+        
         this.timeSelect.addEventListener('change', (e) => {
             const selectedTime = e.target.value;
             this.timeLimit = parseInt(selectedTime);
@@ -259,12 +259,12 @@ class TypingTest {
 
         this.themeSelect.addEventListener('change', (e) => {
             const selectedTheme = e.target.value;
-            console.log(`Saving theme: ${selectedTheme}`); // Debugging
+            console.log(`Saving theme: ${selectedTheme}`); 
             localStorage.setItem('selectedTheme', selectedTheme);
             this.applyTheme(selectedTheme);
         });
 
-        // Initialize the time display with the correct time
+        
         this.timeDisplay.textContent = this.timeLimit + 's';
 
         this.initializeEventListeners();
@@ -275,12 +275,12 @@ class TypingTest {
             this.restartTest();
         });
 
-        // Add this new property to store WPM data points
+        
         this.wpmHistory = [];
         this.lastWpmUpdate = null;
         this.lastWord = '';
 
-        // Add after existing constructor properties
+        
         this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
         this.virtualKeyboard = document.getElementById('virtualKeyboard');
         this.mobileInput = document.getElementById('mobileInput');
@@ -289,20 +289,20 @@ class TypingTest {
             this.initializeMobileSupport();
         }
 
-        // Add resize listener
+        
         window.addEventListener('resize', () => {
             this.updateCharsPerLine();
             this.renderText();
         });
 
-        // Add new property
+        
         this.statsContainer = document.querySelector('.stats');
-        this.statsContainer.classList.remove('visible'); // Ensure stats start hidden
+        this.statsContainer.classList.remove('visible'); 
 
         this.titleElement = document.querySelector('.title h1');
         this.originalTitle = this.titleElement.textContent;
         
-        // Simple caps lock detection and title change
+        
         document.addEventListener('keydown', (e) => {
             if (e.getModifierState('CapsLock')) {
                 this.titleElement.textContent = 'CAPSLOCK';
@@ -318,15 +318,15 @@ class TypingTest {
 
     initializeEventListeners() {
         document.addEventListener('keydown', (e) => {
-            // Handle Tab key
+            
             if (e.key === 'Tab') {
-                e.preventDefault(); // Prevent default tab behavior
+                e.preventDefault(); 
                 this.restartBtn.focus();    
                 
                 return;
             }
 
-            // Handle Enter key when restart button is focused
+            
             if (e.key === 'Enter' && document.activeElement === this.restartBtn) {
                 e.preventDefault();
                 this.restartTest();
@@ -353,7 +353,7 @@ class TypingTest {
                 this.startTest();
             }
 
-            // Prevent focus on other elements during the test
+            
             if (this.isTestActive && !this.typingArea.contains(document.activeElement)) {
                 e.preventDefault();
                 this.typingArea.focus();
@@ -379,7 +379,7 @@ class TypingTest {
             this.applyTheme(e.target.value);
         });
 
-        // Prevent focus on select and button elements during the test
+        
         this.restartBtn.addEventListener('mousedown', (e) => {
             if (this.isTestActive) {
                 e.preventDefault();
@@ -423,37 +423,37 @@ class TypingTest {
         let lines = [];
         let currentLine = '';
         
-        // Build lines word by word
+        
         for (let word of words) {
-            // Check if adding the word (plus a space) would exceed line length
+            
             if (currentLine.length === 0 || (currentLine + ' ' + word).length <= this.charsPerLine) {
-                // Add space only if it's not the start of a line
+                
                 currentLine += (currentLine.length > 0 ? ' ' : '') + word;
             } else {
-                // Push current line and start new line with current word
+                
                 lines.push(currentLine);
                 currentLine = word;
                 
-                // Break if we've reached 5 lines
+                
                 if (lines.length >= 5) {
                     break;
                 }
             }
         }
         
-        // Add the last line if we haven't reached 5 lines yet
+        
         if (currentLine && lines.length < 5) {
             lines.push(currentLine);
         }
 
-        // Join lines with proper spacing and create character spans
+        
         const allChars = lines.join('\n').split('');
         
-        // Calculate current line based on character index
+        
         this.currentLine = lines.slice(0, this.visibleTextStart)
             .reduce((count, line) => count + line.length + 1, 0);
         
-        // Show appropriate lines
+        
         const visibleChars = allChars;
         
         this.textDisplay.innerHTML = visibleChars.map((char, index) => {
@@ -470,7 +470,7 @@ class TypingTest {
                 classes.push('active');
             }
             
-            // Replace newline characters with <br> tags
+            
             if (char === '\n') {
                 return '<br>';
             }
@@ -482,20 +482,20 @@ class TypingTest {
     handleBackspace(isCtrlPressed) {
         if (this.currentIndex > 0) {
             if (isCtrlPressed) {
-                // Find the start of the current word
+                
                 let newIndex = this.currentIndex;
                 
-                // Skip any spaces immediately before cursor
+                
                 while (newIndex > 0 && this.currentText[newIndex - 1] === ' ') {
                     newIndex--;
                 }
                 
-                // Find the start of the word
+                
                 while (newIndex > 0 && this.currentText[newIndex - 1] !== ' ') {
                     newIndex--;
                 }
                 
-                // Delete all characters between newIndex and currentIndex
+                
                 while (this.currentIndex > newIndex) {
                     if (this.mistakes.has(this.currentIndex - 1)) {
                         this.mistakes.delete(this.currentIndex - 1);
@@ -506,7 +506,7 @@ class TypingTest {
                     this.totalChars--;
                 }
             } else {
-                // Original single character backspace logic
+                
                 this.currentIndex--;
                 
                 if (this.mistakes.has(this.currentIndex)) {
@@ -517,7 +517,7 @@ class TypingTest {
                 this.totalChars--;
             }
             
-            // Update visibleTextStart when backspacing to previous lines
+            
             const newLine = Math.floor(this.currentIndex / this.charsPerLine);
             if (newLine < this.currentLine && newLine > 0) {
                 this.visibleTextStart = (newLine - 1) * this.charsPerLine;
@@ -533,27 +533,27 @@ class TypingTest {
 
         const currentChar = this.currentText[this.currentIndex];
 
-        // Handle space key
+        
         if (key === ' ') {
-            // Only allow space if we've typed at least one character and aren't already at a space
+            
             if (this.currentIndex > 0 && !this.currentText.slice(0, this.currentIndex).endsWith(' ')) {
                 if (currentChar === ' ') {
-                    // If space is correct, increment correctChars
+                    
                     this.correctChars++;
                     this.currentIndex++;
                     this.totalChars++;
                 } else {
-                    // Skip to next word if space is pressed at wrong time
+                    
                     let nextSpaceIndex = this.currentText.indexOf(' ', this.currentIndex);
                     if (nextSpaceIndex === -1) return;
                     
-                    // Mark skipped characters as mistakes
+                    
                     while (this.currentIndex < nextSpaceIndex) {
                         this.mistakes.add(this.currentIndex);
                         this.currentIndex++;
                         this.totalChars++;
                     }
-                    // Move past the space
+                    
                     this.currentIndex++;
                     this.totalChars++;
                 }
@@ -564,7 +564,7 @@ class TypingTest {
             return;
         }
 
-        // Handle other characters
+        
         if (key === currentChar) {
             this.correctChars++;
         } else {
@@ -574,12 +574,12 @@ class TypingTest {
         this.currentIndex++;
         this.totalChars++;
 
-        // Vibrate on mobile for feedback (if available)
+        
         if (this.isMobile && navigator.vibrate) {
             navigator.vibrate(10);
         }
 
-        // Add more text if needed
+        
         if (this.currentIndex >= this.currentText.length - (this.charsPerLine * 2)) {
             this.currentText += ' ' + this.generateWords(20).join(' ');
         }
@@ -589,22 +589,22 @@ class TypingTest {
     }
 
     startTest() {
-        if (this.isTestActive) return; // Prevent multiple starts
+        if (this.isTestActive) return; 
         
         this.isTestActive = true;
         this.startTime = new Date();
         this.timer = setInterval(() => this.updateTime(), 1000);
         this.statsTimer = setInterval(() => this.updateStats(), 100);
         
-        // Show stats immediately when typing starts
+        
         requestAnimationFrame(() => {
             this.statsContainer.classList.add('visible');
         });
         
-        // Focus on the typing area
+        
         this.typingArea.focus();
         
-        // Make the typing area focusable
+        
         this.typingArea.setAttribute('tabindex', '-1');
 
         if (this.isMobile) {
@@ -624,7 +624,7 @@ class TypingTest {
     }
 
     updateStats() {
-        // Add early return if test is not active or WPM history is null
+        
         if (!this.startTime || !this.isTestActive || this.wpmHistory === null) return;
         
         const now = new Date();
@@ -637,7 +637,7 @@ class TypingTest {
         this.wpmDisplay.textContent = wpm;
         this.accuracyDisplay.textContent = accuracy + '%';
 
-        // Record WPM only if test is still active
+        
         if (this.isTestActive && (!this.lastWpmUpdate || (now - this.lastWpmUpdate) >= 1000)) {
             this.recordWPM();
             this.lastWpmUpdate = now;
@@ -645,56 +645,56 @@ class TypingTest {
     }
 
     endTest() {
-        // Clear all timers immediately
+        
         clearInterval(this.timer);
         clearInterval(this.statsTimer);
         this.isTestActive = false;
         
-        // Calculate final stats
+        
         const timeElapsed = this.timeLimit / 60;
         const finalWpm = Math.round((this.correctChars / 5) / timeElapsed);
         const finalAccuracy = this.totalChars > 0 
             ? Math.round((this.correctChars / this.totalChars) * 100) 
             : 0;
         
-        // Take final snapshot of WPM history and prevent further updates
-        const finalWpmHistory = [...this.wpmHistory];
-        this.wpmHistory = null; // Prevent further updates
         
-        // Show results with final data
+        const finalWpmHistory = [...this.wpmHistory];
+        this.wpmHistory = null; 
+        
+        
         this.showResultsModal(finalWpm, finalAccuracy, finalWpmHistory);
     }
 
     showResultsModal(finalWpm, finalAccuracy, finalWpmHistory) {
-        // Add hide class to container for smooth transition
+        
         document.querySelector('.container').classList.add('hide');
         
-        // Wait for container transition before showing modal
+        
         setTimeout(() => {
-            // Update display with final stats
+            
             this.wpmResult.textContent = finalWpm;
             this.accuracyResult.textContent = `${finalAccuracy}%`;
             this.totalCharsResult.textContent = this.totalChars;
             this.correctCharsResult.textContent = this.correctChars;
             this.incorrectCharsResult.textContent = this.totalChars - this.correctChars;
 
-            // Clear any existing chart
+            
             const existingChart = Chart.getChart("accuracyGraph");
             if (existingChart) {
                 existingChart.destroy();
             }
 
-            // Prepare data for the graph using final WPM history
+            
             const labels = [];
             const data = [];
             const totalTime = this.timeLimit;
 
-            // Create time points from 10% to 100%
+            
             for (let i = 1; i <= 10; i++) {
                 const timePoint = (i / 10) * totalTime;
                 labels.push(i * 10 + '%');
                 
-                // Find the closest WPM data point for this time
+                
                 const closestPoint = finalWpmHistory.reduce((closest, point) => {
                     if (Math.abs(point.time - timePoint) < Math.abs(closest.time - timePoint)) {
                         return point;
@@ -705,11 +705,11 @@ class TypingTest {
                 data.push(closestPoint ? closestPoint.wpm : 0);
             }
 
-            // Find the maximum WPM achieved
-            const maxWPM = Math.max(...data, 0);  // Use 0 as fallback
-            const yAxisMax = Math.ceil(maxWPM / 50) * 50;  // Round up to next 50
+            
+            const maxWPM = Math.max(...data, 0);  
+            const yAxisMax = Math.ceil(maxWPM / 50) * 50;  
 
-            // Create accuracy graph
+            
             const ctx = document.getElementById('accuracyGraph').getContext('2d');
             new Chart(ctx, {
                 type: 'line',
@@ -778,7 +778,7 @@ class TypingTest {
                         },
                         y: {
                             min: 0,
-                            max: yAxisMax,  // Use the rounded up value
+                            max: yAxisMax,  
                             grid: {
                                 color: 'rgba(255, 255, 255, 0.1)',
                                 drawBorder: false
@@ -786,7 +786,7 @@ class TypingTest {
                             ticks: {
                                 color: getComputedStyle(document.documentElement)
                                     .getPropertyValue('--char-color'),
-                                stepSize: Math.ceil(yAxisMax / 8),  // Adjust step size based on max value
+                                stepSize: Math.ceil(yAxisMax / 8),  
                                 callback: function(value) {
                                     return value + ' WPM';
                                 }
@@ -802,7 +802,7 @@ class TypingTest {
                 }
             });
 
-            // Show modal with animation
+            
             this.resultsModal.style.display = 'flex';
             void this.resultsModal.offsetWidth;
             this.resultsModal.classList.add('show');
@@ -812,7 +812,7 @@ class TypingTest {
     closeResultsModal() {
         this.resultsModal.classList.remove('show');
         
-        // Wait for modal transition before showing container
+        
         setTimeout(() => {
             this.resultsModal.style.display = 'none';
             document.querySelector('.container').classList.remove('hide');
@@ -829,13 +829,13 @@ class TypingTest {
         this.mistakes = new Set();
         this.startTime = null;
         this.isTestActive = false;
-        this.wpmHistory = []; // Clear WPM history
+        this.wpmHistory = []; 
         this.lastWpmUpdate = null;
         this.timeDisplay.textContent = this.timeLimit + 's';
         this.wpmDisplay.textContent = '0';
         this.accuracyDisplay.textContent = '0%';
         
-        // Ensure stats are hidden on restart
+        
         this.statsContainer.classList.remove('visible');
         
         this.generateInitialText();
@@ -850,35 +850,35 @@ class TypingTest {
         }
     }
 
-    // Add this new method to record WPM data points
+    
     recordWPM() {
         const now = new Date();
-        const timeElapsed = (now - this.startTime) / 1000 / 60; // in minutes
+        const timeElapsed = (now - this.startTime) / 1000 / 60; 
         const currentWPM = Math.round((this.correctChars / 5) / timeElapsed) || 0;
         this.wpmHistory.push({
-            time: timeElapsed * 60, // convert to seconds
+            time: timeElapsed * 60, 
             wpm: currentWPM
         });
     }
 
     initializeMobileSupport() {
-        // Handle mobile input
+        
         this.mobileInput.addEventListener('input', (e) => {
             const inputChar = e.data;
             if (inputChar && this.isTestActive) {
                 this.checkCharacter(inputChar);
             }
-            this.mobileInput.value = ''; // Clear input after each character
+            this.mobileInput.value = ''; 
         });
 
-        // Handle mobile keyboard show/hide
+        
         this.typingArea.addEventListener('touchstart', () => {
             if (!this.isTestActive) {
                 this.mobileInput.focus();
             }
         });
 
-        // Adjust container padding when keyboard shows/hides
+        
         window.visualViewport.addEventListener('resize', () => {
             const container = document.querySelector('.container');
             if (window.visualViewport.height < window.innerHeight) {
@@ -892,12 +892,12 @@ class TypingTest {
     updateCharsPerLine() {
         const container = document.querySelector('.typing-area');
         const containerWidth = container.clientWidth;
-        const maxChars = 77; // Maximum for large screens
+        const maxChars = 77; 
         
         if (window.innerWidth <= 440) {
-            // Extra small screens (phones)
-            // At 440px it will be 50 chars
-            // At 320px it will be about 35 chars
+            
+            
+            
             const minWidth = 320;
             const minChars = 35;
             const maxCharsXSmall = 50;
@@ -909,25 +909,25 @@ class TypingTest {
             const charRange = maxCharsXSmall - minChars;
             this.charsPerLine = Math.floor(minChars + (charRange * percentage));
         } else if (window.innerWidth <= 770) {
-            // Create a smoother decline from 770px down to 440px
-            // At 770px it will be 65 chars
-            // At 440px it will be 50 chars
+            
+            
+            
             const percentage = (window.innerWidth - 440) / (770 - 440);
             this.charsPerLine = Math.floor(50 + (65 - 50) * percentage);
         } else if (window.innerWidth <= 1024) {
-            // Smooth transition between 1024 and 770
+            
             const percentage = (window.innerWidth - 770) / (1024 - 770);
             this.charsPerLine = Math.floor(65 + (maxChars - 65) * percentage);
         } else {
             this.charsPerLine = maxChars;
         }
         
-        // Ensure we never go below minimum chars per line
+        
         this.charsPerLine = Math.max(35, this.charsPerLine);
     }
 }
 
-// Remove the separate DOM content loaded event listener for preferences
+
 document.addEventListener('DOMContentLoaded', () => {
     new TypingTest();
 }); 
