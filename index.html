@@ -5,16 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>TypeShit</title>
+    <title>TypeCraft</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'><rect x='5' y='5' width='90' height='50' rx='5' fill='%23B8B8B8' stroke='black' stroke-width='4'/><rect x='15' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='28' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='41' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='54' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='67' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='80' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='15' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='28' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='41' y='28' width='20' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='67' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='80' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='15' y='41' width='30' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='50' y='41' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='63' y='41' width='25' height='8' fill='white' stroke='black' stroke-width='2'/></svg>" type="image/svg+xml">
 </head>
 <body>
     <div class="container">
         <div class="title">
-            <h1>TypeShit</h1>
+            <h1>TypeCraft</h1>
+            <div id="userDisplay" class="user-display"></div>
         </div>
         <div class="header">
             <select id="timeSelect">
@@ -59,7 +61,7 @@
     <div id="resultsModal" class="modal">
         <div class="modal-content">
             <div class="modal-title">
-                <h1>TypeShit</h1>
+                <h1>TypeCraft</h1>
             </div>
             <div class="graph-section">
                 <canvas id="accuracyGraph"></canvas>
@@ -94,6 +96,7 @@
             </button>
         </div>
     </div>
+    <script src="auth-check.js"></script>
     <script src="script.js"></script>
 
     <div class="virtual-keyboard" id="virtualKeyboard">
