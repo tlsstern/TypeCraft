@@ -1747,6 +1747,7 @@ Camel Spawn Egg
 Cat Spawn Egg
 Cave Spider Spawn Egg
 Chicken Spawn Egg
+Chicken Jockey
 Cod Spawn Egg
 Cow Spawn Egg
 Creaking Spawn Egg
