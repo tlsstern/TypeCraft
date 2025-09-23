@@ -1,6 +1,6 @@
 class TypingTest {
   constructor() {
-    this.words = getTermsFromFile();
+    this.words = this.getTermsFromFile();
 
     this.textDisplay = document.getElementById("text-display");
     this.wpmDisplay = document.getElementById("wpm");
