@@ -1,6 +1,6 @@
 class TypingTest {
   constructor() {
-    this.words = this.getTermsFromFile();
+    this.words = [];
 
     this.textDisplay = document.getElementById("text-display");
     this.wpmDisplay = document.getElementById("wpm");
@@ -239,7 +239,7 @@ class TypingTest {
     this.timeDisplay.textContent = this.timeLimit + "s";
 
     this.initializeEventListeners();
-    this.generateInitialText();
+    this.initializeWords();
 
     this.playAgainBtn.addEventListener("click", () => {
       this.closeResultsModal();
@@ -362,6 +362,15 @@ class TypingTest {
         e.preventDefault();
       }
     });
+  }
+
+  async initializeWords() {
+    this.words = await this.getTermsFromFile();
+    if (this.words.length === 0) {
+      console.error("Failed to load words, using default set");
+      this.words = ["test", "typing", "speed", "keyboard", "practice"];
+    }
+    this.generateInitialText();
   }
 
   generateInitialText() {
@@ -596,27 +605,28 @@ class TypingTest {
   }
 
     endTest() {
-        
+
         clearInterval(this.timer);
         clearInterval(this.statsTimer);
         this.isTestActive = false;
-        
-        
-        const timeElapsed = this.timeLimit / 60;
-        const finalWpm = Math.round((this.correctChars / 5) / timeElapsed);
-        const finalAccuracy = this.totalChars > 0 
-            ? Math.round((this.correctChars / this.totalChars) * 100) 
+
+        // Calculate actual time elapsed in seconds
+        const actualTimeElapsed = Math.floor((new Date() - this.startTime) / 1000);
+        const timeElapsedMinutes = actualTimeElapsed / 60;
+
+        const finalWpm = Math.round((this.correctChars / 5) / timeElapsedMinutes);
+        const finalAccuracy = this.totalChars > 0
+            ? Math.round((this.correctChars / this.totalChars) * 100)
             : 0;
-        
 
         const finalWpmHistory = this.wpmHistory ? [...this.wpmHistory] : [];
-        this.wpmHistory = null; 
-        
-        
-        this.showResultsModal(finalWpm, finalAccuracy, finalWpmHistory);
+        this.wpmHistory = null;
+
+        // Pass actual elapsed time and timeLimit
+        this.showResultsModal(finalWpm, finalAccuracy, finalWpmHistory, actualTimeElapsed);
     }
 
-    showResultsModal(finalWpm, finalAccuracy, finalWpmHistory) {
+    showResultsModal(finalWpm, finalAccuracy, finalWpmHistory, actualTimeElapsed) {
 
         document.querySelector('.container').classList.add('hide');
 
@@ -636,6 +646,12 @@ class TypingTest {
                     totalChars: this.totalChars,
                     correctChars: this.correctChars,
                     incorrectChars: this.totalChars - this.correctChars,
+                    duration: actualTimeElapsed,
+                    charactersTyped: this.totalChars,
+                    errors: this.totalChars - this.correctChars,
+                    testType: this.timeLimit + 's',
+                    language: 'en',
+                    rawWpm: finalWpm,
                     timestamp: new Date().toISOString()
                 }).then(result => {
                     if (result.error) {
@@ -861,25 +877,25 @@ class TypingTest {
     });
   }
 
-  getTermsFromFile() {
-    const fs = require("fs");
-
+  async getTermsFromFile() {
     const filePath = "mcitems.txt";
 
     let minecraftTerms = [];
 
     try {
-      const fileContent = fs.readFileSync(filePath, "utf8");
+      const response = await fetch(filePath);
+      const fileContent = await response.text();
 
       minecraftTerms = fileContent.split("\n");
 
       minecraftTerms = minecraftTerms
         .filter((term) => term.trim() !== "")
         .map((term) => term.trim());
-    
+
       return minecraftTerms;
     } catch (err) {
       console.error("Error reading the file:", err);
+      return [];
     }
   }
 
