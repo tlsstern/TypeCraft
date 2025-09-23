@@ -645,27 +645,29 @@ class TypingTest {
     }
 
     endTest() {
-        
+
         clearInterval(this.timer);
         clearInterval(this.statsTimer);
         this.isTestActive = false;
-        
-        
+
+        // Calculate actual duration in seconds
+        const actualDuration = this.startTime ? Math.floor((new Date() - this.startTime) / 1000) : this.timeLimit;
+
         const timeElapsed = this.timeLimit / 60;
         const finalWpm = Math.round((this.correctChars / 5) / timeElapsed);
-        const finalAccuracy = this.totalChars > 0 
-            ? Math.round((this.correctChars / this.totalChars) * 100) 
+        const finalAccuracy = this.totalChars > 0
+            ? Math.round((this.correctChars / this.totalChars) * 100)
             : 0;
-        
+
 
         const finalWpmHistory = this.wpmHistory ? [...this.wpmHistory] : [];
-        this.wpmHistory = null; 
-        
-        
-        this.showResultsModal(finalWpm, finalAccuracy, finalWpmHistory);
+        this.wpmHistory = null;
+
+
+        this.showResultsModal(finalWpm, finalAccuracy, finalWpmHistory, actualDuration);
     }
 
-    showResultsModal(finalWpm, finalAccuracy, finalWpmHistory) {
+    showResultsModal(finalWpm, finalAccuracy, finalWpmHistory, actualDuration) {
 
         document.querySelector('.container').classList.add('hide');
 
@@ -679,9 +681,18 @@ class TypingTest {
             this.incorrectCharsResult.textContent = this.totalChars - this.correctChars;
 
             if (window.supabaseData) {
+                // Calculate raw WPM (without penalty for errors)
+                const rawWpm = Math.round((this.totalChars / 5) / (actualDuration / 60));
+
                 window.supabaseData.saveTypingSession({
                     wpm: finalWpm,
                     accuracy: finalAccuracy,
+                    rawWpm: rawWpm,
+                    duration: actualDuration, // Actual test duration in seconds
+                    charactersTyped: this.totalChars, // Total characters typed
+                    errors: this.totalChars - this.correctChars, // Number of errors
+                    testType: `${this.timeLimit}s`, // Test type based on time limit
+                    language: 'en', // Default language
                     totalChars: this.totalChars,
                     correctChars: this.correctChars,
                     incorrectChars: this.totalChars - this.correctChars,
