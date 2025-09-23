@@ -657,8 +657,8 @@ class TypingTest {
             ? Math.round((this.correctChars / this.totalChars) * 100) 
             : 0;
         
-        
-        const finalWpmHistory = [...this.wpmHistory];
+
+        const finalWpmHistory = this.wpmHistory ? [...this.wpmHistory] : [];
         this.wpmHistory = null; 
         
         
@@ -666,17 +666,36 @@ class TypingTest {
     }
 
     showResultsModal(finalWpm, finalAccuracy, finalWpmHistory) {
-        
+
         document.querySelector('.container').classList.add('hide');
-        
-        
+
+
         setTimeout(() => {
-            
+
             this.wpmResult.textContent = finalWpm;
             this.accuracyResult.textContent = `${finalAccuracy}%`;
             this.totalCharsResult.textContent = this.totalChars;
             this.correctCharsResult.textContent = this.correctChars;
             this.incorrectCharsResult.textContent = this.totalChars - this.correctChars;
+
+            if (window.supabaseData) {
+                window.supabaseData.saveTypingSession({
+                    wpm: finalWpm,
+                    accuracy: finalAccuracy,
+                    totalChars: this.totalChars,
+                    correctChars: this.correctChars,
+                    incorrectChars: this.totalChars - this.correctChars,
+                    timestamp: new Date().toISOString()
+                }).then(result => {
+                    if (result.error) {
+                        console.log('Error saving session:', result.error);
+                    } else {
+                        console.log('Session saved successfully');
+                    }
+                }).catch(error => {
+                    console.log('Failed to save session:', error);
+                });
+            }
 
             
             const existingChart = Chart.getChart("accuracyGraph");
