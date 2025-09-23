@@ -1,0 +1,1820 @@
+Air
+Cobblestone
+Cobblestone Slab
+Cobblestone Stairs
+Cobblestone Wall
+Infested Cobblestone
+Mossy Cobblestone
+Mossy Cobblestone Slab
+Mossy Cobblestone Stairs
+Mossy Cobblestone Wall
+Stone
+Stone Slab
+Stone Stairs
+Infested Stone
+Smooth Stone
+Smooth Stone Slab
+Stone Bricks
+Stone Brick Slab
+Stone Brick Stairs
+Stone Brick Wall
+Infested Stone Bricks
+Cracked Stone Bricks
+Infested Cracked Stone Bricks
+Chiseled Stone Bricks
+Infested Chiseled Stone Bricks
+Mossy Stone Bricks
+Mossy Stone Brick Slab
+Mossy Stone Brick Stairs
+Mossy Stone Brick Wall
+Infested Mossy Stone Bricks
+Stone Pressure Plate
+Stone Button
+Deepslate
+Cobbled Deepslate
+Cobbled Deepslate Slab
+Cobbled Deepslate Stairs
+Cobbled Deepslate Wall
+Infested Deepslate
+Polished Deepslate
+Polished Deepslate Slab
+Polished Deepslate Stairs
+Polished Deepslate Wall
+Deepslate Bricks
+Deepslate Brick Slab
+Deepslate Brick Stairs
+Deepslate Brick Wall
+Cracked Deepslate Bricks
+Deepslate Tiles
+Deepslate Tile Slab
+Deepslate Tile Stairs
+Deepslate Tile Wall
+Cracked Deepslate Tiles
+Chiseled Deepslate
+Reinforced Deepslate
+Bedrock
+Diorite
+Diorite Slab
+Diorite Stairs
+Diorite Wall
+Polished Diorite
+Polished Diorite Slab
+Polished Diorite Stairs
+Andesite
+Andesite Slab
+Andesite Stairs
+Andesite Wall
+Polished Andesite
+Polished Andesite Slab
+Polished Andesite Stairs
+Granite
+Granite Slab
+Granite Stairs
+Granite Wall
+Polished Granite
+Polished Granite Slab
+Polished Granite Stairs
+Tuff
+Tuff Slab
+Tuff Stairs
+Tuff Wall
+Chiseled Tuff
+Polished Tuff
+Polished Tuff Slab
+Polished Tuff Stairs
+Polished Tuff Wall
+Tuff Bricks
+Tuff Brick Slab
+Tuff Brick Stairs
+Tuff Brick Wall
+Chiseled Tuff Bricks
+Calcite
+Dripstone Block
+Pointed Dripstone
+Dirt
+Grass Block
+Mycelium
+Podzol
+Coarse Dirt
+Rooted Dirt
+Dirt Path
+Farmland
+Oak Log
+Oak Wood
+Stripped Oak Log
+Stripped Oak Wood
+Oak Planks
+Oak Slab
+Oak Stairs
+Oak Fence
+Oak Fence Gate
+Oak Door
+Oak Trapdoor
+Oak Sign
+Oak Hanging Sign
+Oak Pressure Plate
+Oak Button
+Oak Boat
+Oak Boat with Chest
+Birch Log
+Birch Wood
+Stripped Birch Log
+Stripped Birch Wood
+Birch Planks
+Birch Slab
+Birch Stairs
+Birch Fence
+Birch Fence Gate
+Birch Door
+Birch Trapdoor
+Birch Sign
+Birch Hanging Sign
+Birch Pressure Plate
+Birch Button
+Birch Boat
+Birch Boat with Chest
+Spruce Log
+Spruce Wood
+Stripped Spruce Log
+Stripped Spruce Wood
+Spruce Planks
+Spruce Slab
+Spruce Stairs
+Spruce Fence
+Spruce Fence Gate
+Spruce Door
+Spruce Trapdoor
+Spruce Sign
+Spruce Hanging Sign
+Spruce Pressure Plate
+Spruce Button
+Spruce Boat
+Spruce Boat with Chest
+Jungle Log
+Jungle Wood
+Stripped Jungle Log
+Stripped Jungle Wood
+Jungle Planks
+Jungle Slab
+Jungle Stairs
+Jungle Fence
+Jungle Fence Gate
+Jungle Door
+Jungle Trapdoor
+Jungle Sign
+Jungle Hanging Sign
+Jungle Pressure Plate
+Jungle Button
+Jungle Boat
+Jungle Boat with Chest
+Dark Oak Log
+Dark Oak Wood
+Stripped Dark Oak Log
+Stripped Dark Oak Wood
+Dark Oak Planks
+Dark Oak Slab
+Dark Oak Stairs
+Dark Oak Fence
+Dark Oak Fence Gate
+Dark Oak Door
+Dark Oak Trapdoor
+Dark Oak Sign
+Dark Oak Hanging Sign
+Dark Oak Pressure Plate
+Dark Oak Button
+Dark Oak Boat
+Dark Oak Boat with Chest
+Acacia Log
+Acacia Wood
+Stripped Acacia Log
+Stripped Acacia Wood
+Acacia Planks
+Acacia Slab
+Acacia Stairs
+Acacia Fence
+Acacia Fence Gate
+Acacia Door
+Acacia Trapdoor
+Acacia Sign
+Acacia Hanging Sign
+Acacia Pressure Plate
+Acacia Button
+Acacia Boat
+Acacia Boat with Chest
+Mangrove Log
+Mangrove Wood
+Stripped Mangrove Log
+Stripped Mangrove Wood
+Mangrove Planks
+Mangrove Slab
+Mangrove Stairs
+Mangrove Fence
+Mangrove Gate
+Mangrove Door
+Mangrove Trapdoor
+Mangrove Sign
+Mangrove Hanging Sign
+Mangrove Pressure Plate
+Mangrove Button
+Mangrove Boat
+Mangrove Boat with Chest
+Cherry Log
+Cherry Wood
+Stripped Cherry Log
+Stripped Cherry Wood
+Cherry Planks
+Cherry Slab
+Cherry Stairs
+Cherry Fence
+Cherry Fence Gate
+Cherry Door
+Cherry Trapdoor
+Cherry Sign
+Cherry Hanging Sign
+Cherry Pressure Plate
+Cherry Button
+Cherry Boat
+Cherry Boat with Chest
+Block of Bamboo
+Block of Stripped Bamboo
+Bamboo Planks
+Bamboo Slab
+Bamboo Stairs
+Bamboo Fence
+Bamboo Fence Gate
+Bamboo Door
+Bamboo Trapdoor
+Bamboo Sign
+Bamboo Hanging Sign
+Bamboo Pressure Plate
+Bamboo Button
+Bamboo Raft
+Bamboo Raft with Chest
+Bamboo Mosaic
+Bamboo Mosaic Slab
+Bamboo Mosaic Stairs
+Pale Oak Log
+Creaking Heart
+Pale Oak Wood
+Stripped Pale Oak Log
+Stripped Pale Oak Wood
+Pale Oak Planks
+Pale Oak Slab
+Pale Oak Stairs
+Pale Oak Fence
+Pale Oak Fence Gate
+Pale Oak Door
+Pale Oak Trapdoor
+Pale Oak Sign
+Pale Oak Hanging Sign
+Pale Oak Pressure Plate
+Pale Oak Button
+Pale Oak Boat
+Pale Oak Boat with Chest
+Warped Stem
+Warped Hyphae
+Stripped Warped Stem
+Stripped Warped Hyphae
+Warped Planks
+Warped Slab
+Warped Stairs
+Warped Fence
+Warped Fence Gate
+Warped Door
+Warped Trapdoor
+Warped Sign
+Warped Hanging Sign
+Warped Pressure Plate
+Warped Button
+Crimson Stem
+Crimson Hyphae
+Stripped Crimson Stem
+Stripped Crimson Hyphae
+Crimson Planks
+Crimson Slab
+Crimson Stairs
+Crimson Fence
+Crimson Fence Gate
+Crimson Door
+Crimson Trapdoor
+Crimson Sign
+Crimson Hanging Sign
+Crimson Pressure Plate
+Crimson Button
+Petrified Oak Slab
+Gravel
+Suspicious Gravel
+Flint
+Sand
+Suspicious Sand
+Sandstone
+Sandstone Slab
+Sandstone Stairs
+Sandstone Wall
+Smooth Sandstone
+Smooth Sandstone Slab
+Smooth Sandstone Stairs
+Cut Sandstone
+Cut Sandstone Slab
+Chiseled Sandstone
+Red Sand
+Red Sandstone
+Red Sandstone Slab
+Red Sandstone Stairs
+Red Sandstone Wall
+Smooth Red Sandstone
+Smooth Red Sandstone Slab
+Smooth Red Sandstone Stairs
+Cut Red Sandstone
+Cut Red Sandstone Slab
+Chiseled Red Sandstone
+Emerald Ore
+Deepslate Emerald Ore
+Coal Ore
+Deepslate Coal Ore
+Copper Ore
+Deepslate Copper Ore
+Iron Ore
+Deepslate Iron Ore
+Lapis Lazuli Ore
+Deepslate Lapis Lazuli Ore
+Gold Ore
+Deepslate Gold Ore
+Redstone Ore
+Deepslate Redstone Ore
+Diamond Ore
+Deepslate Diamond Ore
+Nether Quartz Ore
+Nether Gold Ore
+Ancient Debris
+Emerald
+Block of Emerald
+Coal
+Block of Coal
+Raw Copper
+Block of Raw Copper
+Copper ingot
+Block of Copper
+Exposed Copper
+Weathered Copper
+Oxidized Copper
+Cut Copper
+Exposed Cut Copper
+Weathered Cut Copper
+Oxidized Cut Copper
+Cut Copper Slab
+Exposed Cut Copper Slab
+Weathered Cut Copper Slab
+Oxidized Cut Copper Slab
+Cut Copper Stairs
+Exposed Cut Copper Stairs
+Weathered Cut Copper Stairs
+Oxidized Cut Copper Stairs
+Chiseled Copper
+Exposed Chiseled Copper
+Weathered Chiseled Copper
+Oxidized Chiseled Copper
+Copper Grate
+Exposed Copper Grate
+Weathered Copper Grate
+Oxidized Copper Grate
+Copper Bulb
+Exposed Copper Bulb
+Weathered Copper Bulb
+Oxidized Copper Bulb
+Copper Door
+Exposed Copper Door
+Weathered Copper Door
+Oxidized Copper Door
+Copper Trapdoor
+Exposed Copper Trapdoor
+Weathered Copper Trapdoor
+Oxidized Copper Trapdoor
+Waxed Block of Copper
+Waxed Exposed Copper
+Waxed Weathered Copper
+Waxed Oxidized Copper
+Waxed Cut Copper
+Waxed Exposed Cut Copper
+Waxed Weathered Cut Copper
+Waxed Oxidized Cut Copper
+Waxed Cut Copper Slab
+Waxed Exposed Cut Copper Slab
+Waxed Weathered Cut Copper Slab
+Waxed Oxidized Cut Copper Slab
+Waxed Cut Copper Stairs
+Waxed Exposed Cut Copper Stairs
+Waxed Weathered Cut Copper Stairs
+Waxed Oxidized Cut Copper Stairs
+Waxed Chiseled Copper
+Waxed Exposed Chiseled Copper
+Waxed Weathered Chiseled Copper
+Waxed Oxidized Chiseled Copper
+Waxed Copper Grate
+Waxed Exposed Copper Grate
+Waxed Weathered Copper Grate
+Waxed Oxidized Copper Grate
+Waxed Copper Bulb
+Waxed Exposed Copper Bulb
+Waxed Weathered Copper Bulb
+Waxed Oxidized Copper Bulb
+Waxed Copper Door
+Waxed Exposed Copper Door
+Waxed Weathered Copper Door
+Waxed Oxidized Copper Door
+Waxed Copper Trapdoor
+Waxed Exposed Copper Trapdoor
+Waxed Weathered Copper Trapdoor
+Waxed Oxidized Copper Trapdoor
+Raw Iron
+Block of Raw Iron
+Iron Ingot
+Block of Iron
+Iron Door
+Iron Trapdoor
+Heavy Weighted Pressure Plate
+Iron Nugget
+Lapis Lazuli
+Block of Lapis Lazuli
+Raw Gold
+Block of Raw Gold
+Gold Ingot
+Block of Gold
+Light Weighted Pressure Plate
+Gold Nugget
+Redstone Dust
+Block of Redstone
+Diamond
+Block of Diamond
+Nether Quartz
+Block of Quartz
+Quartz Slab
+Quartz Stairs
+Smooth Quartz Block
+Smooth Quartz Slab
+Smooth Quartz Stairs
+Chiseled Quartz Block
+Quartz Pillar
+Quartz Bricks
+Netherite Scrap
+Netherite Ingot
+Block of Netherite
+Small Amethyst Bud
+Medium Amethyst Bud
+Large Amethyst Bud
+Amethyst Cluster
+Amethyst Shard
+Block of Amethyst
+Budding Amethyst
+Resin Clump
+Block of Resin
+Resin Brick
+Resin Bricks
+Resin Brick Slab
+Resin Brick Stairs
+Resin Brick Wall
+Chiseled Resin Bricks
+Clay Ball
+Clay
+Brick
+Bricks
+Brick Slab
+Brick Stairs
+Brick Wall
+Mud
+Packed Mud
+Mud Bricks
+Mud Brick Slab
+Mud Brick Stairs
+Mud Brick Wall
+Prismarine Shard
+Prismarine Crystals
+Prismarine
+Prismarine Slab
+Prismarine Stairs
+Prismarine Wall
+Prismarine Bricks
+Prismarine Brick Slab
+Prismarine Brick Stairs
+Dark Prismarine
+Dark Prismarine Slab
+Dark Prismarine Stairs
+Sea Lantern
+Sponge
+Wet Sponge
+Snowball
+Snow Block
+Snow
+Ice
+Packed Ice
+Blue Ice
+Netherrack
+Glowstone Dust
+Glowstone
+Shroomlight
+Magma Block
+Nether Wart
+Nether Brick
+Nether Bricks
+Nether Brick Slab
+Nether Brick Stairs
+Nether Brick Wall
+Nether Brick Fence
+Chiseled Nether Bricks
+Cracked Nether Bricks
+Red Nether Bricks
+Red Nether Brick Slab
+Red Nether Brick Stairs
+Red Nether Brick Wall
+Warped Nylium
+Warped Wart Block
+Warped Fungus
+Warped Roots
+Nether Sprouts
+Twisting Vines
+Crimson Nylium
+Nether Wart Block
+Crimson Fungus
+Crimson Roots
+Weeping Vines
+Basalt
+Polished Basalt
+Smooth Basalt
+Soul Sand
+Soul Soil
+Blackstone
+Blackstone Slab
+Blackstone Stairs
+Blackstone Wall
+Polished Blackstone
+Polished Blackstone Slab
+Polished Blackstone Stairs
+Polished Blackstone Wall
+Polished Blackstone Bricks
+Polished Blackstone Brick Slab
+Polished Blackstone Brick Stairs
+Polished Blackstone Brick Wall
+Cracked Polished Blackstone Bricks
+Chiseled Polished Blackstone
+Polished Blackstone Pressure Plate
+Polished Blackstone Button
+Gilded Blackstone
+Obsidian
+Crying Obsidian
+End Stone
+End Stone Bricks
+End Stone Brick Slab
+End Stone Brick Stairs
+End Stone Brick Wall
+End Portal Frame
+Chorus Flower
+Chorus Plant
+Chorus Fruit
+Popped Chorus
+Purpur Block
+Purpur Slab
+Purpur Stairs
+Purpur Pillar
+White Dye
+Light Gray Dye
+Gray Dye
+Black Dye
+Brown Dye
+Red Dye
+Orange Dye
+Yellow Dye
+Lime Dye
+Green Dye
+Cyan Dye
+Light Blue Dye
+Blue Dye
+Purple Dye
+Magenta Dye
+Pink Dye
+White Wool
+Light Gray Wool
+Gray Wool
+Black Wool
+Brown Wool
+Red Wool
+Orange Wool
+Yellow Wool
+Lime Wool
+Green Wool
+Cyan Wool
+Light Blue Wool
+Blue Wool
+Purple Wool
+Magenta Wool
+Pink Wool
+White Carpet
+Light Gray Carpet
+Gray Carpet
+Black Carpet
+Brown Carpet
+Red Carpet
+Orange Carpet
+Yellow Carpet
+Lime Carpet
+Green Carpet
+Cyan Carpet
+Light Blue Carpet
+Blue Carpet
+Purple Carpet
+Magenta Carpet
+Pink Carpet
+White Banner
+Light Gray Banner
+Gray Banner
+Black Banner
+Brown Banner
+Red Banner
+Orange Banner
+Yellow Banner
+Lime Banner
+Green Banner
+Cyan Banner
+Light Blue Banner
+Blue Banner
+Purple Banner
+Magenta Banner
+Pink Banner
+Ominous Banner
+White Bed
+Light Gray Bed
+Gray Bed
+Black Bed
+Brown Bed
+Red Bed
+Orange Bed
+Yellow Bed
+Lime Bed
+Green Bed
+Cyan Bed
+Light Blue Bed
+Blue Bed
+Purple Bed
+Magenta Bed
+Pink Bed
+White Concrete Powder
+Light Gray Concrete Powder
+Gray Concrete Powder
+Black Concrete Powder
+Brown Concrete Powder
+Red Concrete Powder
+Orange Concrete Powder
+Yellow Concrete Powder
+Lime Concrete Powder
+Green Concrete Powder
+Cyan Concrete Powder
+Light Blue Concrete Powder
+Blue Concrete Powder
+Purple Concrete Powder
+Magenta Concrete Powder
+Pink Concrete Powder
+White Concrete
+Light Gray Concrete
+Gray Concrete
+Black Concrete
+Brown Concrete
+Red Concrete
+Orange Concrete
+Yellow Concrete
+Lime Concrete
+Green Concrete
+Cyan Concrete
+Light Blue Concrete
+Blue Concrete
+Purple Concrete
+Magenta Concrete
+Pink Concrete
+Terracotta
+White Terracotta
+Light Gray Terracotta
+Gray Terracotta
+Black Terracotta
+Brown Terracotta
+Red Terracotta
+Orange Terracotta
+Yellow Terracotta
+Lime Terracotta
+Green Terracotta
+Cyan Terracotta
+Light Blue Terracotta
+Blue Terracotta
+Purple Terracotta
+Magenta Terracotta
+Pink Terracotta
+White Glazed Terracotta
+Light Gray Glazed Terracotta
+Gray Glazed Terracotta
+Black Glazed Terracotta
+Brown Glazed Terracotta
+Red Glazed Terracotta
+Orange Glazed Terracotta
+Yellow Glazed Terracotta
+Lime Glazed Terracotta
+Green Glazed Terracotta
+Cyan Glazed Terracotta
+Light Blue Glazed Terracotta
+Blue Glazed Terracotta
+Purple Glazed Terracotta
+Magenta Glazed Terracotta
+Pink Glazed Terracotta
+Glass
+White Stained Glass
+Light Gray Stained Glass
+Gray Stained Glass
+Black Stained Glass
+Brown Stained Glass
+Red Stained Glass
+Orange Stained Glass
+Yellow Stained Glass
+Lime Stained Glass
+Green Stained Glass
+Cyan Stained Glass
+Light Blue Stained Glass
+Blue Stained Glass
+Purple Stained Glass
+Magenta Stained Glass
+Pink Stained Glass
+Tinted Glass
+Glass Pane
+White Stained Glass Pane
+Light Gray Stained Glass Pane
+Gray Stained Glass Pane
+Black Stained Glass Pane
+Brown Stained Glass Pane
+Red Stained Glass Pane
+Orange Stained Glass Pane
+Yellow Stained Glass Pane
+Lime Stained Glass Pane
+Green Stained Glass Pane
+Cyan Stained Glass Pane
+Light Blue Stained Glass Pane
+Blue Stained Glass Pane
+Purple Stained Glass Pane
+Magenta Stained Glass Pane
+Pink Stained Glass Pane
+Candle
+White Candle
+Light Gray Candle
+Gray Candle
+Black Candle
+Brown Candle
+Red Candle
+Orange Candle
+Yellow Candle
+Lime Candle
+Green Candle
+Cyan Candle
+Light Blue Candle
+Blue Candle
+Purple Candle
+Magenta Candle
+Pink Candle
+White Harness
+Light Gray Harness
+Gray Harness
+Black Harness
+Brown Harness
+Red Harness
+Orange Harness
+Yellow Harness
+Lime Harness
+Green Harness
+Cyan Harness
+Light Blue Harness
+Blue Harness
+Purple Harness
+Magenta Harness
+Pink Harness
+Bundle
+White Bundle
+Light Gray Bundle
+Gray Bundle
+Black Bundle
+Brown Bundle
+Red Bundle
+Orange Bundle
+Yellow Bundle
+Lime Bundle
+Green Bundle
+Cyan Bundle
+Light Blue Bundle
+Blue Bundle
+Purple Bundle
+Magenta Bundle
+Pink Bundle
+Shulker Box
+White Shulker Box
+Light Gray Shulker Box
+Gray Shulker Box
+Black Shulker Box
+Brown Shulker Box
+Red Shulker Box
+Orange Shulker Box
+Yellow Shulker Box
+Lime Shulker Box
+Green Shulker Box
+Cyan Shulker Box
+Light Blue Shulker Box
+Blue Shulker Box
+Purple Shulker Box
+Magenta Shulker Box
+Pink Shulker Box
+Crafting Table
+Furnace
+Blast Furnace
+Smoker
+Chest
+Trapped Chest
+Ender Chest
+Enchanting Table
+Anvil
+Chipped Anvil
+Damaged Anvil
+Grindstone
+Stonecutter
+Barrel
+Composter
+Loom
+Cartography Table
+Smithing Table
+Fletching Table
+Lectern
+Jukebox
+Bell
+Brewing Stand
+Cauldron
+Lodestone
+Respawn Anchor
+Bee Nest
+Beehive
+Trial Spawner
+Vault
+Trial Key
+Ominous Trial Key
+Heavy Core
+Armor Stand
+Flower Pot
+Decorated Pot
+Painting Random variant
+Painting Albanian
+Painting de_aztec
+Painting Kebab med tre pepperoni
+Painting Meditative
+Painting Paradisträd
+Painting Target Successfully Bombed
+Painting Wasteland
+Painting Graham
+Painting Prairie Ride
+Painting Wanderer
+Painting Bonjour Monsieur Courbet
+Painting Creebet
+Painting Seaside
+Painting sunset_dense
+Painting The Pool
+Painting Baroque
+Painting Bust
+Painting Earth
+Painting Fire
+Painting Humble
+Painting Match
+Painting Skull and Roses
+Painting The Stage Is Set
+Painting The void
+Painting Water
+Painting Wind
+Painting Wither
+Painting Bouquet
+Painting Cavebird
+Painting Cotán
+Painting Dennis
+Painting Endboss
+Painting Fern
+Painting Owlemons
+Painting Sunflowers
+Painting Tides
+Painting Backyard
+Painting Pond
+Painting Changing
+Painting Fighters
+Painting Finding
+Painting Lowmist
+Painting Passage
+Painting Kong
+Painting Mortal Coil
+Painting Orb
+Painting Pigscene
+Painting Pointer
+Painting Skull On Fire
+Painting Unpacked
+Item Frame
+Glow Item Frame
+Ladder
+Scaffolding
+Iron Bars
+Chain
+Cobweb
+Monster Spawner
+End Crystal
+Nether Star
+Beacon
+Nautilus Shell
+Heart of the Sea
+Conduit
+End Rod
+Torch
+Soul Torch
+Lantern
+Soul Lantern
+Campfire
+Soul Campfire
+Redstone Torch
+Redstone Repeater
+Redstone Comparator
+Lever
+Hopper
+Observer
+Dispenser
+Dropper
+Crafter
+Piston
+Sticky Piston
+Note Block
+TNT
+Redstone Lamp
+Daylight Detector
+Tripwire Hook
+Lightning Rod
+Target
+Rail
+Powered Rail
+Detector Rail
+Activator Rail
+Minecart
+Minecart with Chest
+Minecart with Hopper
+Minecart with Furnace
+Minecart with TNT
+Minecart with Command Block
+Sculk Vein
+Sculk
+Sculk Sensor
+Calibrated Sculk Sensor
+Sculk Catalyst
+Sculk Shrieker
+Red Mushroom
+Brown Mushroom
+Red Mushroom Block
+Brown Mushroom Block
+Mushroom Stem
+Oak Sapling
+Birch Sapling
+Spruce Sapling
+Jungle Sapling
+Dark Oak Sapling
+Acacia Sapling
+Mangrove Propagule
+Cherry Sapling
+Pale Oak Sapling
+Oak Leaves
+Birch Leaves
+Spruce Leaves
+Jungle Leaves
+Dark Oak Leaves
+Acacia Leaves
+Mangrove Leaves
+Cherry Leaves
+Pale Oak Leaves
+Azalea Leaves
+Flowering Azalea Leaves
+Leaf Litter
+Dandelion
+Poppy
+Blue Orchid
+Allium
+Azure Bluet
+Red Tulip
+Orange Tulip
+White Tulip
+Pink Tulip
+Oxeye Daisy
+Cornflower
+Lily of the Valley
+Open Eyeblossom
+Closed Eyeblossom
+Wither Rose
+Sunflower
+Peony
+Lilac
+Rose Bush
+Pink Petals
+Wildflowers
+Short Grass
+Tall Grass
+Fern
+Large Fern
+Bush
+Firefly Bush
+Short Dry Grass
+Tall Dry Grass
+Dead Bush
+Cactus Flower
+Cactus
+Sugar Cane
+Bamboo
+Lily Pad
+Vines
+Sweet Berries
+Glow Berries
+Moss Block
+Moss Carpet
+Small Dripleaf
+Big Dripleaf
+Azalea
+Flowering Azalea
+Spore Blossom
+Pale Moss Block
+Pale Moss Carpet
+Pale Hanging Moss
+Hanging Roots
+Mangrove Roots
+Muddy Mangrove Roots
+Glow Lichen
+Seagrass
+Sea Pickle
+Kelp
+Dried Kelp
+Dried Kelp Block
+Tube Coral Block
+Brain Coral Block
+Bubble Coral Block
+Fire Coral Block
+Horn Coral Block
+Dead Tube Coral Block
+Dead Brain Coral Block
+Dead Bubble Coral Block
+Dead Fire Coral Block
+Dead Horn Coral Block
+Tube Coral
+Brain Coral
+Bubble Coral
+Fire Coral
+Horn Coral
+Dead Tube Coral
+Dead Brain Coral
+Dead Bubble Coral
+Dead Fire Coral
+Dead Horn Coral
+Tube Coral Fan
+Brain Coral Fan
+Bubble Coral Fan
+Fire Coral Fan
+Horn Coral Fan
+Dead Tube Coral Fan
+Dead Brain Coral Fan
+Dead Bubble Coral Fan
+Dead Fire Coral Fan
+Dead Horn Coral Fan
+Torchflower Seeds
+Torchflower
+Pitcher Pod
+Pitcher Plant
+Wheat Seeds
+Wheat
+Hay Bale
+Beetroot Seeds
+Beetroot
+Carrot
+Golden Carrot
+Potato
+Baked Potato
+Poisonous Potato
+Pumpkin Seeds
+Pumpkin
+Carved Pumpkin
+Jack o Lantern
+Melon Seeds
+Melon
+Melon Slice
+Glistering Melon Slice
+Cocoa Beans
+Apple
+Golden Apple
+Enchanted Golden Apple
+Bread
+Pumpkin Pie
+Cookie
+Cake
+Raw Rabbit
+Cooked Rabbit
+Raw Mutton
+Cooked Mutton
+Raw Chicken
+Cooked Chicken
+Raw Porkchop
+Cooked Porkchop
+Raw Beef
+Steak
+Raw Cod
+Cooked Cod
+Raw Salmon
+Cooked Salmon
+Tropical Fish
+Pufferfish
+Bowl
+Mushroom Stew
+Rabbit Stew
+Beetroot Soup
+Suspicious Stew
+Suspicious Stew Blindness
+Suspicious Stew Fire Resistance
+Suspicious Stew Jump Boost
+Suspicious Stew Night Vision
+Suspicious Stew Nausea
+Suspicious Stew Poison
+Suspicious Stew Regeneration
+Suspicious Stew Saturation
+Suspicious Stew Weakness
+Suspicious Stew Wither
+Leather
+Rabbit Hide
+Rabbit's Foot
+Ink Sac
+Glow Ink Sac
+Feather
+Egg
+Blue Egg
+Brown Egg
+Frogspawn
+Armadillo Scute
+Scute
+Turtle Egg
+Sniffer Egg
+Honey Bottle
+Honey Block
+Honeycomb
+Honeycomb Block
+Slime Ball
+Slime Block
+Pearlescent Froglight
+Verdant Froglight
+Ochre Froglight
+String
+Rotten Flesh
+Arrow
+Uncraftable Tipped Arrow
+Arrow of Splashing
+Tipped Arrow Awkward
+Tipped Arrow Mundane
+Tipped Arrow Thick
+Arrow of Healing
+Arrow of Healing Strong
+Arrow of Regeneration
+Arrow of Regeneration Long
+Arrow of Regeneration Strong
+Arrow of Strength
+Arrow of Strength Long
+Arrow of Strength Strong
+Arrow of Swiftness
+Arrow of Swiftness Long
+Arrow of Swiftness Strong
+Arrow of Leaping
+Arrow of Leaping Long
+Arrow of Leaping Strong
+Arrow of Luck
+Arrow of Night Vision
+Arrow of Night Vision Long
+Arrow of Invisibility
+Arrow of Invisibility Long
+Arrow of Water Breathing
+Arrow of Water Breathing Long
+Arrow of Fire Resistance
+Arrow of Fire Resistance Long
+Arrow of Slow Falling
+Arrow of Slow Falling Long
+Arrow of the Turtle Master
+Arrow of the Turtle Master Long
+Arrow of the Turtle Master Strong
+Arrow of Harming
+Arrow of Harming Strong
+Arrow of Poison
+Arrow of Poison Long
+Arrow of Poison Strong
+Arrow of Weakness
+Arrow of Weakness Long
+Arrow of Slowness
+Arrow of Slowness Long
+Arrow of Slowness Strong
+Arrow of Infestation
+Arrow of Oozing
+Arrow of Weaving
+Arrow of Wind Charging
+Spectral Arrow
+Bone
+Bone Meal
+Bone Block
+Gunpowder
+Sugar
+Spider Eye
+Fermented Spider Eye
+Ender Pearl
+Eye of Ender
+Shulker Shell
+Blaze Rod
+Blaze Powder
+Magma Cream
+Breeze Rod
+Wind Charge
+Ghast Tear
+Dried Ghast
+Phantom Membrane
+Player Head
+Wither Skeleton Skull
+Zombie Head
+Skeleton Skull
+Creeper Head
+Piglin Head
+Dragon Head
+Dragon Egg
+Goat Horn
+Goat Horn Ponder
+Goat Horn Sing
+Goat Horn Seek
+Goat Horn Feel
+Goat Horn Admire
+Goat Horn Call
+Goat Horn Yearn
+Goat Horn Dream
+Music Disc C418 13
+Music Disc C418 Cat
+Music Disc C418 Blocks
+Music Disc C418 Chirp
+Music Disc C418 Far
+Music Disc C418 Mall
+Music Disc C418 Mellohi
+Music Disc C418 Stal
+Music Disc C418 Strad
+Music Disc C418 Ward
+Music Disc C418 11
+Music Disc C418 Wait
+Music Disc Lena Raine Pigstep
+Music Disc Lena Raine Otherside
+Music Disc Samuel Åberg 5
+Music Disc Aaron Cherof Relic
+Music Disc Aaron Cherof Precipice
+Music Disc Lena Raine Creator
+Music Disc Lena Raine Creator Music Box
+Music Disc Amos Roddy Tears
+Music Disc Hyper Potions Lava Chicken
+Disc Fragment
+Echo Shard
+Stick
+Charcoal
+Fire Charge
+Paper
+Book
+Enchanted Book
+Enchanted Book Mending
+Enchanted Book Unbreaking I
+Enchanted Book Unbreaking II
+Enchanted Book Unbreaking III
+Enchanted Book Protection I
+Enchanted Book Protection II
+Enchanted Book Protection III
+Enchanted Book Protection IV
+Enchanted Book Blast Protection I
+Enchanted Book Blast Protection II
+Enchanted Book Blast Protection III
+Enchanted Book Blast Protection IV
+Enchanted Book Fire Protection I
+Enchanted Book Fire Protection II
+Enchanted Book Fire Protection III
+Enchanted Book Fire Protection IV
+Enchanted Book Projectile Protection I
+Enchanted Book Projectile Protection II
+Enchanted Book Projectile Protection III
+Enchanted Book Projectile Protection IV
+Enchanted Book Thorns I
+Enchanted Book Thorns II
+Enchanted Book Thorns III
+Enchanted Book Respiration I
+Enchanted Book Respiration II
+Enchanted Book Respiration III
+Enchanted Book Aqua Affinity
+Enchanted Book Swift Sneak I
+Enchanted Book Swift Sneak II
+Enchanted Book Swift Sneak III
+Enchanted Book Feather Falling I
+Enchanted Book Feather Falling II
+Enchanted Book Feather Falling III
+Enchanted Book Feather Falling IV
+Enchanted Book Soul Speed I
+Enchanted Book Soul Speed II
+Enchanted Book Soul Speed III
+Enchanted Book Depth Strider I
+Enchanted Book Depth Strider II
+Enchanted Book Depth Strider III
+Enchanted Book Frost Walker I
+Enchanted Book Frost Walker II
+Enchanted Book Sharpness I
+Enchanted Book Sharpness II
+Enchanted Book Sharpness III
+Enchanted Book Sharpness IV
+Enchanted Book Sharpness V
+Enchanted Book Smite I
+Enchanted Book Smite II
+Enchanted Book Smite III
+Enchanted Book Smite IV
+Enchanted Book Smite V
+Enchanted Book Bane of Arthropods I
+Enchanted Book Bane of Arthropods II
+Enchanted Book Bane of Arthropods III
+Enchanted Book Bane of Arthropods IV
+Enchanted Book Bane of Arthropods V
+Enchanted Book Looting I
+Enchanted Book Looting II
+Enchanted Book Looting III
+Enchanted Book Sweeping Edge I
+Enchanted Book Sweeping Edge II
+Enchanted Book Sweeping Edge III
+Enchanted Book Fire Aspect I
+Enchanted Book Fire Aspect II
+Enchanted Book Knockback I
+Enchanted Book Knockback II
+Enchanted Book Efficiency I
+Enchanted Book Efficiency II
+Enchanted Book Efficiency III
+Enchanted Book Efficiency IV
+Enchanted Book Efficiency V
+Enchanted Book Fortune I
+Enchanted Book Fortune II
+Enchanted Book Fortune III
+Enchanted Book Silk Touch
+Enchanted Book Power I
+Enchanted Book Power II
+Enchanted Book Power III
+Enchanted Book Power IV
+Enchanted Book Power V
+Enchanted Book Punch I
+Enchanted Book Punch II
+Enchanted Book Flame
+Enchanted Book Infinity
+Enchanted Book Piercing I
+Enchanted Book Piercing II
+Enchanted Book Piercing III
+Enchanted Book Piercing IV
+Enchanted Book Quick Charge I
+Enchanted Book Quick Charge II
+Enchanted Book Quick Charge III
+Enchanted Book Multishot
+Enchanted Book Impaling I
+Enchanted Book Impaling II
+Enchanted Book Impaling III
+Enchanted Book Impaling IV
+Enchanted Book Impaling V
+Enchanted Book Riptide I
+Enchanted Book Riptide II
+Enchanted Book Riptide III
+Enchanted Book Loyalty I
+Enchanted Book Loyalty II
+Enchanted Book Loyalty III
+Enchanted Book Channeling
+Enchanted Book Density I
+Enchanted Book Density II
+Enchanted Book Density III
+Enchanted Book Density IV
+Enchanted Book Density V
+Enchanted Book Breach I
+Enchanted Book Breach II
+Enchanted Book Breach III
+Enchanted Book Breach IV
+Enchanted Book Wind Burst I
+Enchanted Book Wind Burst II
+Enchanted Book Wind Burst III
+Enchanted Book Luck of the Sea I
+Enchanted Book Luck of the Sea II
+Enchanted Book Luck of the Sea III
+Enchanted Book Lure I
+Enchanted Book Lure II
+Enchanted Book Lure III
+Enchanted Book Curse of Binding
+Enchanted Book Curse of Vanishing
+Bookshelf
+Chiseled Bookshelf
+Book and Quill
+Written Book
+Knowledge Book
+Empty Map
+Map
+Thing Banner Pattern
+Skull Charge Banner Pattern
+Creeper Charge Banner Pattern
+Flower Charge Banner Pattern
+Globe Banner Pattern
+Bordure Indented Banner Pattern
+Field Masoned Banner Pattern
+Snout Banner Pattern
+Flow Banner Pattern
+Guster Banner Pattern
+Angler Pottery Sherd
+Archer Pottery Sherd
+Arms Up Pottery Sherd
+Blade Pottery Sherd
+Brewer Pottery Sherd
+Burn Pottery Sherd
+Danger Pottery Sherd
+Explorer Pottery Sherd
+Friend Pottery Sherd
+Flow Pottery Sherd
+Guster Pottery Sherd
+Heart Pottery Sherd
+Heartbreak Pottery Sherd
+Howl Pottery Sherd
+Miner Pottery Sherd
+Mourner Pottery Sherd
+Plenty Pottery Sherd
+Prize Pottery Sherd
+Scrape Pottery Sherd
+Sheaf Pottery Sherd
+Shelter Pottery Sherd
+Skull Pottery Sherd
+Snort Pottery Sherd
+Netherite Upgrade
+Bolt Armor Trim
+Coast Armor Trim
+Dune Armor Trim
+Eye Armor Trim
+Flow Armor Trim
+Host Armor Trim
+Raiser Armor Trim
+Rib Armor Trim
+Sentry Armor Trim
+Shaper Armor Trim
+Silence Armor Trim
+Snout Armor Trim
+Spire Armor Trim
+Tide Armor Trim
+Vex Armor Trim
+Ward Armor Trim
+Wayfinder Armor Trim
+Wild Armor Trim
+Firework Star
+Firework Rocket
+Firework Rocket Flight Duration 1
+Firework Rocket Flight Duration 2
+Firework Rocket Flight Duration 3
+Glass Bottle
+Bottle o Enchanting
+Ominous Bottle Bad Omen
+Ominous Bottle Bad Omen II
+Ominous Bottle Bad Omen III
+Ominous Bottle Bad Omen IV
+Ominous Bottle Bad Omen V
+Dragon's Breath
+Water Bottle
+Uncraftable Potion
+Awkward Potion
+Mundane Potion
+Thick Potion
+Potion of Healing
+Potion of Healing Strong
+Potion of Regeneration
+Potion of Regeneration Long
+Potion of Regeneration Strong
+Potion of Strength
+Potion of Strength Long
+Potion of Strength Strong
+Potion of Swiftness
+Potion of Swiftness Long
+Potion of Swiftness Strong
+Potion of Leaping
+Potion of Leaping Long
+Potion of Leaping Strong
+Potion of Luck
+Potion of Night Vision
+Potion of Night Vision Long
+Potion of Invisibility
+Potion of Invisibility Long
+Potion of Water Breathing
+Potion of Water Breathing Long
+Potion of Fire Resistance
+Potion of Fire Resistance Long
+Potion of Slow Falling
+Potion of Slow Falling Long
+Potion of the Turtle Master
+Potion of the Turtle Master Long
+Potion of the Turtle Master Strong
+Potion of Harming
+Potion of Harming Strong
+Potion of Poison
+Potion of Poison Long
+Potion of Poison Strong
+Potion of Weakness
+Potion of Weakness Long
+Potion of Slowness
+Potion of Slowness Long
+Potion of Slowness Strong
+Potion of Infestation
+Potion of Oozing
+Potion of Weaving
+Potion of Wind Charging
+Splash Water Bottle
+Splash Uncraftable Potion
+Awkward Splash Potion
+Mundane Splash Potion
+Thick Splash Potion
+Splash Potion of Healing
+Splash Potion of Healing Strong
+Splash Potion of Regeneration
+Splash Potion of Regeneration Long
+Splash Potion of Regeneration Strong
+Splash Potion of Strength
+Splash Potion of Strength Long
+Splash Potion of Strength Strong
+Splash Potion of Swiftness
+Splash Potion of Swiftness Long
+Splash Potion of Swiftness Strong
+Splash Potion of Leaping
+Splash Potion of Leaping Long
+Splash Potion of Leaping Strong
+Splash Potion of Luck
+Splash Potion of Night Vision
+Splash Potion of Night Vision Long
+Splash Potion of Invisibility
+Splash Potion of Invisibility Long
+Splash Potion of Water Breathing
+Splash Potion of Water Breathing Long
+Splash Potion of Fire Resistance
+Splash Potion of Fire Resistance Long
+Splash Potion of Slow Falling
+Splash Potion of Slow Falling Long
+Splash Potion of the Turtle Master
+Splash Potion of the Turtle Master Long
+Splash Potion of the Turtle Master Strong
+Splash Potion of Harming
+Splash Potion of Harming Strong
+Splash Potion of Poison
+Splash Potion of Poison Long
+Splash Potion of Poison Strong
+Splash Potion of Weakness
+Splash Potion of Weakness Long
+Splash Potion of Slowness
+Splash Potion of Slowness Long
+Splash Potion of Slowness Strong
+Splash Potion of Infestation
+Splash Potion of Oozing
+Splash Potion of Weaving
+Splash Potion of Wind Charging
+Lingering Water Bottle
+Lingering Uncraftable Potion
+Awkward Lingering Potion
+Mundane Lingering Potion
+Thick Lingering Potion
+Lingering Potion of Healing
+Lingering Potion of Healing Strong
+Lingering Potion of Regeneration
+Lingering Potion of Regeneration Long
+Lingering Potion of Regeneration Strong
+Lingering Potion of Strength
+Lingering Potion of Strength Long
+Lingering Potion of Strength Strong
+Lingering Potion of Swiftness
+Lingering Potion of Swiftness Long
+Lingering Potion of Swiftness Strong
+Lingering Potion of Leaping
+Lingering Potion of Leaping Long
+Lingering Potion of Leaping Strong
+Lingering Potion of Luck
+Lingering Potion of Night Vision
+Lingering Potion of Night Vision Long
+Lingering Potion of Invisibility
+Lingering Potion of Invisibility Long
+Lingering Potion of Water Breathing
+Lingering Potion of Water Breathing Long
+Lingering Potion of Fire Resistance
+Lingering Potion of Fire Resistance Long
+Lingering Potion of Slow Falling
+Lingering Potion of Slow Falling Long
+Lingering Potion of the Turtle Master
+Lingering Potion of the Turtle Master Long
+Lingering Potion of the Turtle Master Strong
+Lingering Potion of Harming
+Lingering Potion of Harming Strong
+Lingering Potion of Poison
+Lingering Potion of Poison Long
+Lingering Potion of Poison Strong
+Lingering Potion of Weakness
+Lingering Potion of Weakness Long
+Lingering Potion of Slowness
+Lingering Potion of Slowness Long
+Lingering Potion of Slowness Strong
+Lingering Potion of Infestation
+Lingering Potion of Oozing
+Lingering Potion of Weaving
+Lingering Potion of Wind Charging
+Saddle
+Leather Horse Armor
+Iron Horse Armor
+Golden Horse Armor
+Diamond Horse Armor
+Wolf Armor
+Bucket
+Water Bucket
+Cod Bucket
+Salmon Bucket
+Tropical Fish Bucket
+Pufferfish Bucket
+Axolotl Bucket
+Tadpole Bucket
+Lava Bucket
+Milk Bucket
+Powder Snow Bucket
+Flint and Steel
+Shears
+Compass
+Recovery Compass
+Clock
+Spyglass
+Brush
+Lead
+Name Tag
+Totem of Undying
+Fishing Rod
+Carrot on a Stick
+Warped Fungus on a Stick
+Bow
+Crossbow
+Shield
+Mace
+Trident
+Turtle Shell
+Elytra
+Wooden Sword
+Stone Sword
+Iron Sword
+Golden Sword
+Diamond Sword
+Netherite Sword
+Wooden Pickaxe
+Stone Pickaxe
+Iron Pickaxe
+Golden Pickaxe
+Diamond Pickaxe
+Netherite Pickaxe
+Wooden Axe
+Stone Axe
+Iron Axe
+Golden Axe
+Diamond Axe
+Netherite Axe
+Wooden Shovel
+Stone Shovel
+Iron Shovel
+Golden Shovel
+Diamond Shovel
+Netherite Shovel
+Wooden Hoe
+Stone Hoe
+Iron Hoe
+Golden Hoe
+Diamond Hoe
+Netherite Hoe
+Leather Cap
+Chainmail Helmet
+Iron Helmet
+Golden Helmet
+Diamond Helmet
+Netherite Helmet
+Leather Tunic
+Chainmail Chestplate
+Iron Chestplate
+Golden Chestplate
+Diamond Chestplate
+Netherite Chestplate
+Leather Pants
+Chainmail Leggings
+Iron Leggings
+Golden Leggings
+Diamond Leggings
+Netherite Leggings
+Leather Boots
+Chainmail Boots
+Iron Boots
+Golden Boots
+Diamond Boots
+Netherite Boots
+Debug Stick
+Command Block
+Chain Command Block
+Repeating Command Block
+Test Instance Block
+Test Block Start
+Test Block Log
+Test Block Fail
+Test Block Accept
+Structure Block
+Jigsaw Block
+Structure Void
+Barrier
+Light 0
+Light 1
+Light 2
+Light 3
+Light 4
+Light 5
+Light 6
+Light 7
+Light 8
+Light 9
+Light 10
+Light 11
+Light 12
+Light 13
+Light 14
+Light 15
+Allay Spawn Egg
+Armadillo Spawn Egg
+Axolotl Spawn Egg
+Bat Spawn Egg
+Bee Spawn Egg
+Blaze Spawn Egg
+Bogged Spawn Egg
+Breeze Spawn Egg
+Camel Spawn Egg
+Cat Spawn Egg
+Cave Spider Spawn Egg
+Chicken Spawn Egg
+Chicken Jockey
+Cod Spawn Egg
+Cow Spawn Egg
+Creaking Spawn Egg
+Creeper Spawn Egg
+Dolphin Spawn Egg
+Donkey Spawn Egg
+Drowned Spawn Egg
+Elder Guardian Spawn Egg
+Ender Dragon Spawn Egg
+Enderman Spawn Egg
+Endermite Spawn Egg
+Evoker Spawn Egg
+Fox Spawn Egg
+Frog Spawn Egg
+Ghast Spawn Egg
+Glow Squid Spawn Egg
+Goat Spawn Egg
+Guardian Spawn Egg
+Happy Ghast Spawn Egg
+Hoglin Spawn Egg
+Horse Spawn Egg
+Husk Spawn Egg
+Iron Golem Spawn Egg
+Llama Spawn Egg
+Magma Cube Spawn Egg
+Mooshroom Spawn Egg
+Mule Spawn Egg
+Ocelot Spawn Egg
+Panda Spawn Egg
+Parrot Spawn Egg
+Phantom Spawn Egg
+Pig Spawn Egg
+Piglin Spawn Egg
+Piglin Brute Spawn Egg
+Pillager Spawn Egg
+Polar Bear Spawn Egg
+Pufferfish Spawn Egg
+Rabbit Spawn Egg
+Ravager Spawn Egg
+Salmon Spawn Egg
+Sheep Spawn Egg
+Shulker Spawn Egg
+Silverfish Spawn Egg
+Skeleton Spawn Egg
+Skeleton Horse Spawn Egg
+Slime Spawn Egg
+Sniffer Spawn Egg
+Snow Golem Spawn Egg
+Spider Spawn Egg
+Squid Spawn Egg
+Stray Spawn Egg
+Strider Spawn Egg
+Tadpole Spawn Egg
+Trader Llama Spawn Egg
+Tropical Fish Spawn Egg
+Turtle Spawn Egg
+Vex Spawn Egg
+Villager Spawn Egg
+Vindicator Spawn Egg
+Wandering Trader Spawn Egg
+Warden Spawn Egg
+Witch Spawn Egg
+Wither Spawn Egg
+Wither Skeleton Spawn Egg
+Wolf Spawn Egg
+Zoglin Spawn Egg
+Zombie Spawn Egg
+Zombie Horse Spawn Egg
+Zombie Villager Spawn Egg
+Zombified Piglin Spawn Egg
