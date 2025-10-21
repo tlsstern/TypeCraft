@@ -25,7 +25,7 @@ class TypingTest {
         this.timer = null;
 
         this.currentText = '';
-        this.charsPerLine = 82;
+        this.charsPerLine = 80;
         this.updateCharsPerLine();
         this.statsTimer = null;
         this.themeSelect = document.getElementById('themeSelect');
@@ -289,7 +289,7 @@ class TypingTest {
             return;
         }
 
-        if (key === currentChar) {
+        if (key.toLowerCase() === currentChar.toLowerCase()) {
             this.correctChars++;
         } else {
             this.mistakes.add(this.currentIndex);
@@ -317,7 +317,7 @@ class TypingTest {
         let currentLine = '';
         
         for (let word of words) {
-            if (currentLine.length === 0 || (currentLine + ' ' + word).length <= this.charsPerLine) {
+            if (currentLine.length == 0 || (currentLine + ' ' + word).length <= this.charsPerLine) {
                 currentLine += (currentLine.length > 0 ? ' ' : '') + word;
             } else {
                 lines.push(currentLine);
@@ -329,7 +329,7 @@ class TypingTest {
             }
         }
         
-        if (currentLine && lines.length < 5) {
+        if (currentLine && lines.length < 4) {
             lines.push(currentLine);
         }
 
