@@ -1,6 +1,6 @@
 class TypingTest {
     constructor() {
-        this.words = []; 
+        this.words = [];
         this.textDisplay = document.getElementById('text-display');
         this.wpmDisplay = document.getElementById('wpm');
         this.accuracyDisplay = document.getElementById('accuracy');
@@ -60,7 +60,7 @@ class TypingTest {
         this.timeDisplay.textContent = this.timeLimit + 's';
 
         this.initializeEventListeners();
-        
+
         this.initializeTest();
 
         this.applyMinecraftTheme();
@@ -90,7 +90,7 @@ class TypingTest {
         this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
         this.virtualKeyboard = document.getElementById('virtualKeyboard');
         this.mobileInput = document.getElementById('mobileInput');
-        
+
         if (this.isMobile) {
             this.initializeMobileSupport();
         }
@@ -109,12 +109,12 @@ class TypingTest {
 
     async initializeTest() {
         this.textDisplay.innerHTML = '<span class="loading-text">Loading text...</span>';
-        
+
         await this.fetchSourceText();
 
         this.generateInitialText();
     }
-    
+
     async fetchSourceText() {
         try {
             const response = await fetch('mcitems.txt');
@@ -122,9 +122,9 @@ class TypingTest {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const text = await response.text();
-            
+
             this.sentences = text.split('\n').map(s => s.trim()).filter(s => s.length > 0);
-            
+
             this.words = this.sentences.join(' ').split(/\s+/).filter(w => w.length > 0);
 
         } catch (error) {
@@ -139,8 +139,8 @@ class TypingTest {
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Tab') {
                 e.preventDefault();
-                this.restartBtn.focus();    
-                
+                this.restartBtn.focus();
+
                 return;
             }
 
@@ -178,9 +178,9 @@ class TypingTest {
 
         document.addEventListener('keypress', (e) => {
             if (this.resultsModal.style.display === 'flex') return;
-            
+
             if (!this.isTestActive) return;
-            
+
             if (e.key.length === 1) {
                 this.checkCharacter(e.key);
             }
@@ -218,10 +218,10 @@ class TypingTest {
         } else {
             this.currentText = this.generateWords(100).join(' ');
         }
-        
+
         this.renderText();
     }
-    
+
     generateWords(count) {
         if (this.sentences && this.sentences.length > 0) {
             return [this.sentences[Math.floor(Math.random() * this.sentences.length)]];
@@ -232,14 +232,14 @@ class TypingTest {
                 do {
                     newWord = this.words[Math.floor(Math.random() * this.words.length)];
                 } while (newWord === this.lastWord);
-                
+
                 words.push(newWord);
                 this.lastWord = newWord;
             }
             return words;
         }
     }
-    
+
 
     checkCharacter(key) {
         if (!this.isTestActive || this.resultsModal.style.display === 'flex') return;
@@ -252,11 +252,10 @@ class TypingTest {
                     this.correctChars++;
                     this.currentIndex++;
                     this.totalChars++;
-                    // No sound for space
                 } else {
                     let nextSpaceIndex = this.currentText.indexOf(' ', this.currentIndex);
                     if (nextSpaceIndex === -1) {
-                         nextSpaceIndex = this.currentText.length;
+                        nextSpaceIndex = this.currentText.length;
                     }
 
                     while (this.currentIndex < nextSpaceIndex) {
@@ -266,10 +265,9 @@ class TypingTest {
                     }
 
                     if (nextSpaceIndex < this.currentText.length) {
-                       this.currentIndex++;
-                       this.totalChars++;
+                        this.currentIndex++;
+                        this.totalChars++;
                     }
-                    // No sound for incorrect space either
                 }
 
                 this.renderText();
@@ -280,13 +278,11 @@ class TypingTest {
 
         if (key.toLowerCase() === currentChar.toLowerCase()) {
             this.correctChars++;
-            // Play typing sound for correct character
             if (window.typeCraftSounds) {
                 window.typeCraftSounds.playType();
             }
         } else {
             this.mistakes.add(this.currentIndex);
-            // Play incorrect sound for wrong character
             if (window.typeCraftSounds) {
                 window.typeCraftSounds.playIncorrect();
             }
@@ -300,44 +296,44 @@ class TypingTest {
         }
 
         if (this.currentIndex >= this.currentText.length - (this.charsPerLine * 2)) {
-            this.currentText += ' ' + this.generateWords(1)[0]; 
+            this.currentText += ' ' + this.generateWords(1)[0];
         }
 
         this.renderText();
         this.updateStats();
     }
-    
-    
+
+
     renderText() {
         const words = this.currentText.split(' ');
         let lines = [];
         let currentLine = '';
-        
+
         for (let word of words) {
             if (currentLine.length == 0 || (currentLine + ' ' + word).length <= this.charsPerLine) {
                 currentLine += (currentLine.length > 0 ? ' ' : '') + word;
             } else {
                 lines.push(currentLine);
                 currentLine = word;
-                
+
                 if (lines.length >= 5) {
                     break;
                 }
             }
         }
-        
+
         if (currentLine && lines.length < 4) {
             lines.push(currentLine);
         }
 
         const allChars = lines.join('\n').split('');
-        
+
         const visibleChars = allChars;
-        
+
         this.textDisplay.innerHTML = visibleChars.map((char, index) => {
             const globalIndex = index;
             let classes = ['char'];
-            
+
             if (globalIndex < this.currentIndex) {
                 if (this.mistakes.has(globalIndex)) {
                     classes.push('incorrect');
@@ -347,18 +343,17 @@ class TypingTest {
             } else if (globalIndex === this.currentIndex) {
                 classes.push('active');
             }
-            
+
             if (char === '\n') {
                 return '<br>';
             }
-            
+
             return `<span class="${classes.join(' ')}">${char}</span>`;
         }).join('');
     }
 
     handleBackspace(isCtrlPressed) {
         if (this.currentIndex > 0) {
-            // Play backspace sound
             if (window.typeCraftSounds) {
                 window.typeCraftSounds.playBackspace();
             }
@@ -406,7 +401,6 @@ class TypingTest {
         this.timer = setInterval(() => this.updateTime(), 1000);
         this.statsTimer = setInterval(() => this.updateStats(), 100);
 
-        // Play start sound
         if (window.typeCraftSounds) {
             window.typeCraftSounds.playStart();
         }
@@ -427,7 +421,7 @@ class TypingTest {
     updateTime() {
         const timeElapsed = Math.floor((new Date() - this.startTime) / 1000);
         const timeLeft = this.timeLimit - timeElapsed;
-        
+
         if (timeLeft <= 0) {
             this.endTest();
         } else {
@@ -437,7 +431,7 @@ class TypingTest {
 
     updateStats() {
         if (!this.startTime || !this.isTestActive) return;
-        
+
         const now = new Date();
         const timeElapsed = (now - this.startTime) / 1000 / 60;
         const wpm = Math.round((this.correctChars / 5) / timeElapsed) || 0;
@@ -459,7 +453,6 @@ class TypingTest {
         clearInterval(this.statsTimer);
         this.isTestActive = false;
 
-        // Play completion sound
         if (window.typeCraftSounds) {
             window.typeCraftSounds.playComplete();
         }
@@ -470,7 +463,6 @@ class TypingTest {
             ? Math.round((this.correctChars / this.totalChars) * 100)
             : 0;
 
-        // Save results to database for authenticated users
         const sessionData = {
             wpm: finalWpm,
             accuracy: finalAccuracy,
@@ -482,7 +474,6 @@ class TypingTest {
             language: 'en'
         };
 
-        // Save to database if user is authenticated
         if (window.supabaseData && !window.authCheck.isGuest()) {
             try {
                 const saveResult = await window.supabaseData.saveTypingSession(sessionData);
@@ -502,7 +493,6 @@ class TypingTest {
     async showResultsModal(finalWpm, finalAccuracy, finalWpmHistory) {
         document.querySelector('.container').classList.add('hide');
 
-        // Load user statistics if authenticated
         let userStats = null;
         if (window.supabaseData && !window.authCheck.isGuest()) {
             try {
@@ -522,7 +512,6 @@ class TypingTest {
             this.correctCharsResult.textContent = this.correctChars;
             this.incorrectCharsResult.textContent = this.totalChars - this.correctChars;
 
-            // Show user statistics section for authenticated users
             const userStatsSection = document.getElementById('userStatsSection');
             if (userStats && userStatsSection) {
                 userStatsSection.style.display = 'block';
@@ -541,19 +530,19 @@ class TypingTest {
             for (let i = 1; i <= 10; i++) {
                 const timePoint = (i / 10) * totalTime;
                 labels.push(i * 10 + '%');
-                
+
                 const closestPoint = finalWpmHistory.reduce((closest, point) => {
                     if (Math.abs(point.time - timePoint) < Math.abs(closest.time - timePoint)) {
                         return point;
                     }
                     return closest;
                 }, finalWpmHistory[0] || { time: 0, wpm: 0 });
-                
+
                 data.push(closestPoint ? closestPoint.wpm : 0);
             }
 
-            const maxWPM = Math.max(...data, 0); 
-            const yAxisMax = Math.ceil(maxWPM / 50) * 50;  
+            const maxWPM = Math.max(...data, 0);
+            const yAxisMax = Math.ceil(maxWPM / 50) * 50;
 
             const ctx = document.getElementById('accuracyGraph').getContext('2d');
             new Chart(ctx, {
@@ -632,7 +621,7 @@ class TypingTest {
                                 color: getComputedStyle(document.documentElement)
                                     .getPropertyValue('--char-color'),
                                 stepSize: Math.ceil(yAxisMax / 8),
-                                callback: function(value) {
+                                callback: function (value) {
                                     return value + ' WPM';
                                 }
                             }
@@ -647,15 +636,15 @@ class TypingTest {
                 }
             });
 
-                this.resultsModal.style.display = 'flex';
-                void this.resultsModal.offsetWidth;
-                this.resultsModal.classList.add('show');
+            this.resultsModal.style.display = 'flex';
+            void this.resultsModal.offsetWidth;
+            this.resultsModal.classList.add('show');
         }, 300);
     }
 
     closeResultsModal() {
         this.resultsModal.classList.remove('show');
-        
+
         setTimeout(() => {
             this.resultsModal.style.display = 'none';
             document.querySelector('.container').classList.remove('hide');
@@ -663,42 +652,35 @@ class TypingTest {
     }
 
     updateUserStatsDisplay(userStats, currentWpm, currentAccuracy) {
-        // Update personal best display
         const pbElement = document.getElementById('personalBest');
         if (pbElement) {
             pbElement.textContent = userStats.top_speed || 0;
         }
 
-        // Update average WPM display
         const avgWpmElement = document.getElementById('averageWpm');
         if (avgWpmElement) {
             avgWpmElement.textContent = Math.round(userStats.average_wpm) || 0;
         }
 
-        // Update average accuracy display
         const avgAccElement = document.getElementById('averageAccuracy');
         if (avgAccElement) {
             avgAccElement.textContent = Math.round(userStats.average_accuracy) || 0;
         }
 
-        // Update total runs display
         const totalRunsElement = document.getElementById('totalRuns');
         if (totalRunsElement) {
             totalRunsElement.textContent = userStats.total_runs || 0;
         }
 
-        // Update rank display if available
         const rankElement = document.getElementById('userRank');
         if (rankElement) {
             rankElement.textContent = userStats.rank ? `#${userStats.rank}` : 'Unranked';
         }
 
-        // Show improvement indicators
         this.showImprovementIndicators(userStats, currentWpm, currentAccuracy);
     }
 
     showImprovementIndicators(userStats, currentWpm, currentAccuracy) {
-        // Show new personal best indicator
         const pbIndicator = document.getElementById('pbIndicator');
         if (pbIndicator && userStats.top_speed) {
             if (currentWpm > userStats.top_speed) {
@@ -709,7 +691,6 @@ class TypingTest {
             }
         }
 
-        // Show above average indicators
         const aboveAvgIndicator = document.getElementById('aboveAvgIndicator');
         if (aboveAvgIndicator && userStats.average_wpm) {
             if (currentWpm > userStats.average_wpm) {
@@ -722,7 +703,6 @@ class TypingTest {
     }
 
     async restartTest() {
-        // Play click sound for restart
         if (window.typeCraftSounds) {
             window.typeCraftSounds.playClick();
         }
@@ -771,10 +751,10 @@ class TypingTest {
 
     recordWPM() {
         const now = new Date();
-        const timeElapsed = (now - this.startTime) / 1000 / 60; 
+        const timeElapsed = (now - this.startTime) / 1000 / 60;
         const currentWPM = Math.round((this.correctChars / 5) / timeElapsed) || 0;
         this.wpmHistory.push({
-            time: timeElapsed * 60, 
+            time: timeElapsed * 60,
             wpm: currentWPM
         });
     }
@@ -785,7 +765,7 @@ class TypingTest {
             if (inputChar && this.isTestActive) {
                 this.checkCharacter(inputChar);
             }
-            this.mobileInput.value = ''; 
+            this.mobileInput.value = '';
         });
 
         this.typingArea.addEventListener('touchstart', () => {
@@ -807,7 +787,7 @@ class TypingTest {
     updateCharsPerLine() {
         const container = document.querySelector('.typing-area');
         const containerWidth = container.clientWidth;
-        const maxChars = 70; 
+        const maxChars = 70;
 
         if (window.innerWidth <= 440) {
             const minWidth = 320;

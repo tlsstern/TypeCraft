@@ -43,7 +43,6 @@ function updateUIForUser(user) {
         `;
   }
 
-  // Show account section in options modal if it exists
   const accountSection = document.getElementById("accountSection");
   const userEmailDisplay = document.getElementById("userEmailDisplay");
   if (accountSection && userEmailDisplay) {

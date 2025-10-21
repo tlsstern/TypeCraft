@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -10,15 +11,18 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/minecraft-4" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/minecraftia" rel="stylesheet">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'><rect x='5' y='5' width='90' height='50' rx='5' fill='%23B8B8B8' stroke='black' stroke-width='4'/><rect x='15' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='28' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='41' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='54' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='67' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='80' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='15' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='28' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='41' y='28' width='20' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='67' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='80' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='15' y='41' width='30' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='50' y='41' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='63' y='41' width='25' height='8' fill='white' stroke='black' stroke-width='2'/></svg>" type="image/svg+xml">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'><rect x='5' y='5' width='90' height='50' rx='5' fill='%23B8B8B8' stroke='black' stroke-width='4'/><rect x='15' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='28' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='41' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='54' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='67' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='80' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='15' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='28' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='41' y='28' width='20' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='67' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='80' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='15' y='41' width='30' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='50' y='41' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='63' y='41' width='25' height='8' fill='white' stroke='black' stroke-width='2'/></svg>"
+        type="image/svg+xml">
 </head>
+
 <body>
     <video id="bg-video" autoplay loop muted>
         <source src="background/background.mp4" type="video/mp4">
     </video>
     <div class="title-screen-content">
         <img class="title-image" src="background/title.png" alt="Title">
-        
+
         <div class="main-menu-buttons">
             <button class="menu-button singleplayer-btn">Singleplayer</button>
             <div class="bottom-row-buttons">
@@ -26,7 +30,7 @@
                 <button class="menu-button quit-btn">Quit Game</button>
             </div>
         </div>
-        
+
         <div class="bottom-left-controls">
             <div id="userDisplay">
                 <button class="sign-in-btn" onclick="window.location.href='login.html'">Sign In</button>
@@ -80,11 +84,11 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="TypeCraftBackend/auth-check.js"></script>
     <script>
-        document.querySelector('.singleplayer-btn').addEventListener('click', function() {
+        document.querySelector('.singleplayer-btn').addEventListener('click', function () {
             window.location.href = 'typing.html';
         });
 
-        document.querySelector('.quit-btn').addEventListener('click', function() {
+        document.querySelector('.quit-btn').addEventListener('click', function () {
             window.close();
         });
 
@@ -124,7 +128,7 @@
         }
 
         // Initialize on page load
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Options Modal Functionality
             const optionsModal = document.getElementById('optionsModal');
             const optionsBtn = document.querySelector('.options-btn');
@@ -136,24 +140,24 @@
                 return;
             }
 
-            optionsBtn.addEventListener('click', function() {
+            optionsBtn.addEventListener('click', function () {
                 loadSettings(); // Reload settings when opening modal
                 optionsModal.style.display = 'flex';
             });
 
-            optionsDoneBtn.addEventListener('click', function() {
+            optionsDoneBtn.addEventListener('click', function () {
                 saveSettings();
                 optionsModal.style.display = 'none';
             });
 
-            optionsResetBtn.addEventListener('click', function() {
+            optionsResetBtn.addEventListener('click', function () {
                 if (confirm('Reset all settings to default?')) {
                     resetSettings();
                 }
             });
 
             // Close modal when clicking outside
-            optionsModal.addEventListener('click', function(e) {
+            optionsModal.addEventListener('click', function (e) {
                 if (e.target === optionsModal) {
                     saveSettings();
                     optionsModal.style.display = 'none';
@@ -162,7 +166,7 @@
 
             // Toggle buttons functionality
             document.querySelectorAll('.toggle-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
+                btn.addEventListener('click', function () {
                     const isEnabled = this.getAttribute('data-enabled') === 'true';
                     this.setAttribute('data-enabled', !isEnabled);
                     this.textContent = !isEnabled ? 'ON' : 'OFF';
@@ -173,7 +177,7 @@
             // Slider value display
             document.querySelectorAll('input[type="range"]').forEach(slider => {
                 const valueDisplay = slider.nextElementSibling;
-                slider.addEventListener('input', function() {
+                slider.addEventListener('input', function () {
                     valueDisplay.textContent = this.value + '%';
                 });
             });
@@ -183,4 +187,5 @@
         });
     </script>
 </body>
+
 </html>
