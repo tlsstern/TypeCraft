@@ -25,7 +25,7 @@ class TypingTest {
         this.timer = null;
 
         this.currentText = '';
-        this.charsPerLine = 80;
+        this.charsPerLine = 70;
         this.updateCharsPerLine();
         this.statsTimer = null;
         this.themeSelect = document.getElementById('themeSelect');
@@ -789,7 +789,7 @@ class TypingTest {
     updateCharsPerLine() {
         const container = document.querySelector('.typing-area');
         const containerWidth = container.clientWidth;
-        const maxChars = 77; 
+        const maxChars = 70; 
 
         if (window.innerWidth <= 440) {
             const minWidth = 320;
