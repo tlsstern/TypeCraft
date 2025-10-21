@@ -105,18 +105,6 @@ class TypingTest {
 
         this.titleElement = document.querySelector('.title h1');
         this.originalTitle = this.titleElement.textContent;
-        
-        document.addEventListener('keydown', (e) => {
-            if (e.getModifierState('CapsLock')) {
-                this.titleElement.textContent = 'CAPSLOCK';
-            }
-        });
-
-        document.addEventListener('keyup', (e) => {
-            if (!e.getModifierState('CapsLock')) {
-                this.titleElement.textContent = this.originalTitle;
-            }
-        });
     }
 
     async initializeTest() {
