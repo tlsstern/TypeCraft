@@ -25,7 +25,7 @@ class TypingTest {
         this.timer = null;
 
         this.currentText = '';
-        this.charsPerLine = 82;
+        this.charsPerLine = 76;
         this.updateCharsPerLine();
         this.statsTimer = null;
         this.themeSelect = document.getElementById('themeSelect');
@@ -133,8 +133,7 @@ class TypingTest {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            const fetchedText = await response.text();
-            const text = fetchedText.toLowerCase();
+            const text = await response.text();
             
             this.sentences = text.split('\n').map(s => s.trim()).filter(s => s.length > 0);
             
@@ -323,7 +322,7 @@ class TypingTest {
                 lines.push(currentLine);
                 currentLine = word;
                 
-                if (lines.length >= 4) {
+                if (lines.length >= 5) {
                     break;
                 }
             }
@@ -685,7 +684,7 @@ class TypingTest {
     updateCharsPerLine() {
         const container = document.querySelector('.typing-area');
         const containerWidth = container.clientWidth;
-        const maxChars = 80; 
+        const maxChars = 77; 
 
         if (window.innerWidth <= 440) {
             const minWidth = 320;
