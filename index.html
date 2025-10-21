@@ -35,6 +35,39 @@
         </div>
     </div>
 
+    <!-- Options Modal -->
+    <div id="optionsModal" class="options-modal">
+        <div class="options-content">
+            <h1 class="options-title">Options</h1>
+
+            <div class="options-sections">
+                <!-- Audio Settings -->
+                <div class="options-section">
+                    <h2 class="section-title">Audio</h2>
+                    <div class="setting-item">
+                        <label for="masterVolume">Master Volume</label>
+                        <div class="slider-container">
+                            <input type="range" id="masterVolume" min="0" max="100" value="70">
+                            <span class="slider-value">70%</span>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <label for="sfxVolume">Sound Effects</label>
+                        <div class="slider-container">
+                            <input type="range" id="sfxVolume" min="0" max="100" value="50">
+                            <span class="slider-value">50%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="options-buttons">
+                <button class="menu-button options-done-btn">Done</button>
+                <button class="menu-button options-reset-btn">Reset to Default</button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="TypeCraftBackend/auth-check.js"></script>
     <script>
@@ -46,9 +79,98 @@
             window.close();
         });
 
-        document.querySelector('.options-btn').addEventListener('click', function() {
-            // Options functionality can be added later
-            console.log('Options clicked');
+        // Define settings functions in global scope
+        function loadSettings() {
+            const settings = JSON.parse(localStorage.getItem('typeCraftSettings')) || {};
+
+            if (settings.masterVolume !== undefined) {
+                document.getElementById('masterVolume').value = settings.masterVolume;
+                document.querySelector('#masterVolume + .slider-value').textContent = settings.masterVolume + '%';
+            }
+            if (settings.sfxVolume !== undefined) {
+                document.getElementById('sfxVolume').value = settings.sfxVolume;
+                document.querySelector('#sfxVolume + .slider-value').textContent = settings.sfxVolume + '%';
+            }
+        }
+
+        // Save settings to localStorage
+        function saveSettings() {
+            const settings = {
+                masterVolume: parseInt(document.getElementById('masterVolume').value),
+                sfxVolume: parseInt(document.getElementById('sfxVolume').value)
+            };
+
+            localStorage.setItem('typeCraftSettings', JSON.stringify(settings));
+        }
+
+        // Reset settings to default
+        function resetSettings() {
+            localStorage.removeItem('typeCraftSettings');
+
+            // Reset UI
+            document.getElementById('masterVolume').value = 70;
+            document.querySelector('#masterVolume + .slider-value').textContent = '70%';
+            document.getElementById('sfxVolume').value = 50;
+            document.querySelector('#sfxVolume + .slider-value').textContent = '50%';
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Options Modal Functionality
+            const optionsModal = document.getElementById('optionsModal');
+            const optionsBtn = document.querySelector('.options-btn');
+            const optionsDoneBtn = document.querySelector('.options-done-btn');
+            const optionsResetBtn = document.querySelector('.options-reset-btn');
+
+            if (!optionsModal || !optionsBtn || !optionsDoneBtn || !optionsResetBtn) {
+                console.error('Options modal elements not found');
+                return;
+            }
+
+            optionsBtn.addEventListener('click', function() {
+                loadSettings(); // Reload settings when opening modal
+                optionsModal.style.display = 'flex';
+            });
+
+            optionsDoneBtn.addEventListener('click', function() {
+                saveSettings();
+                optionsModal.style.display = 'none';
+            });
+
+            optionsResetBtn.addEventListener('click', function() {
+                if (confirm('Reset all settings to default?')) {
+                    resetSettings();
+                }
+            });
+
+            // Close modal when clicking outside
+            optionsModal.addEventListener('click', function(e) {
+                if (e.target === optionsModal) {
+                    saveSettings();
+                    optionsModal.style.display = 'none';
+                }
+            });
+
+            // Toggle buttons functionality
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const isEnabled = this.getAttribute('data-enabled') === 'true';
+                    this.setAttribute('data-enabled', !isEnabled);
+                    this.textContent = !isEnabled ? 'ON' : 'OFF';
+                    this.classList.toggle('disabled', isEnabled);
+                });
+            });
+
+            // Slider value display
+            document.querySelectorAll('input[type="range"]').forEach(slider => {
+                const valueDisplay = slider.nextElementSibling;
+                slider.addEventListener('input', function() {
+                    valueDisplay.textContent = this.value + '%';
+                });
+            });
+
+            // Load settings on page load
+            loadSettings();
         });
     </script>
 </body>

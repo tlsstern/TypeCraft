@@ -252,12 +252,13 @@ class TypingTest {
                     this.correctChars++;
                     this.currentIndex++;
                     this.totalChars++;
+                    // No sound for space
                 } else {
                     let nextSpaceIndex = this.currentText.indexOf(' ', this.currentIndex);
                     if (nextSpaceIndex === -1) {
                          nextSpaceIndex = this.currentText.length;
                     }
-                    
+
                     while (this.currentIndex < nextSpaceIndex) {
                         this.mistakes.add(this.currentIndex);
                         this.currentIndex++;
@@ -268,8 +269,9 @@ class TypingTest {
                        this.currentIndex++;
                        this.totalChars++;
                     }
+                    // No sound for incorrect space either
                 }
-                
+
                 this.renderText();
                 this.updateStats();
             }
@@ -278,8 +280,16 @@ class TypingTest {
 
         if (key.toLowerCase() === currentChar.toLowerCase()) {
             this.correctChars++;
+            // Play typing sound for correct character
+            if (window.typeCraftSounds) {
+                window.typeCraftSounds.playType();
+            }
         } else {
             this.mistakes.add(this.currentIndex);
+            // Play incorrect sound for wrong character
+            if (window.typeCraftSounds) {
+                window.typeCraftSounds.playIncorrect();
+            }
         }
 
         this.currentIndex++;
@@ -348,17 +358,22 @@ class TypingTest {
 
     handleBackspace(isCtrlPressed) {
         if (this.currentIndex > 0) {
+            // Play backspace sound
+            if (window.typeCraftSounds) {
+                window.typeCraftSounds.playBackspace();
+            }
+
             if (isCtrlPressed) {
                 let newIndex = this.currentIndex;
-                
+
                 while (newIndex > 0 && this.currentText[newIndex - 1] === ' ') {
                     newIndex--;
                 }
-                
+
                 while (newIndex > 0 && this.currentText[newIndex - 1] !== ' ') {
                     newIndex--;
                 }
-                
+
                 while (this.currentIndex > newIndex) {
                     this.currentIndex--;
                     if (this.mistakes.has(this.currentIndex)) {
@@ -370,7 +385,7 @@ class TypingTest {
                 }
             } else {
                 this.currentIndex--;
-                
+
                 if (this.mistakes.has(this.currentIndex)) {
                     this.mistakes.delete(this.currentIndex);
                 } else {
@@ -378,25 +393,30 @@ class TypingTest {
                 }
                 this.totalChars--;
             }
-            
+
             this.renderText();
             this.updateStats();
         }
     }
 
     startTest() {
-        if (this.isTestActive) return; 
+        if (this.isTestActive) return;
         this.isTestActive = true;
         this.startTime = new Date();
         this.timer = setInterval(() => this.updateTime(), 1000);
         this.statsTimer = setInterval(() => this.updateStats(), 100);
-        
+
+        // Play start sound
+        if (window.typeCraftSounds) {
+            window.typeCraftSounds.playStart();
+        }
+
         requestAnimationFrame(() => {
             this.statsContainer.classList.add('visible');
         });
-        
+
         this.typingArea.focus();
-        
+
         this.typingArea.setAttribute('tabindex', '-1');
 
         if (this.isMobile) {
@@ -438,6 +458,11 @@ class TypingTest {
         clearInterval(this.timer);
         clearInterval(this.statsTimer);
         this.isTestActive = false;
+
+        // Play completion sound
+        if (window.typeCraftSounds) {
+            window.typeCraftSounds.playComplete();
+        }
 
         const timeElapsed = this.timeLimit / 60;
         const finalWpm = Math.round((this.correctChars / 5) / timeElapsed);
@@ -697,6 +722,11 @@ class TypingTest {
     }
 
     async restartTest() {
+        // Play click sound for restart
+        if (window.typeCraftSounds) {
+            window.typeCraftSounds.playClick();
+        }
+
         this.closeResultsModal();
         clearInterval(this.timer);
         clearInterval(this.statsTimer);
@@ -711,9 +741,9 @@ class TypingTest {
         this.timeDisplay.textContent = this.timeLimit + 's';
         this.wpmDisplay.textContent = '0';
         this.accuracyDisplay.textContent = '0%';
-        
+
         this.statsContainer.classList.remove('visible');
-        
+
         this.generateInitialText();
     }
 
