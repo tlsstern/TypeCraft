@@ -4,7 +4,20 @@ class TypingTest {
         this.textDisplay = document.getElementById('text-display');
         this.wpmDisplay = document.getElementById('wpm');
         this.accuracyDisplay = document.getElementById('accuracy');
+
+        // Handle missing display elements gracefully
+        if (!this.wpmDisplay) {
+            console.warn('WPM display element not found');
+        }
+        if (!this.accuracyDisplay) {
+            console.warn('Accuracy display element not found');
+        }
         this.timeDisplay = document.getElementById('time');
+
+        // Handle missing time display gracefully
+        if (!this.timeDisplay) {
+            console.warn('Time display element not found');
+        }
         this.restartBtn = document.getElementById('restart');
         this.timeSelect = document.getElementById('timeSelect');
         this.resultsModal = document.getElementById('resultsModal');
@@ -15,12 +28,18 @@ class TypingTest {
         this.incorrectCharsResult = document.getElementById('incorrectCharsResult');
         this.playAgainBtn = document.getElementById('playAgainBtn');
 
+        // Handle missing elements gracefully
+        if (!this.timeSelect) {
+            this.timeLimit = 30; // Default to 30 seconds
+        } else {
+            this.timeLimit = parseInt(this.timeSelect.value);
+        }
+
         this.currentIndex = 0;
         this.correctChars = 0;
         this.totalChars = 0;
         this.mistakes = new Set();
         this.startTime = null;
-        this.timeLimit = parseInt(this.timeSelect.value);
         this.isTestActive = false;
         this.timer = null;
 
@@ -35,29 +54,38 @@ class TypingTest {
         const savedTime = localStorage.getItem('selectedTime');
         const savedTheme = localStorage.getItem('selectedTheme');
 
-        if (savedTime) {
+        if (savedTime && this.timeSelect) {
             this.timeSelect.value = savedTime;
             this.timeLimit = parseInt(savedTime);
         }
 
-        if (savedTheme) {
+        if (savedTheme && this.themeSelect) {
             this.themeSelect.value = savedTheme;
         }
         this.applyMinecraftTheme();
 
-        this.timeSelect.addEventListener('change', (e) => {
-            const selectedTime = e.target.value;
-            this.timeLimit = parseInt(selectedTime);
-            localStorage.setItem('selectedTime', selectedTime);
-            this.restartTest();
-        });
+        if (this.timeSelect) {
+            this.timeSelect.addEventListener('change', (e) => {
+                const selectedTime = e.target.value;
+                this.timeLimit = parseInt(selectedTime);
+                localStorage.setItem('selectedTime', selectedTime);
+                this.restartTest();
+            });
+        }
 
-        this.themeSelect.addEventListener('change', (e) => {
-            const selectedTheme = e.target.value;
-            localStorage.setItem('selectedTheme', selectedTheme);
-        });
+        if (this.themeSelect) {
+            this.themeSelect.addEventListener('change', (e) => {
+                const selectedTheme = e.target.value;
+                localStorage.setItem('selectedTheme', selectedTheme);
+            });
+        }
 
-        this.timeDisplay.textContent = this.timeLimit + 's';
+        // Don't create time display overlay in typing area
+
+        const timeDisplayElement = document.getElementById('time');
+        if (timeDisplayElement) {
+            timeDisplayElement.textContent = this.timeLimit + 's';
+        }
 
         this.initializeEventListeners();
         
@@ -101,7 +129,11 @@ class TypingTest {
         });
 
         this.statsContainer = document.querySelector('.stats');
-        this.statsContainer.classList.remove('visible');
+
+        // Handle missing stats container gracefully
+        if (this.statsContainer) {
+            this.statsContainer.classList.remove('visible');
+        }
 
         this.titleElement = document.querySelector('.title h1');
         this.originalTitle = this.titleElement.textContent;
@@ -206,17 +238,21 @@ class TypingTest {
             }
         });
 
-        this.timeSelect.addEventListener('mousedown', (e) => {
-            if (this.isTestActive) {
-                e.preventDefault();
-            }
-        });
+        if (this.timeSelect) {
+            this.timeSelect.addEventListener('mousedown', (e) => {
+                if (this.isTestActive) {
+                    e.preventDefault();
+                }
+            });
+        }
 
-        this.themeSelect.addEventListener('mousedown', (e) => {
-            if (this.isTestActive) {
-                e.preventDefault();
-            }
-        });
+        if (this.themeSelect) {
+            this.themeSelect.addEventListener('mousedown', (e) => {
+                if (this.isTestActive) {
+                    e.preventDefault();
+                }
+            });
+        }
     }
 
 
@@ -403,9 +439,11 @@ class TypingTest {
         this.timer = setInterval(() => this.updateTime(), 1000);
         this.statsTimer = setInterval(() => this.updateStats(), 100);
         
-        requestAnimationFrame(() => {
-            this.statsContainer.classList.add('visible');
-        });
+        if (this.statsContainer) {
+            requestAnimationFrame(() => {
+                this.statsContainer.classList.add('visible');
+            });
+        }
         
         this.typingArea.focus();
         
@@ -419,17 +457,19 @@ class TypingTest {
     updateTime() {
         const timeElapsed = Math.floor((new Date() - this.startTime) / 1000);
         const timeLeft = this.timeLimit - timeElapsed;
-        
+
         if (timeLeft <= 0) {
             this.endTest();
         } else {
-            this.timeDisplay.textContent = timeLeft + 's';
+            if (this.timeDisplay) {
+                this.timeDisplay.textContent = timeLeft + 's';
+            }
         }
     }
 
     updateStats() {
         if (!this.startTime || !this.isTestActive) return;
-        
+
         const now = new Date();
         const timeElapsed = (now - this.startTime) / 1000 / 60;
         const wpm = Math.round((this.correctChars / 5) / timeElapsed) || 0;
@@ -437,8 +477,12 @@ class TypingTest {
             ? Math.round((this.correctChars / this.totalChars) * 100)
             : 0;
 
-        this.wpmDisplay.textContent = wpm;
-        this.accuracyDisplay.textContent = accuracy + '%';
+        if (this.wpmDisplay) {
+            this.wpmDisplay.textContent = wpm;
+        }
+        if (this.accuracyDisplay) {
+            this.accuracyDisplay.textContent = accuracy + '%';
+        }
 
         if (this.isTestActive && (!this.lastWpmUpdate || (now - this.lastWpmUpdate) >= 1000)) {
             this.recordWPM();
@@ -720,11 +764,19 @@ class TypingTest {
         this.isTestActive = false;
         this.wpmHistory = [];
         this.lastWpmUpdate = null;
-        this.timeDisplay.textContent = this.timeLimit + 's';
-        this.wpmDisplay.textContent = '0';
-        this.accuracyDisplay.textContent = '0%';
-        
-        this.statsContainer.classList.remove('visible');
+        if (this.timeDisplay) {
+            this.timeDisplay.textContent = this.timeLimit + 's';
+        }
+        if (this.wpmDisplay) {
+            this.wpmDisplay.textContent = '0';
+        }
+        if (this.accuracyDisplay) {
+            this.accuracyDisplay.textContent = '0%';
+        }
+
+        if (this.statsContainer) {
+            this.statsContainer.classList.remove('visible');
+        }
         
         this.generateInitialText();
     }
