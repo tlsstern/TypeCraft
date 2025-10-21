@@ -133,11 +133,12 @@ class TypingTest {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            const text = await response.text();
+            const fetchedText = await response.text();
+            const text = fetchedText.toLowerCase();
             
             this.sentences = text.split('\n').map(s => s.trim()).filter(s => s.length > 0);
             
-            this.words = this.sentences.join(' ').toLowerCase().split(/\s+/).filter(w => w.length > 0);
+            this.words = this.sentences.join(' ').split(/\s+/).filter(w => w.length > 0);
 
         } catch (error) {
             console.error('Could not load mcitems.txt:', error);
