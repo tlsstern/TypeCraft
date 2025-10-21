@@ -1,33 +1,8 @@
 class TypingTest {
     constructor() {
-        this.words = [
-            "the", "be", "to", "of", "and", "a", "in", "that", "have", "i",
-            "it", "for", "not", "on", "with", "he", "as", "you", "do", "at",
-            "this", "but", "his", "by", "from", "they", "we", "say", "her", "she",
-            "or", "an", "will", "my", "one", "all", "would", "there", "their", "what",
-            "so", "up", "out", "if", "about", "who", "get", "which", "go", "me",
-            "when", "make", "can", "like", "time", "no", "him", "know", "take",
-            "people", "into", "year", "your", "good", "some", "could", "them", "see", "other",
-            "than", "then", "now", "look", "only", "come", "its", "over", "think", "also",
-            "back", "after", "use", "two", "how", "our", "work", "first", "well", "way",
-            "even", "new", "because", "any", "these", "give", "day", "most", "us",
-            "is", "was", "were", "been", "has", "had", "are", "said", "did", "monkey",
-            "each", "under", "name", "very", "through", "form", "much", "great", "before",
-            "where", "must", "child", "last", "right", "old", "too", "does",
-            "tell", "sentence", "set", "three", "air", "play", "small", "end", "put",
-            "home", "read", "hand", "port", "large", "spell", "add", "land", "here", "big",
-            "high", "follow", "act", "why", "ask", "men", "change", "went", "light",
-            "kind", "off", "need", "house", "picture", "try", "again", "animal", "point", "mother",
-            "world", "near", "build", "self", "earth", "father", "head", "stand", "own", "page",
-            "country", "found", "answer", "school", "grow", "study", "still", "learn", "plant",
-            "cover", "food", "sun", "four", "between", "state", "keep", "eye", "never", "let",
-            "thought", "city", "tree", "cross", "farm", "hard", "start", "might", "story", "saw",
-            "far", "sea", "draw", "left", "late", "run", "dont", "while", "press", "close",
-            "night", "real", "life", "few", "north", "book", "carry", "took", "science", "eat",
-            "room", "friend", "began", "idea", "fish", "mountain", "stop", "once", "base", "hear",
-            "horse", "cut", "sure", "watch", "color", "face", "wood", "main", "open", "seem"
-        ];
-        
+        // ... (existing property definitions remain the same) ...
+        this.words = []; // Initialize as empty, will be populated by fetchSourceText
+
         this.textDisplay = document.getElementById('text-display');
         this.wpmDisplay = document.getElementById('wpm');
         this.accuracyDisplay = document.getElementById('accuracy');
@@ -87,7 +62,11 @@ class TypingTest {
         this.timeDisplay.textContent = this.timeLimit + 's';
 
         this.initializeEventListeners();
-        this.generateInitialText();
+        
+        // --- KEY CHANGE: Start the data loading and then initialize text ---
+        this.initializeTest();
+        // -------------------------------------------------------------------
+
         this.applyMinecraftTheme();
 
         this.playAgainBtn.addEventListener('click', () => {
@@ -144,6 +123,50 @@ class TypingTest {
         });
     }
 
+    // --- NEW ASYNCHRONOUS INITIALIZATION METHOD ---
+    async initializeTest() {
+        // Show a loading message while fetching data
+        this.textDisplay.innerHTML = '<span class="loading-text">Loading text...</span>';
+        
+        // Wait for the source text to be fetched and parsed
+        await this.fetchSourceText();
+
+        // Only generate text once 'this.words' is populated
+        this.generateInitialText();
+    }
+    
+    // --- NEW METHOD TO FETCH TEXT FILE ---
+    async fetchSourceText() {
+        try {
+            const response = await fetch('mcitems.txt');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const text = await response.text();
+            
+            // Split the content by newline, filter out empty lines,
+            // and then split each sentence into words.
+            // Note: Since 'mcitems.txt' is guaranteed to have complete sentences on each line,
+            // we will use the lines themselves as the full text source for generation.
+            
+            // To get a list of all words, we join all lines and split by space, 
+            // cleaning up any extra whitespace from the split and filter.
+            this.sentences = text.split('\n').map(s => s.trim()).filter(s => s.length > 0);
+            
+            // For word-based random generation (used in generateWords), 
+            // we populate 'this.words' with all individual words from the file.
+            this.words = this.sentences.join(' ').split(/\s+/).filter(w => w.length > 0);
+
+        } catch (error) {
+            console.error('Could not load mcitems.txt:', error);
+            this.textDisplay.innerHTML = '<span class="error-text">Error loading text source. Check console for details.</span>';
+            // Fallback to a placeholder word list if fetching fails
+            this.words = ["Error", "loading", "text", "source", "please", "check", "mcitems.txt", "file", "and", "path"];
+            this.sentences = [this.words.join(' ')];
+        }
+    }
+
+    // ... (initializeEventListeners remains the same) ...
     initializeEventListeners() {
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Tab') {
@@ -176,7 +199,8 @@ class TypingTest {
                 return;
             }
 
-            if (!this.isTestActive && e.key.length === 1) {
+            // --- IMPORTANT: Only start test if source text is loaded ---
+            if (!this.isTestActive && e.key.length === 1 && this.words.length > 0) {
                 this.startTest();
             }
 
@@ -219,26 +243,122 @@ class TypingTest {
         });
     }
 
+
+    // --- MODIFIED generateInitialText to use sentences or words if sentences fail ---
     generateInitialText() {
-        this.currentText = this.generateWords(100).join(' ');
+        if (this.sentences && this.sentences.length > 0) {
+            // Select a random set of sentences to form the initial text
+            let initialSentences = [];
+            // Use 5 random sentences to ensure enough starting text
+            for (let i = 0; i < 5; i++) {
+                initialSentences.push(this.sentences[Math.floor(Math.random() * this.sentences.length)]);
+            }
+            // Join them with a space
+            this.currentText = initialSentences.join(' ');
+        } else {
+            // Fallback to random word generation if sentences list is empty
+            this.currentText = this.generateWords(100).join(' ');
+        }
+        
         this.renderText();
     }
-
+    
+    // --- MODIFIED generateWords to fetch new sentences instead of random words ---
     generateWords(count) {
-        const words = [];
-        for (let i = 0; i < count; i++) {
-            let newWord;
-            do {
-                newWord = this.words[Math.floor(Math.random() * this.words.length)];
-            } while (newWord === this.lastWord);
-            
-            words.push(newWord);
-            this.lastWord = newWord;
+        if (this.sentences && this.sentences.length > 0) {
+            // If using the sentence structure, generate the next segment by picking a random sentence
+            // The argument 'count' is ignored in this implementation since we fetch a full sentence
+            return [this.sentences[Math.floor(Math.random() * this.sentences.length)]];
+        } else {
+            // Original logic for random word generation (only used as a fallback)
+            const words = [];
+            for (let i = 0; i < count; i++) {
+                let newWord;
+                do {
+                    newWord = this.words[Math.floor(Math.random() * this.words.length)];
+                } while (newWord === this.lastWord);
+                
+                words.push(newWord);
+                this.lastWord = newWord;
+            }
+            return words;
         }
-        return words;
     }
+    
+    // ... (The rest of the class methods remain the same) ...
 
+    checkCharacter(key) {
+        if (!this.isTestActive || this.resultsModal.style.display === 'flex') return;
+
+        const currentChar = this.currentText[this.currentIndex];
+
+        // Handle space key
+        if (key === ' ') {
+            // Only allow space if we've typed at least one character and aren't already at a space
+            if (this.currentIndex > 0 && !this.currentText.slice(0, this.currentIndex).endsWith(' ')) {
+                if (currentChar === ' ') {
+                    // If space is correct, increment correctChars
+                    this.correctChars++;
+                    this.currentIndex++;
+                    this.totalChars++;
+                } else {
+                    // Skip to next word if space is pressed at wrong time
+                    let nextSpaceIndex = this.currentText.indexOf(' ', this.currentIndex);
+                    if (nextSpaceIndex === -1) {
+                         // If no more spaces, mark remaining chars as mistakes and end of current text reached
+                         nextSpaceIndex = this.currentText.length;
+                    }
+                    
+                    // Mark skipped characters as mistakes
+                    while (this.currentIndex < nextSpaceIndex) {
+                        this.mistakes.add(this.currentIndex);
+                        this.currentIndex++;
+                        this.totalChars++;
+                    }
+
+                    // Only move past the space if it exists in the current text
+                    if (nextSpaceIndex < this.currentText.length) {
+                       this.currentIndex++;
+                       this.totalChars++;
+                    }
+                }
+                
+                this.renderText();
+                this.updateStats();
+            }
+            return;
+        }
+
+        // Handle other characters
+        if (key === currentChar) {
+            this.correctChars++;
+        } else {
+            this.mistakes.add(this.currentIndex);
+        }
+
+        this.currentIndex++;
+        this.totalChars++;
+
+        // Vibrate on mobile for feedback (if available)
+        if (this.isMobile && navigator.vibrate) {
+            navigator.vibrate(10);
+        }
+
+        // Add more text if needed
+        // Using 'generateWords' here will fetch a new random sentence
+        if (this.currentIndex >= this.currentText.length - (this.charsPerLine * 2)) {
+            // Generate a single new sentence and append it with a leading space
+            this.currentText += ' ' + this.generateWords(1)[0]; 
+        }
+
+        this.renderText();
+        this.updateStats();
+    }
+    
+    // ... (renderText, handleBackspace, startTest, updateTime, updateStats, endTest, showResultsModal, closeResultsModal, restartTest, applyMinecraftTheme, recordWPM, initializeMobileSupport, updateCharsPerLine remain the same) ...
+    
     renderText() {
+        // ... (The rest of this method remains the same) ...
         const words = this.currentText.split(' ');
         let lines = [];
         let currentLine = '';
@@ -296,6 +416,7 @@ class TypingTest {
     }
 
     handleBackspace(isCtrlPressed) {
+        // ... (The rest of this method remains the same) ...
         if (this.currentIndex > 0) {
             if (isCtrlPressed) {
                 // Find the start of the current word
@@ -313,12 +434,12 @@ class TypingTest {
                 
                 // Delete all characters between newIndex and currentIndex
                 while (this.currentIndex > newIndex) {
-                    if (this.mistakes.has(this.currentIndex - 1)) {
-                        this.mistakes.delete(this.currentIndex - 1);
+                    this.currentIndex--;
+                    if (this.mistakes.has(this.currentIndex)) {
+                        this.mistakes.delete(this.currentIndex);
                     } else {
                         this.correctChars--;
                     }
-                    this.currentIndex--;
                     this.totalChars--;
                 }
             } else {
@@ -338,67 +459,8 @@ class TypingTest {
         }
     }
 
-    checkCharacter(key) {
-        if (!this.isTestActive || this.resultsModal.style.display === 'flex') return;
-
-        const currentChar = this.currentText[this.currentIndex];
-
-        // Handle space key
-        if (key === ' ') {
-            // Only allow space if we've typed at least one character and aren't already at a space
-            if (this.currentIndex > 0 && !this.currentText.slice(0, this.currentIndex).endsWith(' ')) {
-                if (currentChar === ' ') {
-                    // If space is correct, increment correctChars
-                    this.correctChars++;
-                    this.currentIndex++;
-                    this.totalChars++;
-                } else {
-                    // Skip to next word if space is pressed at wrong time
-                    let nextSpaceIndex = this.currentText.indexOf(' ', this.currentIndex);
-                    if (nextSpaceIndex === -1) return;
-                    
-                    // Mark skipped characters as mistakes
-                    while (this.currentIndex < nextSpaceIndex) {
-                        this.mistakes.add(this.currentIndex);
-                        this.currentIndex++;
-                        this.totalChars++;
-                    }
-                    // Move past the space
-                    this.currentIndex++;
-                    this.totalChars++;
-                }
-                
-                this.renderText();
-                this.updateStats();
-            }
-            return;
-        }
-
-        // Handle other characters
-        if (key === currentChar) {
-            this.correctChars++;
-        } else {
-            this.mistakes.add(this.currentIndex);
-        }
-
-        this.currentIndex++;
-        this.totalChars++;
-
-        // Vibrate on mobile for feedback (if available)
-        if (this.isMobile && navigator.vibrate) {
-            navigator.vibrate(10);
-        }
-
-        // Add more text if needed
-        if (this.currentIndex >= this.currentText.length - (this.charsPerLine * 2)) {
-            this.currentText += ' ' + this.generateWords(20).join(' ');
-        }
-
-        this.renderText();
-        this.updateStats();
-    }
-
     startTest() {
+        // ... (The rest of this method remains the same) ...
         if (this.isTestActive) return; // Prevent multiple starts
         
         this.isTestActive = true;
@@ -423,6 +485,7 @@ class TypingTest {
     }
 
     updateTime() {
+        // ... (The rest of this method remains the same) ...
         const timeElapsed = Math.floor((new Date() - this.startTime) / 1000);
         const timeLeft = this.timeLimit - timeElapsed;
         
@@ -434,6 +497,7 @@ class TypingTest {
     }
 
     updateStats() {
+        // ... (The rest of this method remains the same) ...
         if (!this.startTime || !this.isTestActive) return;
         
         const now = new Date();
@@ -454,6 +518,7 @@ class TypingTest {
     }
 
     endTest() {
+        // ... (The rest of this method remains the same) ...
         // Clear all timers immediately
         clearInterval(this.timer);
         clearInterval(this.statsTimer);
@@ -471,6 +536,7 @@ class TypingTest {
     }
 
     showResultsModal(finalWpm, finalAccuracy, finalWpmHistory) {
+        // ... (The rest of this method remains the same) ...
         // Add hide class to container for smooth transition
         document.querySelector('.container').classList.add('hide');
         
@@ -615,6 +681,7 @@ class TypingTest {
     }
 
     closeResultsModal() {
+        // ... (The rest of this method remains the same) ...
         this.resultsModal.classList.remove('show');
         
         // Wait for modal transition before showing container
@@ -624,7 +691,7 @@ class TypingTest {
         }, 400);
     }
 
-    restartTest() {
+    async restartTest() {
         this.closeResultsModal();
         clearInterval(this.timer);
         clearInterval(this.statsTimer);
@@ -643,10 +710,12 @@ class TypingTest {
         // Ensure stats are hidden on restart
         this.statsContainer.classList.remove('visible');
         
+        // Re-generate initial text, which uses the already loaded source
         this.generateInitialText();
     }
 
     applyMinecraftTheme() {
+        // ... (The rest of this method remains the same) ...
         // Apply Minecraft theme colors
         document.documentElement.style.setProperty('--bg-color', 'transparent');
         document.documentElement.style.setProperty('--text-color', '#fff');
@@ -673,6 +742,7 @@ class TypingTest {
 
     // Add this new method to record WPM data points
     recordWPM() {
+        // ... (The rest of this method remains the same) ...
         const now = new Date();
         const timeElapsed = (now - this.startTime) / 1000 / 60; // in minutes
         const currentWPM = Math.round((this.correctChars / 5) / timeElapsed) || 0;
@@ -683,6 +753,7 @@ class TypingTest {
     }
 
     initializeMobileSupport() {
+        // ... (The rest of this method remains the same) ...
         // Handle mobile input
         this.mobileInput.addEventListener('input', (e) => {
             const inputChar = e.data;
@@ -711,6 +782,7 @@ class TypingTest {
     }
 
     updateCharsPerLine() {
+        // ... (The rest of this method remains the same) ...
         const container = document.querySelector('.typing-area');
         const containerWidth = container.clientWidth;
         const maxChars = 77; // Maximum for large screens
@@ -752,4 +824,4 @@ class TypingTest {
 // Remove the separate DOM content loaded event listener for preferences
 document.addEventListener('DOMContentLoaded', () => {
     new TypingTest();
-}); 
+});
