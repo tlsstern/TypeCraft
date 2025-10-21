@@ -1,6 +1,6 @@
 class TypingTest {
   constructor() {
-    this.words = this.getTermsFromFile();
+    this.words = getTermsFromFile();
 
     this.textDisplay = document.getElementById("text-display");
     this.wpmDisplay = document.getElementById("wpm");
@@ -595,31 +595,26 @@ class TypingTest {
     }
   }
 
-    endTest() {
-        
-        clearInterval(this.timer);
-        clearInterval(this.statsTimer);
-        this.isTestActive = false;
-        
-        
-        const timeElapsed = this.timeLimit / 60;
-        const finalWpm = Math.round((this.correctChars / 5) / timeElapsed);
-        const finalAccuracy = this.totalChars > 0 
-            ? Math.round((this.correctChars / this.totalChars) * 100) 
-            : 0;
-        
+  endTest() {
+    clearInterval(this.timer);
+    clearInterval(this.statsTimer);
+    this.isTestActive = false;
 
-        const finalWpmHistory = this.wpmHistory ? [...this.wpmHistory] : [];
-        this.wpmHistory = null; 
-        
-        
-        this.showResultsModal(finalWpm, finalAccuracy, finalWpmHistory);
-    }
+    const timeElapsed = this.timeLimit / 60;
+    const finalWpm = Math.round(this.correctChars / 5 / timeElapsed);
+    const finalAccuracy =
+      this.totalChars > 0
+        ? Math.round((this.correctChars / this.totalChars) * 100)
+        : 0;
 
-    showResultsModal(finalWpm, finalAccuracy, finalWpmHistory) {
+    const finalWpmHistory = this.wpmHistory ? [...this.wpmHistory] : [];
+    this.wpmHistory = null;
 
-        document.querySelector('.container').classList.add('hide');
+    this.showResultsModal(finalWpm, finalAccuracy, finalWpmHistory);
+  }
 
+  showResultsModal(finalWpm, finalAccuracy, finalWpmHistory) {
+    document.querySelector(".container").classList.add("hide");
 
     setTimeout(() => {
       this.wpmResult.textContent = finalWpm;
@@ -629,55 +624,56 @@ class TypingTest {
       this.incorrectCharsResult.textContent =
         this.totalChars - this.correctChars;
 
-            if (window.supabaseData) {
-                window.supabaseData.saveTypingSession({
-                    wpm: finalWpm,
-                    accuracy: finalAccuracy,
-                    totalChars: this.totalChars,
-                    correctChars: this.correctChars,
-                    incorrectChars: this.totalChars - this.correctChars,
-                    timestamp: new Date().toISOString()
-                }).then(result => {
-                    if (result.error) {
-                        console.log('Error saving session:', result.error);
-                    } else {
-                        console.log('Session saved successfully');
-                    }
-                }).catch(error => {
-                    console.log('Failed to save session:', error);
-                });
+      if (window.supabaseData) {
+        window.supabaseData
+          .saveTypingSession({
+            wpm: finalWpm,
+            accuracy: finalAccuracy,
+            totalChars: this.totalChars,
+            correctChars: this.correctChars,
+            incorrectChars: this.totalChars - this.correctChars,
+            timestamp: new Date().toISOString(),
+          })
+          .then((result) => {
+            if (result.error) {
+              console.log("Error saving session:", result.error);
+            } else {
+              console.log("Session saved successfully");
             }
+          })
+          .catch((error) => {
+            console.log("Failed to save session:", error);
+          });
+      }
 
-            
-            const existingChart = Chart.getChart("accuracyGraph");
-            if (existingChart) {
-                existingChart.destroy();
-            }
+      const existingChart = Chart.getChart("accuracyGraph");
+      if (existingChart) {
+        existingChart.destroy();
+      }
 
-            
-            const labels = [];
-            const data = [];
-            const totalTime = this.timeLimit;
+      const labels = [];
+      const data = [];
+      const totalTime = this.timeLimit;
 
-            
-            for (let i = 1; i <= 10; i++) {
-                const timePoint = (i / 10) * totalTime;
-                labels.push(i * 10 + '%');
-                
-                
-                const closestPoint = finalWpmHistory.reduce((closest, point) => {
-                    if (Math.abs(point.time - timePoint) < Math.abs(closest.time - timePoint)) {
-                        return point;
-                    }
-                    return closest;
-                }, finalWpmHistory[0] || { time: 0, wpm: 0 });
-                
-                data.push(closestPoint ? closestPoint.wpm : 0);
-            }
+      for (let i = 1; i <= 10; i++) {
+        const timePoint = (i / 10) * totalTime;
+        labels.push(i * 10 + "%");
 
-            
-            const maxWPM = Math.max(...data, 0);  
-            const yAxisMax = Math.ceil(maxWPM / 50) * 50;  
+        const closestPoint = finalWpmHistory.reduce((closest, point) => {
+          if (
+            Math.abs(point.time - timePoint) <
+            Math.abs(closest.time - timePoint)
+          ) {
+            return point;
+          }
+          return closest;
+        }, finalWpmHistory[0] || { time: 0, wpm: 0 });
+
+        data.push(closestPoint ? closestPoint.wpm : 0);
+      }
+
+      const maxWPM = Math.max(...data, 0);
+      const yAxisMax = Math.ceil(maxWPM / 50) * 50;
 
       const ctx = document.getElementById("accuracyGraph").getContext("2d");
       new Chart(ctx, {

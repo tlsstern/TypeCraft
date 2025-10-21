@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -10,8 +11,11 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'><rect x='5' y='5' width='90' height='50' rx='5' fill='%23B8B8B8' stroke='black' stroke-width='4'/><rect x='15' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='28' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='41' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='54' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='67' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='80' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='15' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='28' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='41' y='28' width='20' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='67' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='80' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='15' y='41' width='30' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='50' y='41' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='63' y='41' width='25' height='8' fill='white' stroke='black' stroke-width='2'/></svg>" type="image/svg+xml">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'><rect x='5' y='5' width='90' height='50' rx='5' fill='%23B8B8B8' stroke='black' stroke-width='4'/><rect x='15' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='28' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='41' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='54' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='67' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='80' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='15' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='28' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='41' y='28' width='20' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='67' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='80' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='15' y='41' width='30' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='50' y='41' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='63' y='41' width='25' height='8' fill='white' stroke='black' stroke-width='2'/></svg>"
+        type="image/svg+xml">
 </head>
+
 <body>
     <div class="container">
         <div class="title">
@@ -66,7 +70,7 @@
             <div class="graph-section">
                 <canvas id="accuracyGraph"></canvas>
             </div>
-            
+
             <div class="stats-container">
                 <div class="stat-card primary">
                     <div class="stat-value" id="wpmResult">0</div>
@@ -101,13 +105,9 @@
     <script src="script.js"></script>
 
     <div class="virtual-keyboard" id="virtualKeyboard">
-        <input type="text" 
-               id="mobileInput" 
-               autocomplete="off" 
-               autocorrect="off" 
-               autocapitalize="off" 
-               spellcheck="false"
-               style="opacity: 0; position: absolute; pointer-events: none;">
+        <input type="text" id="mobileInput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+            style="opacity: 0; position: absolute; pointer-events: none;">
     </div>
 </body>
+
 </html>
