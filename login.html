@@ -63,10 +63,15 @@
 
                         <form id="signupForm">
                             <div class="form-group">
+                                <input type="text" class="form-control" id="signupUsername" name="username" required placeholder="Username" maxlength="20">
+                                <small class="form-text">3-20 characters, letters, numbers, _ and - only</small>
+                            </div>
+                            <div class="form-group">
                                 <input type="email" class="form-control" id="signupEmail" name="email" required placeholder="Email address">
                             </div>
                             <div class="form-group">
                                 <input type="password" class="form-control" id="signupPassword" name="password" required placeholder="Create password">
+                                <small class="form-text">At least 6 characters</small>
                             </div>
                             <button type="submit" class="btn btn-primary">Sign Up</button>
                         </form>

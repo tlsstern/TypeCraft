@@ -182,6 +182,42 @@ class SupabaseDataHandler {
             return { error: error.message };
         }
     }
+
+    async updateUsername(username) {
+        if (!supabaseClient) {
+            console.error('Cannot update username: Supabase client not initialized');
+            return { error: 'Supabase not initialized' };
+        }
+
+        const user = await this.getCurrentUser();
+        if (!user) {
+            console.error('Cannot update username: User not authenticated');
+            return { error: 'User not authenticated' };
+        }
+
+        try {
+            // Update or insert username in user_statistics
+            const { data, error } = await supabaseClient
+                .from('user_statistics')
+                .upsert({
+                    user_id: user.id,
+                    username: username,
+                    updated_at: new Date().toISOString()
+                }, {
+                    onConflict: 'user_id'
+                })
+                .select()
+                .single();
+
+            if (error) throw error;
+
+            console.log('Username updated successfully:', username);
+            return { data, error: null };
+        } catch (error) {
+            console.error('Error updating username:', error);
+            return { error: error.message };
+        }
+    }
 }
 
 const supabaseData = new SupabaseDataHandler();
