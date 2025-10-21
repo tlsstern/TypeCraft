@@ -36,26 +36,19 @@ async function checkAuthStatus() {
 }
 
 function updateUIForUser(user) {
-    const userDisplay = document.getElementById('userDisplay');
-    if (userDisplay) {
-        userDisplay.innerHTML = `
-            <span>Welcome, ${user.email}</span>
-        `;
-    }
-
-    // Show account section in options modal if it exists
-    const accountSection = document.getElementById('accountSection');
-    const userEmailDisplay = document.getElementById('userEmailDisplay');
-    if (accountSection && userEmailDisplay) {
-        accountSection.style.display = 'block';
-        userEmailDisplay.textContent = user.email;
-    }
   const userDisplay = document.getElementById("userDisplay");
   if (userDisplay) {
     userDisplay.innerHTML = `
-            <button onclick="logout()" class="btn-logout">Logout</button>
             <span>Welcome, ${user.email}</span>
         `;
+  }
+
+  // Show account section in options modal if it exists
+  const accountSection = document.getElementById("accountSection");
+  const userEmailDisplay = document.getElementById("userEmailDisplay");
+  if (accountSection && userEmailDisplay) {
+    accountSection.style.display = "block";
+    userEmailDisplay.textContent = user.email;
   }
 
   enableAuthFeatures();
