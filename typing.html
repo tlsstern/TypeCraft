@@ -17,6 +17,9 @@
         <div class="title">
             <h1>typecraft</h1>
         </div>
+        <div class="user-info" id="userDisplay">
+            <!-- User info will be populated by auth-check.js -->
+        </div>
         <div class="header">
             <select id="timeSelect">
                 <option value="10">10 seconds</option>
@@ -82,6 +85,31 @@
                 </div>
             </div>
 
+            <!-- User Statistics Section (shown only for authenticated users) -->
+            <div id="userStatsSection" class="user-stats-section" style="display: none;">
+                <h3>Your Statistics</h3>
+                <div class="user-stats-grid">
+                    <div class="user-stat-item">
+                        <div class="stat-value" id="personalBest">0</div>
+                        <div class="stat-label">Personal Best</div>
+                    </div>
+                    <div class="user-stat-item">
+                        <div class="stat-value" id="averageWpm">0</div>
+                        <div class="stat-label">Avg WPM</div>
+                    </div>
+                    <div class="user-stat-item">
+                        <div class="stat-value" id="averageAccuracy">0%</div>
+                        <div class="stat-label">Avg Accuracy</div>
+                    </div>
+                    <div class="user-stat-item">
+                        <div class="stat-value" id="totalRuns">0</div>
+                        <div class="stat-label">Total Tests</div>
+                    </div>
+                </div>
+                <div id="pbIndicator" class="improvement-indicator" style="display: none;"></div>
+                <div id="aboveAvgIndicator" class="improvement-indicator" style="display: none;"></div>
+            </div>
+
             <button id="playAgainBtn">
                 <span class="material-icons">replay</span>
                 Try Again
@@ -92,6 +120,9 @@
             </button>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="TypeCraftBackend/auth-check.js"></script>
+    <script src="TypeCraftBackend/supabase-data.js"></script>
     <script src="script.js"></script>
 
     <div class="virtual-keyboard" id="virtualKeyboard">

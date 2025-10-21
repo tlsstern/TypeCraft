@@ -28,28 +28,27 @@
         </div>
         
         <div class="bottom-left-controls">
-            <button class="sign-in-btn">Sign In</button>
-            <div class="user-icon">👤</div>
+            <div id="userDisplay">
+                <button class="sign-in-btn">Sign In</button>
+                <div class="user-icon">👤</div>
+            </div>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="TypeCraftBackend/auth-check.js"></script>
     <script>
         document.querySelector('.singleplayer-btn').addEventListener('click', function() {
             window.location.href = 'typing.html';
         });
-        
+
         document.querySelector('.quit-btn').addEventListener('click', function() {
             window.close();
         });
-        
+
         document.querySelector('.options-btn').addEventListener('click', function() {
             // Options functionality can be added later
             console.log('Options clicked');
-        });
-        
-        document.querySelector('.sign-in-btn').addEventListener('click', function() {
-            // Sign in functionality can be added later
-            console.log('Sign In clicked');
         });
     </script>
 </body>

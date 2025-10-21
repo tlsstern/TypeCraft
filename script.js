@@ -133,8 +133,7 @@ class TypingTest {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            const fetchedText = await response.text();
-            const text = fetchedText.toLowerCase();
+            const text = await response.text();
             
             this.sentences = text.split('\n').map(s => s.trim()).filter(s => s.length > 0);
             
@@ -323,7 +322,7 @@ class TypingTest {
                 lines.push(currentLine);
                 currentLine = word;
                 
-                if (lines.length >= 4) {
+                if (lines.length >= 5) {
                     break;
                 }
             }
@@ -447,29 +446,75 @@ class TypingTest {
         }
     }
 
-    endTest() {
+    async endTest() {
         clearInterval(this.timer);
         clearInterval(this.statsTimer);
         this.isTestActive = false;
-        
+
         const timeElapsed = this.timeLimit / 60;
         const finalWpm = Math.round((this.correctChars / 5) / timeElapsed);
-        const finalAccuracy = this.totalChars > 0 
-            ? Math.round((this.correctChars / this.totalChars) * 100) 
+        const finalAccuracy = this.totalChars > 0
+            ? Math.round((this.correctChars / this.totalChars) * 100)
             : 0;
-        
+
+        // Save results to database for authenticated users
+        const sessionData = {
+            wpm: finalWpm,
+            accuracy: finalAccuracy,
+            rawWpm: finalWpm,
+            duration: this.timeLimit,
+            charactersTyped: this.totalChars,
+            errors: this.totalChars - this.correctChars,
+            testType: this.timeLimit + 's',
+            language: 'en'
+        };
+
+        // Save to database if user is authenticated
+        if (window.supabaseData && !window.authCheck.isGuest()) {
+            try {
+                const saveResult = await window.supabaseData.saveTypingSession(sessionData);
+                if (saveResult.error) {
+                    console.error('Error saving session:', saveResult.error);
+                } else {
+                    console.log('Session saved successfully');
+                }
+            } catch (error) {
+                console.error('Error saving to database:', error);
+            }
+        }
+
         this.showResultsModal(finalWpm, finalAccuracy, this.wpmHistory);
     }
 
-    showResultsModal(finalWpm, finalAccuracy, finalWpmHistory) {
+    async showResultsModal(finalWpm, finalAccuracy, finalWpmHistory) {
         document.querySelector('.container').classList.add('hide');
-        
+
+        // Load user statistics if authenticated
+        let userStats = null;
+        if (window.supabaseData && !window.authCheck.isGuest()) {
+            try {
+                const statsResult = await window.supabaseData.getUserStats();
+                if (!statsResult.error && statsResult.data) {
+                    userStats = statsResult.data;
+                }
+            } catch (error) {
+                console.error('Error loading user stats:', error);
+            }
+        }
+
         setTimeout(() => {
             this.wpmResult.textContent = finalWpm;
             this.accuracyResult.textContent = `${finalAccuracy}%`;
             this.totalCharsResult.textContent = this.totalChars;
             this.correctCharsResult.textContent = this.correctChars;
             this.incorrectCharsResult.textContent = this.totalChars - this.correctChars;
+
+            // Show user statistics section for authenticated users
+            const userStatsSection = document.getElementById('userStatsSection');
+            if (userStats && userStatsSection) {
+                userStatsSection.style.display = 'block';
+                this.updateUserStatsDisplay(userStats, finalWpm, finalAccuracy);
+            }
 
             const existingChart = Chart.getChart("accuracyGraph");
             if (existingChart) {
@@ -589,9 +634,9 @@ class TypingTest {
                 }
             });
 
-            this.resultsModal.style.display = 'flex';
-            void this.resultsModal.offsetWidth;
-            this.resultsModal.classList.add('show');
+                this.resultsModal.style.display = 'flex';
+                void this.resultsModal.offsetWidth;
+                this.resultsModal.classList.add('show');
         }, 300);
     }
 
@@ -602,6 +647,65 @@ class TypingTest {
             this.resultsModal.style.display = 'none';
             document.querySelector('.container').classList.remove('hide');
         }, 400);
+    }
+
+    updateUserStatsDisplay(userStats, currentWpm, currentAccuracy) {
+        // Update personal best display
+        const pbElement = document.getElementById('personalBest');
+        if (pbElement) {
+            pbElement.textContent = userStats.top_speed || 0;
+        }
+
+        // Update average WPM display
+        const avgWpmElement = document.getElementById('averageWpm');
+        if (avgWpmElement) {
+            avgWpmElement.textContent = Math.round(userStats.average_wpm) || 0;
+        }
+
+        // Update average accuracy display
+        const avgAccElement = document.getElementById('averageAccuracy');
+        if (avgAccElement) {
+            avgAccElement.textContent = Math.round(userStats.average_accuracy) || 0;
+        }
+
+        // Update total runs display
+        const totalRunsElement = document.getElementById('totalRuns');
+        if (totalRunsElement) {
+            totalRunsElement.textContent = userStats.total_runs || 0;
+        }
+
+        // Update rank display if available
+        const rankElement = document.getElementById('userRank');
+        if (rankElement) {
+            rankElement.textContent = userStats.rank ? `#${userStats.rank}` : 'Unranked';
+        }
+
+        // Show improvement indicators
+        this.showImprovementIndicators(userStats, currentWpm, currentAccuracy);
+    }
+
+    showImprovementIndicators(userStats, currentWpm, currentAccuracy) {
+        // Show new personal best indicator
+        const pbIndicator = document.getElementById('pbIndicator');
+        if (pbIndicator && userStats.top_speed) {
+            if (currentWpm > userStats.top_speed) {
+                pbIndicator.style.display = 'block';
+                pbIndicator.textContent = '🎉 New Personal Best!';
+            } else {
+                pbIndicator.style.display = 'none';
+            }
+        }
+
+        // Show above average indicators
+        const aboveAvgIndicator = document.getElementById('aboveAvgIndicator');
+        if (aboveAvgIndicator && userStats.average_wpm) {
+            if (currentWpm > userStats.average_wpm) {
+                aboveAvgIndicator.style.display = 'block';
+                aboveAvgIndicator.textContent = '📈 Above Average!';
+            } else {
+                aboveAvgIndicator.style.display = 'none';
+            }
+        }
     }
 
     async restartTest() {
@@ -685,7 +789,7 @@ class TypingTest {
     updateCharsPerLine() {
         const container = document.querySelector('.typing-area');
         const containerWidth = container.clientWidth;
-        const maxChars = 80; 
+        const maxChars = 77; 
 
         if (window.innerWidth <= 440) {
             const minWidth = 320;
