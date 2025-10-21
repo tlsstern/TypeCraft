@@ -77,7 +77,7 @@ class TypeCraftSounds {
         oscillator.frequency.setValueAtTime(1200, ctx.currentTime);
         oscillator.frequency.exponentialRampToValueAtTime(1000, ctx.currentTime + 0.1);
 
-        gainNode.gain.setValueAtTime(volume * 0.15, ctx.currentTime);
+        gainNode.gain.setValueAtTime(volume * 0.6, ctx.currentTime);
         gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
 
         oscillator.start(ctx.currentTime);
