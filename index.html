@@ -65,6 +65,15 @@
                 <button class="menu-button options-done-btn">Done</button>
                 <button class="menu-button options-reset-btn">Reset to Default</button>
             </div>
+
+            <!-- Account section (shown only when logged in) -->
+            <div id="accountSection" class="account-section" style="display: none;">
+                <div class="account-divider"></div>
+                <div class="account-info">
+                    <span id="userEmailDisplay"></span>
+                </div>
+                <button class="menu-button options-logout-btn" onclick="logout()">Logout</button>
+            </div>
         </div>
     </div>
 

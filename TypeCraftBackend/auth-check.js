@@ -35,8 +35,15 @@ function updateUIForUser(user) {
     if (userDisplay) {
         userDisplay.innerHTML = `
             <span>Welcome, ${user.email}</span>
-            <button onclick="logout()" class="btn-logout">Logout</button>
         `;
+    }
+
+    // Show account section in options modal if it exists
+    const accountSection = document.getElementById('accountSection');
+    const userEmailDisplay = document.getElementById('userEmailDisplay');
+    if (accountSection && userEmailDisplay) {
+        accountSection.style.display = 'block';
+        userEmailDisplay.textContent = user.email;
     }
 
     enableAuthFeatures();
