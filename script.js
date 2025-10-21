@@ -239,7 +239,7 @@ class TypingTest {
     this.timeDisplay.textContent = this.timeLimit + "s";
 
     this.initializeEventListeners();
-    this.generateInitialText();
+    this.initializeWords();
 
     this.playAgainBtn.addEventListener("click", () => {
       this.closeResultsModal();
@@ -362,6 +362,15 @@ class TypingTest {
         e.preventDefault();
       }
     });
+  }
+
+  async initializeWords() {
+    this.words = await this.getTermsFromFile();
+    if (this.words.length === 0) {
+      console.error("Failed to load words, using default set");
+      this.words = ["test", "typing", "speed", "keyboard", "practice"];
+    }
+    this.generateInitialText();
   }
 
   generateInitialText() {
@@ -857,25 +866,25 @@ class TypingTest {
     });
   }
 
-  getTermsFromFile() {
-    const fs = require("fs");
-
+  async getTermsFromFile() {
     const filePath = "mcitems.txt";
 
     let minecraftTerms = [];
 
     try {
-      const fileContent = fs.readFileSync(filePath, "utf8");
+      const response = await fetch(filePath);
+      const fileContent = await response.text();
 
       minecraftTerms = fileContent.split("\n");
 
       minecraftTerms = minecraftTerms
         .filter((term) => term.trim() !== "")
         .map((term) => term.trim());
-    
+
       return minecraftTerms;
     } catch (err) {
       console.error("Error reading the file:", err);
+      return [];
     }
   }
 
