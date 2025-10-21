@@ -46,8 +46,8 @@ function updateUIForGuest() {
     const userDisplay = document.getElementById('userDisplay');
     if (userDisplay) {
         userDisplay.innerHTML = `
-            <span>Guest Mode</span>
             <a href="login.html" class="btn-login">Sign In</a>
+            <span>Guest Mode</span>
         `;
     }
 
