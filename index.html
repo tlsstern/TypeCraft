@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -10,15 +11,18 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/minecraft-4" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/minecraftia" rel="stylesheet">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'><rect x='5' y='5' width='90' height='50' rx='5' fill='%23B8B8B8' stroke='black' stroke-width='4'/><rect x='15' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='28' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='41' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='54' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='67' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='80' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='15' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='28' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='41' y='28' width='20' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='67' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='80' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='15' y='41' width='30' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='50' y='41' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='63' y='41' width='25' height='8' fill='white' stroke='black' stroke-width='2'/></svg>" type="image/svg+xml">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'><rect x='5' y='5' width='90' height='50' rx='5' fill='%23B8B8B8' stroke='black' stroke-width='4'/><rect x='15' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='28' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='41' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='54' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='67' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='80' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='15' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='28' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='41' y='28' width='20' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='67' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='80' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='15' y='41' width='30' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='50' y='41' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='63' y='41' width='25' height='8' fill='white' stroke='black' stroke-width='2'/></svg>"
+        type="image/svg+xml">
 </head>
+
 <body>
     <video id="bg-video" autoplay loop muted>
         <source src="background/background.mp4" type="video/mp4">
     </video>
     <div class="title-screen-content">
         <img class="title-image" src="background/title.png" alt="Title">
-        
+
         <div class="main-menu-buttons">
             <button class="menu-button singleplayer-btn">Singleplayer</button>
             <div class="bottom-row-buttons">
@@ -26,7 +30,7 @@
                 <button class="menu-button quit-btn">Quit Game</button>
             </div>
         </div>
-        
+
         <div class="bottom-left-controls">
             <div id="userDisplay">
                 <button class="sign-in-btn" onclick="window.location.href='login.html'">Sign In</button>
@@ -35,21 +39,153 @@
         </div>
     </div>
 
+    <!-- Options Modal -->
+    <div id="optionsModal" class="options-modal">
+        <div class="options-content">
+            <h1 class="options-title">Options</h1>
+
+            <div class="options-sections">
+                <!-- Audio Settings -->
+                <div class="options-section">
+                    <h2 class="section-title">Audio</h2>
+                    <div class="setting-item">
+                        <label for="masterVolume">Master Volume</label>
+                        <div class="slider-container">
+                            <input type="range" id="masterVolume" min="0" max="100" value="70">
+                            <span class="slider-value">70%</span>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <label for="sfxVolume">Sound Effects</label>
+                        <div class="slider-container">
+                            <input type="range" id="sfxVolume" min="0" max="100" value="50">
+                            <span class="slider-value">50%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="options-buttons">
+                <button class="menu-button options-done-btn">Done</button>
+                <button class="menu-button options-reset-btn">Reset to Default</button>
+            </div>
+
+            <!-- Account section (shown only when logged in) -->
+            <div id="accountSection" class="account-section" style="display: none;">
+                <div class="account-divider"></div>
+                <div class="account-info">
+                    <span id="userEmailDisplay"></span>
+                </div>
+                <button class="menu-button options-logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="TypeCraftBackend/auth-check.js"></script>
     <script>
-        document.querySelector('.singleplayer-btn').addEventListener('click', function() {
+        document.querySelector('.singleplayer-btn').addEventListener('click', function () {
             window.location.href = 'typing.html';
         });
 
-        document.querySelector('.quit-btn').addEventListener('click', function() {
+        document.querySelector('.quit-btn').addEventListener('click', function () {
             window.close();
         });
 
-        document.querySelector('.options-btn').addEventListener('click', function() {
-            // Options functionality can be added later
-            console.log('Options clicked');
+        // Define settings functions in global scope
+        function loadSettings() {
+            const settings = JSON.parse(localStorage.getItem('typeCraftSettings')) || {};
+
+            if (settings.masterVolume !== undefined) {
+                document.getElementById('masterVolume').value = settings.masterVolume;
+                document.querySelector('#masterVolume + .slider-value').textContent = settings.masterVolume + '%';
+            }
+            if (settings.sfxVolume !== undefined) {
+                document.getElementById('sfxVolume').value = settings.sfxVolume;
+                document.querySelector('#sfxVolume + .slider-value').textContent = settings.sfxVolume + '%';
+            }
+        }
+
+        // Save settings to localStorage
+        function saveSettings() {
+            const settings = {
+                masterVolume: parseInt(document.getElementById('masterVolume').value),
+                sfxVolume: parseInt(document.getElementById('sfxVolume').value)
+            };
+
+            localStorage.setItem('typeCraftSettings', JSON.stringify(settings));
+        }
+
+        // Reset settings to default
+        function resetSettings() {
+            localStorage.removeItem('typeCraftSettings');
+
+            // Reset UI
+            document.getElementById('masterVolume').value = 70;
+            document.querySelector('#masterVolume + .slider-value').textContent = '70%';
+            document.getElementById('sfxVolume').value = 50;
+            document.querySelector('#sfxVolume + .slider-value').textContent = '50%';
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            // Options Modal Functionality
+            const optionsModal = document.getElementById('optionsModal');
+            const optionsBtn = document.querySelector('.options-btn');
+            const optionsDoneBtn = document.querySelector('.options-done-btn');
+            const optionsResetBtn = document.querySelector('.options-reset-btn');
+
+            if (!optionsModal || !optionsBtn || !optionsDoneBtn || !optionsResetBtn) {
+                console.error('Options modal elements not found');
+                return;
+            }
+
+            optionsBtn.addEventListener('click', function () {
+                loadSettings(); // Reload settings when opening modal
+                optionsModal.style.display = 'flex';
+            });
+
+            optionsDoneBtn.addEventListener('click', function () {
+                saveSettings();
+                optionsModal.style.display = 'none';
+            });
+
+            optionsResetBtn.addEventListener('click', function () {
+                if (confirm('Reset all settings to default?')) {
+                    resetSettings();
+                }
+            });
+
+            // Close modal when clicking outside
+            optionsModal.addEventListener('click', function (e) {
+                if (e.target === optionsModal) {
+                    saveSettings();
+                    optionsModal.style.display = 'none';
+                }
+            });
+
+            // Toggle buttons functionality
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const isEnabled = this.getAttribute('data-enabled') === 'true';
+                    this.setAttribute('data-enabled', !isEnabled);
+                    this.textContent = !isEnabled ? 'ON' : 'OFF';
+                    this.classList.toggle('disabled', isEnabled);
+                });
+            });
+
+            // Slider value display
+            document.querySelectorAll('input[type="range"]').forEach(slider => {
+                const valueDisplay = slider.nextElementSibling;
+                slider.addEventListener('input', function () {
+                    valueDisplay.textContent = this.value + '%';
+                });
+            });
+
+            // Load settings on page load
+            loadSettings();
         });
     </script>
 </body>
+
 </html>
