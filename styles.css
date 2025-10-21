@@ -1381,6 +1381,52 @@ select option {
     background: linear-gradient(145deg, #989898, #808080);
 }
 
+/* Account section in options modal */
+.account-section {
+    margin-top: 30px;
+    padding-top: 20px;
+}
+
+.account-divider {
+    height: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.account-info {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.account-info span {
+    font-family: 'Minecraftia', 'Courier New', monospace;
+    font-size: 0.95rem;
+    color: #AAAAAA;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.options-logout-btn {
+    width: 100%;
+    background:
+        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        linear-gradient(145deg, #E57373, #D32F2F) !important;
+    border: 3px outset #E57373 !important;
+}
+
+.options-logout-btn:hover {
+    background:
+        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.2) 0%, transparent 50%),
+        linear-gradient(145deg, #EF5350, #C62828) !important;
+}
+
+.options-logout-btn:active {
+    background:
+        radial-gradient(circle at 30% 30%, rgba(0, 0, 0, 0.1) 0%, transparent 50%),
+        linear-gradient(145deg, #B71C1C, #8B0000) !important;
+    border: 3px inset #E57373 !important;
+}
+
 /* Responsive styles for options modal */
 @media (max-width: 768px) {
     .options-content {
