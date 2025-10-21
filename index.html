@@ -13,7 +13,6 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'><rect x='5' y='5' width='90' height='50' rx='5' fill='%23B8B8B8' stroke='black' stroke-width='4'/><rect x='15' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='28' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='41' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='54' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='67' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='80' y='15' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='15' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='28' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='41' y='28' width='20' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='67' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='80' y='28' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='15' y='41' width='30' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='50' y='41' width='8' height='8' fill='white' stroke='black' stroke-width='2'/><rect x='63' y='41' width='25' height='8' fill='white' stroke='black' stroke-width='2'/></svg>" type="image/svg+xml">
 </head>
 <body>
-<<<<<<< Updated upstream
     <video id="bg-video" autoplay loop muted>
         <source src="background/background.mp4" type="video/mp4">
     </video>
@@ -25,31 +24,6 @@
             <div class="bottom-row-buttons">
                 <button class="menu-button options-btn">Options...</button>
                 <button class="menu-button quit-btn">Quit Game</button>
-=======
-    <div class="container">
-        <div class="title">
-            <h1>TypeCraft</h1>
-            <div class="title-actions">
-                <a href="leaderboard/leaderboard.html" class="leaderboard-link">
-                    <span class="material-icons">emoji_events</span>
-                    Leaderboard
-                </a>
-                <div id="userDisplay" class="user-display"></div>
-            </div>
-        </div>
-        <div class="header">
-            <select id="timeSelect">
-                <option value="10">10 seconds</option>
-                <option value="15">15 seconds</option>
-                <option value="30">30 seconds</option>
-                <option value="60">1 minute</option>
-                <option value="120">2 minutes</option>
-            </select>
-            <div class="stats">
-                <div class="stat"><span class="label">WPM</span><span id="wpm">0</span></div>
-                <div class="stat"><span class="label">Accuracy</span><span id="accuracy">0%</span></div>
-                <div class="stat"><span class="label">Time</span><span id="time">30s</span></div>
->>>>>>> Stashed changes
             </div>
         </div>
         
@@ -59,7 +33,6 @@
         </div>
     </div>
 
-<<<<<<< Updated upstream
     <script>
         document.querySelector('.singleplayer-btn').addEventListener('click', function() {
             window.location.href = 'typing.html';
@@ -79,78 +52,5 @@
             console.log('Sign In clicked');
         });
     </script>
-=======
-    <div id="resultsModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-title">
-                <h1>TypeCraft</h1>
-            </div>
-            <div class="graph-section">
-                <canvas id="accuracyGraph"></canvas>
-            </div>
-            
-            <div class="stats-container">
-                <div class="stat-card primary">
-                    <div class="stat-value" id="wpmResult">0</div>
-                    <div class="stat-label">WPM</div>
-                </div>
-                <div class="stat-card primary">
-                    <div class="stat-value" id="accuracyResult">0%</div>
-                    <div class="stat-label">Accuracy</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="totalCharsResult">0</div>
-                    <div class="stat-label">Total</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="correctCharsResult">0</div>
-                    <div class="stat-label">Correct</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="incorrectCharsResult">0</div>
-                    <div class="stat-label">Incorrect</div>
-                </div>
-            </div>
-
-            <button id="playAgainBtn">
-                <span class="material-icons">replay</span>
-                Try Again
-            </button>
-        </div>
-    </div>
-    <script src="TypeCraftBackend/auth-check.js"></script>
-    <script src="TypeCraftBackend/supabase-data.js"></script>
-    <script src="script.js"></script>
-
-    <div class="virtual-keyboard" id="virtualKeyboard">
-        <input type="text"
-               id="mobileInput"
-               autocomplete="off"
-               autocorrect="off"
-               autocapitalize="off"
-               spellcheck="false"
-               style="opacity: 0; position: absolute; pointer-events: none;">
-    </div>
-
-    <div id="usernameModal" class="modal">
-        <div class="modal-content username-modal-content">
-            <h2>Set Your Username</h2>
-            <p>Choose a username to display on the leaderboard</p>
-            <div class="username-input-group">
-                <input type="text"
-                       id="usernameInput"
-                       placeholder="Enter username"
-                       maxlength="20"
-                       autocomplete="off">
-                <span id="usernameCharCount">0/20</span>
-            </div>
-            <div id="usernameError" class="username-error"></div>
-            <div class="username-modal-buttons">
-                <button id="cancelUsernameBtn" class="btn-secondary">Cancel</button>
-                <button id="saveUsernameBtn" class="btn-primary">Save Username</button>
-            </div>
-        </div>
-    </div>
->>>>>>> Stashed changes
 </body>
 </html>

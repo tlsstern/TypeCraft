@@ -254,25 +254,8 @@ loginForm.addEventListener('submit', async (e) => {
 signupForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const username = document.getElementById('signupUsername').value.trim();
     const email = document.getElementById('signupEmail').value;
     const password = document.getElementById('signupPassword').value;
-
-    // Validate username
-    if (username.length < 3) {
-        showAlert('Username must be at least 3 characters long!', 'danger', false);
-        return;
-    }
-
-    if (username.length > 20) {
-        showAlert('Username must be 20 characters or less!', 'danger', false);
-        return;
-    }
-
-    if (!/^[a-zA-Z0-9_-]+$/.test(username)) {
-        showAlert('Username can only contain letters, numbers, _ and -', 'danger', false);
-        return;
-    }
 
     if (password.length < 6) {
         showAlert('Password must be at least 6 characters long!', 'danger', false);
@@ -291,24 +274,6 @@ signupForm.addEventListener('submit', async (e) => {
             if (data.user && data.user.identities && data.user.identities.length === 0) {
                 showAlert('A user with this email already exists.', 'warning', false);
             } else {
-                // Save username to user_statistics table
-                if (data.user) {
-                    try {
-                        const { error: statsError } = await supabaseClient
-                            .from('user_statistics')
-                            .insert({
-                                user_id: data.user.id,
-                                username: username
-                            });
-
-                        if (statsError) {
-                            console.error('Error saving username:', statsError);
-                        }
-                    } catch (statsErr) {
-                        console.error('Failed to save username:', statsErr);
-                    }
-                }
-
                 showAlert('Sign up successful! Please check your email to verify your account.', 'success', false);
                 setTimeout(() => {
                     flipCard.classList.remove('flipped');
