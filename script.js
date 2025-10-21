@@ -25,7 +25,7 @@ class TypingTest {
         this.timer = null;
 
         this.currentText = '';
-        this.charsPerLine = 76;
+        this.charsPerLine = 82;
         this.updateCharsPerLine();
         this.statsTimer = null;
         this.themeSelect = document.getElementById('themeSelect');
@@ -137,7 +137,7 @@ class TypingTest {
             
             this.sentences = text.split('\n').map(s => s.trim()).filter(s => s.length > 0);
             
-            this.words = this.sentences.join(' ').split(/\s+/).filter(w => w.length > 0);
+            this.words = this.sentences.join(' ').toLowerCase().split(/\s+/).filter(w => w.length > 0);
 
         } catch (error) {
             console.error('Could not load mcitems.txt:', error);
@@ -322,7 +322,7 @@ class TypingTest {
                 lines.push(currentLine);
                 currentLine = word;
                 
-                if (lines.length >= 5) {
+                if (lines.length >= 4) {
                     break;
                 }
             }
@@ -684,7 +684,7 @@ class TypingTest {
     updateCharsPerLine() {
         const container = document.querySelector('.typing-area');
         const containerWidth = container.clientWidth;
-        const maxChars = 77; 
+        const maxChars = 80; 
 
         if (window.innerWidth <= 440) {
             const minWidth = 320;
