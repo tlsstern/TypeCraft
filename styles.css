@@ -882,27 +882,16 @@ select option {
 }
 
 .modal-title h1 {
-<<<<<<<<< Temporary merge branch 1
     font-size: 2.5rem;
     letter-spacing: 3px;
-=========
-    font-size: 2rem;
-    letter-spacing: 2px;
->>>>>>>>> Temporary merge branch 2
     text-transform: uppercase;
     position: relative;
     display: inline-block;
     color: var(--text-color);
-<<<<<<<<< Temporary merge branch 1
     text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
     transition: all 0.5s ease;
     animation: gentlePulse 4s ease-in-out infinite;
     font-family: 'Minecraft', Arial, sans-serif;
-=========
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-    transition: all 0.5s ease;
-    animation: gentlePulse 4s ease-in-out infinite;
->>>>>>>>> Temporary merge branch 2
 }
 
 .modal-title h1::after {
