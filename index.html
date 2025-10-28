@@ -25,6 +25,10 @@
 
         <div class="main-menu-buttons">
             <button class="menu-button singleplayer-btn">Singleplayer</button>
+            <button class="menu-button leaderboard-btn" id="leaderboardBtn">
+                <span class="material-icons">leaderboard</span>
+                Leaderboard
+            </button>
             <div class="bottom-row-buttons">
                 <button class="menu-button options-btn">Options...</button>
                 <button class="menu-button quit-btn">Quit Game</button>
@@ -33,8 +37,108 @@
 
         <div class="bottom-left-controls">
             <div id="userDisplay">
-                <button class="sign-in-btn" onclick="window.location.href='login.html'">Sign In</button>
-                <span>Guest Mode</span>
+                <!-- User display populated by auth-check.js -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div id="profileModal" class="profile-modal">
+        <div class="profile-content">
+            <div class="profile-header">
+                <h1>Profile</h1>
+                <button class="close-button" id="closeProfile">×</button>
+            </div>
+
+            <div class="profile-info">
+                <div class="profile-avatar">
+                    <span class="material-icons profile-avatar-icon" id="profileAvatarIcon">account_circle</span>
+                </div>
+                <h2 id="profileUsername">Guest</h2>
+                <p id="profileEmail"></p>
+            </div>
+
+            <div class="profile-stats" id="profileStats">
+                <h3>Statistics</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-label">Total Tests</span>
+                        <span class="stat-value" id="profileTotalTests">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Top Speed</span>
+                        <span class="stat-value" id="profileTopSpeed">0 WPM</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Average WPM</span>
+                        <span class="stat-value" id="profileAvgWPM">0 WPM</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Average Accuracy</span>
+                        <span class="stat-value" id="profileAvgAccuracy">0%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-actions">
+                <button class="menu-button" id="profileViewLeaderboard" onclick="openLeaderboard(); closeProfileModal();">
+                    <span class="material-icons">leaderboard</span>
+                    View Leaderboard
+                </button>
+                <button class="menu-button profile-logout-btn" id="profileLogoutBtn" style="display: none;">
+                    <span class="material-icons">logout</span>
+                    Logout
+                </button>
+                <button class="menu-button profile-signin-btn" id="profileSigninBtn" style="display: none;">
+                    <span class="material-icons">login</span>
+                    Sign In to Save Progress
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaderboard Modal -->
+    <div id="leaderboardModal" class="leaderboard-modal">
+        <div class="leaderboard-content">
+            <div class="leaderboard-header">
+                <h1>Leaderboard</h1>
+                <button class="close-button" id="closeLeaderboard">×</button>
+            </div>
+
+            <div class="leaderboard-controls">
+                <select id="leaderboardFilter" class="leaderboard-select">
+                    <option value="all-time">All Time</option>
+                    <option value="monthly">This Month</option>
+                    <option value="weekly">This Week</option>
+                </select>
+                <button class="refresh-button" id="refreshLeaderboard">
+                    <span class="material-icons">refresh</span>
+                </button>
+            </div>
+
+            <div class="leaderboard-table-container">
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Player</th>
+                            <th>Top WPM</th>
+                            <th>Avg WPM</th>
+                            <th>Tests</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboardTableBody">
+                        <tr>
+                            <td colspan="5" class="loading-cell">Loading...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="leaderboard-pagination">
+                <button id="prevPage" class="pagination-btn" disabled>Previous</button>
+                <span id="pageInfo">Page 1</span>
+                <button id="nextPage" class="pagination-btn">Next</button>
             </div>
         </div>
     </div>
@@ -87,6 +191,21 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Test Settings -->
+                <div class="options-section">
+                    <h2 class="section-title">Test Settings</h2>
+                    <div class="setting-item">
+                        <label for="testDuration">Test Duration</label>
+                        <select id="testDuration" class="theme-dropdown">
+                            <option value="10">10 seconds</option>
+                            <option value="15">15 seconds</option>
+                            <option value="30">30 seconds</option>
+                            <option value="60" selected>60 seconds</option>
+                            <option value="120">2 minutes</option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
             <div class="options-buttons">
@@ -107,6 +226,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="TypeCraftBackend/auth-check.js"></script>
+    <script src="TypeCraftBackend/supabase-data.js"></script>
     <script>
         // Theme definitions
         const themes = {
@@ -286,6 +406,11 @@
                 document.documentElement.style.setProperty(property, value);
             });
             document.body.setAttribute('data-theme', themeName);
+
+            // Determine if theme is bright or dark for adaptive styling
+            const brightThemes = ['light', 'pastel', 'mint', 'sunshine', 'lavender'];
+            const isBright = brightThemes.includes(themeName);
+            document.body.setAttribute('data-theme-type', isBright ? 'bright' : 'dark');
         }
     </script>
     <script>
@@ -312,6 +437,11 @@
             if (settings.theme !== undefined) {
                 document.getElementById('themeSelect').value = settings.theme;
             }
+            // Load test duration
+            const savedTime = localStorage.getItem('selectedTime');
+            if (savedTime) {
+                document.getElementById('testDuration').value = savedTime;
+            }
         }
 
         // Save settings to localStorage
@@ -324,12 +454,17 @@
 
             localStorage.setItem('typeCraftSettings', JSON.stringify(settings));
             localStorage.setItem('selectedTheme', settings.theme);
+
+            // Save test duration
+            const testDuration = document.getElementById('testDuration').value;
+            localStorage.setItem('selectedTime', testDuration);
         }
 
         // Reset settings to default
         function resetSettings() {
             localStorage.removeItem('typeCraftSettings');
             localStorage.setItem('selectedTheme', 'dark');
+            localStorage.setItem('selectedTime', '60');
 
             // Reset UI
             document.getElementById('masterVolume').value = 70;
@@ -337,6 +472,7 @@
             document.getElementById('sfxVolume').value = 50;
             document.querySelector('#sfxVolume + .slider-value').textContent = '50%';
             document.getElementById('themeSelect').value = 'dark';
+            document.getElementById('testDuration').value = '60';
 
             // Apply dark theme
             if (typeof applyTheme === 'function') {
@@ -379,6 +515,12 @@
                 applyTheme(this.value);
             });
 
+            // Test duration selector change handler
+            const testDuration = document.getElementById('testDuration');
+            testDuration.addEventListener('change', function () {
+                localStorage.setItem('selectedTime', this.value);
+            });
+
             // Close modal when clicking outside
             optionsModal.addEventListener('click', function (e) {
                 if (e.target === optionsModal) {
@@ -411,7 +553,269 @@
             // Apply saved theme on page load
             const savedTheme = localStorage.getItem('selectedTheme') || 'dark';
             applyTheme(savedTheme);
+
+            // Leaderboard functionality
+            initializeLeaderboard();
         });
+
+        // Profile Modal Management
+        function openProfileModal() {
+            const modal = document.getElementById('profileModal');
+            if (!modal) return;
+
+            modal.classList.add('active');
+
+            // Get current user/guest status
+            const user = window.authCheck?.getCurrentUser();
+            const isGuestMode = window.authCheck?.isGuest();
+
+            if (user) {
+                // Logged in user
+                document.getElementById('profileAvatarIcon').textContent = 'account_circle';
+                document.getElementById('profileUsername').textContent = user.email.split('@')[0];
+                document.getElementById('profileEmail').textContent = user.email;
+                document.getElementById('profileEmail').style.display = 'block';
+
+                // Show logout button, hide signin
+                document.getElementById('profileLogoutBtn').style.display = 'flex';
+                document.getElementById('profileSigninBtn').style.display = 'none';
+
+                // Load user statistics
+                loadUserStats();
+            } else {
+                // Guest mode
+                document.getElementById('profileAvatarIcon').textContent = 'person_outline';
+                document.getElementById('profileUsername').textContent = 'Guest';
+                document.getElementById('profileEmail').textContent = '';
+                document.getElementById('profileEmail').style.display = 'none';
+
+                // Show signin button, hide logout
+                document.getElementById('profileLogoutBtn').style.display = 'none';
+                document.getElementById('profileSigninBtn').style.display = 'flex';
+
+                // Show guest message for stats
+                showGuestStats();
+            }
+        }
+
+        function closeProfileModal() {
+            const modal = document.getElementById('profileModal');
+            if (modal) {
+                modal.classList.remove('active');
+            }
+        }
+
+        async function loadUserStats() {
+            try {
+                if (window.supabaseData) {
+                    const result = await window.supabaseData.getUserStats();
+
+                    if (result.data) {
+                        document.getElementById('profileTotalTests').textContent = result.data.total_runs || 0;
+                        document.getElementById('profileTopSpeed').textContent = Math.round(result.data.top_speed || 0) + ' WPM';
+                        document.getElementById('profileAvgWPM').textContent = Math.round(result.data.average_wpm || 0) + ' WPM';
+                        document.getElementById('profileAvgAccuracy').textContent = (result.data.average_accuracy || 0).toFixed(1) + '%';
+                    } else {
+                        // No stats yet
+                        document.getElementById('profileTotalTests').textContent = '0';
+                        document.getElementById('profileTopSpeed').textContent = '0 WPM';
+                        document.getElementById('profileAvgWPM').textContent = '0 WPM';
+                        document.getElementById('profileAvgAccuracy').textContent = '0%';
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading user stats:', error);
+            }
+        }
+
+        function showGuestStats() {
+            document.getElementById('profileTotalTests').textContent = '-';
+            document.getElementById('profileTopSpeed').textContent = '-';
+            document.getElementById('profileAvgWPM').textContent = '-';
+            document.getElementById('profileAvgAccuracy').textContent = '-';
+        }
+
+        // Initialize profile modal
+        document.addEventListener('DOMContentLoaded', () => {
+            const closeProfileBtn = document.getElementById('closeProfile');
+            const profileModal = document.getElementById('profileModal');
+            const profileLogoutBtn = document.getElementById('profileLogoutBtn');
+            const profileSigninBtn = document.getElementById('profileSigninBtn');
+
+            if (closeProfileBtn) {
+                closeProfileBtn.addEventListener('click', closeProfileModal);
+            }
+
+            if (profileModal) {
+                profileModal.addEventListener('click', (e) => {
+                    if (e.target === profileModal) {
+                        closeProfileModal();
+                    }
+                });
+            }
+
+            if (profileLogoutBtn) {
+                profileLogoutBtn.addEventListener('click', logout);
+            }
+
+            if (profileSigninBtn) {
+                profileSigninBtn.addEventListener('click', () => {
+                    // Clear guest mode flag before redirecting to login
+                    localStorage.removeItem('skipAuth');
+                    window.location.href = 'login.html';
+                });
+            }
+        });
+
+        // Leaderboard Manager
+        let currentPage = 1;
+        const itemsPerPage = 10;
+
+        function initializeLeaderboard() {
+            const leaderboardBtn = document.getElementById('leaderboardBtn');
+            const leaderboardModal = document.getElementById('leaderboardModal');
+            const closeLeaderboard = document.getElementById('closeLeaderboard');
+            const refreshButton = document.getElementById('refreshLeaderboard');
+            const prevPageBtn = document.getElementById('prevPage');
+            const nextPageBtn = document.getElementById('nextPage');
+
+            if (leaderboardBtn) {
+                leaderboardBtn.addEventListener('click', openLeaderboard);
+            }
+
+            if (closeLeaderboard) {
+                closeLeaderboard.addEventListener('click', closeLeaderboardModal);
+            }
+
+            if (leaderboardModal) {
+                leaderboardModal.addEventListener('click', (e) => {
+                    if (e.target === leaderboardModal) {
+                        closeLeaderboardModal();
+                    }
+                });
+            }
+
+            if (refreshButton) {
+                refreshButton.addEventListener('click', () => loadLeaderboard(currentPage));
+            }
+
+            if (prevPageBtn) {
+                prevPageBtn.addEventListener('click', () => {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        loadLeaderboard(currentPage);
+                    }
+                });
+            }
+
+            if (nextPageBtn) {
+                nextPageBtn.addEventListener('click', () => {
+                    currentPage++;
+                    loadLeaderboard(currentPage);
+                });
+            }
+        }
+
+        async function openLeaderboard() {
+            const modal = document.getElementById('leaderboardModal');
+            if (modal) {
+                modal.classList.add('active');
+                currentPage = 1;
+                await loadLeaderboard(currentPage);
+            }
+        }
+
+        function closeLeaderboardModal() {
+            const modal = document.getElementById('leaderboardModal');
+            if (modal) {
+                modal.classList.remove('active');
+            }
+        }
+
+        async function loadLeaderboard(page = 1) {
+            const tableBody = document.getElementById('leaderboardTableBody');
+            if (!tableBody) return;
+
+            // Show loading
+            tableBody.innerHTML = '<tr><td colspan="5" class="loading-cell">Loading...</td></tr>';
+
+            try {
+                const offset = (page - 1) * itemsPerPage;
+                const result = await window.supabaseData.getLeaderboard(itemsPerPage, offset);
+
+                if (result.error) {
+                    throw new Error(result.error);
+                }
+
+                const leaderboardData = result.data || [];
+
+                if (leaderboardData.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="5" class="empty-cell">No leaderboard data available yet. Be the first to set a record!</td></tr>';
+                    updatePaginationButtons(false, false);
+                    return;
+                }
+
+                // Render leaderboard
+                renderLeaderboard(leaderboardData, offset);
+
+                // Update pagination
+                const hasNext = leaderboardData.length === itemsPerPage;
+                const hasPrev = page > 1;
+                updatePaginationButtons(hasPrev, hasNext);
+
+            } catch (error) {
+                console.error('Error loading leaderboard:', error);
+                tableBody.innerHTML = '<tr><td colspan="5" class="error-cell">Failed to load leaderboard. Please try again.</td></tr>';
+            }
+        }
+
+        function renderLeaderboard(data, offset) {
+            const tableBody = document.getElementById('leaderboardTableBody');
+            const currentUserId = window.authCheck?.getCurrentUser()?.id;
+
+            tableBody.innerHTML = '';
+
+            data.forEach((entry, index) => {
+                const rank = offset + index + 1;
+                const isCurrentUser = currentUserId && entry.user_id === currentUserId;
+
+                const row = document.createElement('tr');
+                if (isCurrentUser) {
+                    row.classList.add('current-user');
+                }
+
+                const rankDisplay = getRankDisplay(rank);
+                const username = entry.username || entry.email || 'Anonymous';
+                const displayName = username.length > 20 ? username.substring(0, 17) + '...' : username;
+
+                row.innerHTML = `
+                    <td class="rank-cell">${rankDisplay}</td>
+                    <td class="username-cell">${displayName}${isCurrentUser ? ' <span class="you-badge">YOU</span>' : ''}</td>
+                    <td class="wpm-cell">${Math.round(entry.top_speed || 0)}</td>
+                    <td class="wpm-cell">${Math.round(entry.average_wpm || 0)}</td>
+                    <td class="tests-cell">${entry.total_runs || 0}</td>
+                `;
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        function getRankDisplay(rank) {
+            if (rank === 1) return '🥇';
+            if (rank === 2) return '🥈';
+            if (rank === 3) return '🥉';
+            return `#${rank}`;
+        }
+
+        function updatePaginationButtons(hasPrev, hasNext) {
+            const prevBtn = document.getElementById('prevPage');
+            const nextBtn = document.getElementById('nextPage');
+            const pageInfo = document.getElementById('pageInfo');
+
+            if (prevBtn) prevBtn.disabled = !hasPrev;
+            if (nextBtn) nextBtn.disabled = !hasNext;
+            if (pageInfo) pageInfo.textContent = `Page ${currentPage}`;
+        }
     </script>
 </body>
 
