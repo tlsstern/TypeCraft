@@ -42,7 +42,6 @@ function updateUIForUser(user) {
     const username = user.email.split('@')[0];
     userDisplay.innerHTML = `
             <button class="user-profile" onclick="openProfileModal()">
-                <span class="user-icon material-icons">account_circle</span>
                 <span class="username">${username}</span>
             </button>
         `;
