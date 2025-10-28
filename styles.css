@@ -520,7 +520,7 @@ button:hover {
     font-size: 1.8rem;
     font-weight: bold;
     margin-bottom: 0.3rem;
-    color: var(--correct-color);
+    color: white;
     text-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
     font-family: 'Minecraft', Arial, sans-serif;
 }
@@ -621,7 +621,7 @@ button:hover {
 
 .stat-card.primary .stat-value {
     font-size: 2.2rem;
-    color: var(--correct-color);
+    color: white;
     text-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
 }
 
@@ -2055,7 +2055,7 @@ select option {
     display: block;
     font-family: 'Minecraft', Arial, sans-serif;
     font-size: 2.2rem;
-    color: var(--correct-color);
+    color: white;
     font-weight: 200;
     text-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
 }
