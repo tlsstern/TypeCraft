@@ -96,6 +96,11 @@ class TypingTest {
     async initializeTest() {
         this.textDisplay.innerHTML = '<span class="loading-text">Loading text...</span>';
 
+        // Reset time bar to empty
+        if (this.timeBarFill) {
+            this.timeBarFill.style.width = '0%';
+        }
+
         await this.fetchSourceText();
 
         this.generateInitialText();
@@ -415,6 +420,8 @@ class TypingTest {
     }
 
     updateTime() {
+        if (!this.isTestActive) return; // Safety check
+
         const timeElapsed = Math.floor((new Date() - this.startTime) / 1000);
         const timeLeft = this.timeLimit - timeElapsed;
 
@@ -442,12 +449,13 @@ class TypingTest {
     }
 
     async endTest() {
-        // Prevent double execution
+        // Prevent double execution - set flag FIRST before anything else
         if (!this.isTestActive) return;
+        this.isTestActive = false;
 
+        // Now clear intervals
         clearInterval(this.timer);
         clearInterval(this.statsTimer);
-        this.isTestActive = false;
 
         if (this.timeBarFill) {
             this.timeBarFill.style.width = '100%';
@@ -496,6 +504,11 @@ class TypingTest {
     }
 
     async showResultsModal(finalWpm, finalAccuracy, finalWpmHistory) {
+        // Prevent showing results modal multiple times
+        if (this.resultsModal.style.display === 'flex' || this.resultsModal.classList.contains('show')) {
+            return;
+        }
+
         document.querySelector('.container').classList.add('hide');
 
         let userStats = null;
