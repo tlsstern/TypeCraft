@@ -107,6 +107,20 @@
         </div>
     </div>
 
+    <!-- Username Setup Modal for OAuth users -->
+    <div id="usernameModal" class="username-modal" style="display: none;">
+        <div class="username-modal-content">
+            <h2>Choose Your Username</h2>
+            <p>Please choose a username to complete your registration</p>
+            <div class="form-group">
+                <input type="text" class="form-control" id="oauthUsername" name="username" required
+                    placeholder="Choose a username" minlength="3" maxlength="50">
+                <small class="form-text" id="oauthUsernameHint" style="color: var(--char-color); font-size: 0.8em;">Username can only contain letters, numbers, underscores, and hyphens</small>
+            </div>
+            <button id="setUsernameBtn" class="btn btn-primary">Continue</button>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="TypeCraftBackend/auth.js"></script>
 </body>

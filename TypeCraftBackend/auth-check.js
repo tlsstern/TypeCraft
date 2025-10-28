@@ -35,11 +35,28 @@ async function checkAuthStatus() {
   }
 }
 
-function updateUIForUser(user) {
+async function updateUIForUser(user) {
+  // Fetch username from database
+  let displayName = user.email;
+
+  try {
+    const { data, error } = await supabaseClient
+      .from('usernames')
+      .select('username')
+      .eq('user_id', user.id)
+      .single();
+
+    if (!error && data) {
+      displayName = data.username;
+    }
+  } catch (error) {
+    console.error('Error fetching username:', error);
+  }
+
   const userDisplay = document.getElementById("userDisplay");
   if (userDisplay) {
     userDisplay.innerHTML = `
-            <span>Welcome, ${user.email}</span>
+            <span>Welcome, ${displayName}</span>
         `;
   }
 
@@ -47,7 +64,7 @@ function updateUIForUser(user) {
   const userEmailDisplay = document.getElementById("userEmailDisplay");
   if (accountSection && userEmailDisplay) {
     accountSection.style.display = "block";
-    userEmailDisplay.textContent = user.email;
+    userEmailDisplay.textContent = displayName;
   }
 
   enableAuthFeatures();
