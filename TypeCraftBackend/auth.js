@@ -195,6 +195,60 @@ const signupForm = document.getElementById('signupForm');
 const alertContainerFront = document.getElementById('alertContainerFront');
 const alertContainerBack = document.getElementById('alertContainerBack');
 
+// Username validation state
+let usernameCheckTimeout = null;
+let isUsernameValid = false;
+
+// Real-time username availability check
+async function checkUsernameAvailability(username, hintElementId) {
+    const hintElement = document.getElementById(hintElementId);
+
+    if (!username || username.length < 3) {
+        hintElement.style.color = 'var(--char-color)';
+        hintElement.textContent = 'Username must be at least 3 characters';
+        isUsernameValid = false;
+        return;
+    }
+
+    const usernameRegex = /^[a-zA-Z0-9_-]+$/;
+    if (!usernameRegex.test(username)) {
+        hintElement.style.color = 'var(--incorrect-color)';
+        hintElement.textContent = 'Only letters, numbers, underscores, and hyphens allowed';
+        isUsernameValid = false;
+        return;
+    }
+
+    hintElement.style.color = 'var(--char-color)';
+    hintElement.textContent = 'Checking availability...';
+
+    try {
+        const { data: isAvailable, error } = await supabaseClient.rpc('is_username_available', {
+            username_to_check: username
+        });
+
+        if (error) {
+            hintElement.style.color = 'var(--incorrect-color)';
+            hintElement.textContent = 'Error checking username';
+            isUsernameValid = false;
+            return;
+        }
+
+        if (isAvailable) {
+            hintElement.style.color = 'var(--correct-color)';
+            hintElement.textContent = '✓ Username is available!';
+            isUsernameValid = true;
+        } else {
+            hintElement.style.color = 'var(--incorrect-color)';
+            hintElement.textContent = '✗ Username is already taken';
+            isUsernameValid = false;
+        }
+    } catch (error) {
+        hintElement.style.color = 'var(--incorrect-color)';
+        hintElement.textContent = 'Error checking username';
+        isUsernameValid = false;
+    }
+}
+
 function showAlert(message, type = 'danger', isFront = true) {
     const container = isFront ? alertContainerFront : alertContainerBack;
     const alertHtml = `
@@ -225,6 +279,8 @@ showLoginLink.addEventListener('click', (e) => {
     alertContainerFront.innerHTML = '';
     alertContainerBack.innerHTML = '';
 });
+
+// No need for signup username checking anymore since it's removed from the form
 
 loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -263,6 +319,7 @@ signupForm.addEventListener('submit', async (e) => {
     }
 
     try {
+        // Sign up the user
         const { data, error } = await supabaseClient.auth.signUp({
             email: email,
             password: password
@@ -273,12 +330,16 @@ signupForm.addEventListener('submit', async (e) => {
         } else {
             if (data.user && data.user.identities && data.user.identities.length === 0) {
                 showAlert('A user with this email already exists.', 'warning', false);
-            } else {
-                showAlert('Sign up successful! Please check your email to verify your account.', 'success', false);
+            } else if (data.user) {
+                showAlert('Account created! Please check your email to verify your account.', 'success', false);
+
+                // Wait 2 seconds then show username modal
                 setTimeout(() => {
-                    flipCard.classList.remove('flipped');
-                    signupForm.reset();
-                }, 3000);
+                    // Hide the flip card
+                    document.querySelector('.container').style.display = 'none';
+                    // Show username modal
+                    showUsernameModal();
+                }, 2000);
             }
         }
     } catch (error) {
@@ -358,8 +419,112 @@ async function checkSession() {
     const { data: { session } } = await supabaseClient.auth.getSession();
 
     if (session) {
+        // Check if user has a username
+        await checkAndPromptUsername(session.user);
+    }
+}
+
+async function checkAndPromptUsername(user) {
+    try {
+        // Check if user already has a username
+        const { data, error } = await supabaseClient
+            .from('usernames')
+            .select('username')
+            .eq('user_id', user.id)
+            .single();
+
+        if (error && error.code !== 'PGRST116') {
+            // PGRST116 is "not found" error, which is expected for new users
+            console.error('Error checking username:', error);
+        }
+
+        if (!data) {
+            // User doesn't have a username, show modal
+            showUsernameModal();
+        } else {
+            // User has a username, redirect to main app
+            window.location.href = 'index.html';
+        }
+    } catch (error) {
+        console.error('Error in checkAndPromptUsername:', error);
         window.location.href = 'index.html';
     }
+}
+
+let usernameModalInitialized = false;
+
+function handleUsernameInput(e) {
+    clearTimeout(usernameCheckTimeout);
+    const username = e.target.value;
+
+    usernameCheckTimeout = setTimeout(() => {
+        checkUsernameAvailability(username, 'oauthUsernameHint');
+    }, 500);
+}
+
+async function handleSetUsername() {
+    const oauthUsernameInput = document.getElementById('oauthUsername');
+    const setUsernameBtn = document.getElementById('setUsernameBtn');
+    const username = oauthUsernameInput.value;
+
+    if (!isUsernameValid) {
+        document.getElementById('oauthUsernameHint').style.color = 'var(--incorrect-color)';
+        document.getElementById('oauthUsernameHint').textContent = 'Please choose a valid, available username';
+        return;
+    }
+
+    setUsernameBtn.disabled = true;
+    setUsernameBtn.textContent = 'Setting up...';
+
+    // Wait 1.5 seconds before setting username
+    setTimeout(async () => {
+        try {
+            const { error } = await supabaseClient.rpc('set_username', {
+                new_username: username
+            });
+
+            if (error) {
+                document.getElementById('oauthUsernameHint').style.color = 'var(--incorrect-color)';
+                document.getElementById('oauthUsernameHint').textContent = 'Failed to set username: ' + error.message;
+                setUsernameBtn.disabled = false;
+                setUsernameBtn.textContent = 'Continue';
+            } else {
+                document.getElementById('oauthUsernameHint').style.color = 'var(--correct-color)';
+                document.getElementById('oauthUsernameHint').textContent = 'Username set successfully! Redirecting...';
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1000);
+            }
+        } catch (error) {
+            document.getElementById('oauthUsernameHint').style.color = 'var(--incorrect-color)';
+            document.getElementById('oauthUsernameHint').textContent = 'An error occurred. Please try again.';
+            setUsernameBtn.disabled = false;
+            setUsernameBtn.textContent = 'Continue';
+        }
+    }, 1500);
+}
+
+function showUsernameModal() {
+    const modal = document.getElementById('usernameModal');
+    const oauthUsernameInput = document.getElementById('oauthUsername');
+    const setUsernameBtn = document.getElementById('setUsernameBtn');
+
+    modal.style.display = 'flex';
+
+    // Initialize event listeners only once
+    if (!usernameModalInitialized) {
+        oauthUsernameInput.addEventListener('input', handleUsernameInput);
+        setUsernameBtn.addEventListener('click', handleSetUsername);
+        usernameModalInitialized = true;
+    }
+
+    // Reset the input and button state
+    oauthUsernameInput.value = '';
+    setUsernameBtn.disabled = false;
+    setUsernameBtn.textContent = 'Continue';
+    document.getElementById('oauthUsernameHint').style.color = 'var(--char-color)';
+    document.getElementById('oauthUsernameHint').textContent = 'Username can only contain letters, numbers, underscores, and hyphens';
+    isUsernameValid = false;
 }
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -367,9 +532,9 @@ if (!urlParams.get('skip')) {
     checkSession();
 }
 
-supabaseClient.auth.onAuthStateChange((event, session) => {
+supabaseClient.auth.onAuthStateChange(async (event, session) => {
     if (event === 'SIGNED_IN' && session) {
-        window.location.href = 'index.html';
+        await checkAndPromptUsername(session.user);
     }
 });
 

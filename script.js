@@ -13,10 +13,15 @@ class TypingTest {
             console.warn('Accuracy display element not found');
         }
         this.timeDisplay = document.getElementById('time');
+        this.timeBar = document.getElementById('mcTimeBar');
+        this.timeBarFill = document.getElementById('mcTimeBarFill');
 
         // Handle missing time display gracefully
         if (!this.timeDisplay) {
             console.warn('Time display element not found');
+        }
+        if (!this.timeBar || !this.timeBarFill) {
+            console.warn('Time bar elements not found');
         }
         this.restartBtn = document.getElementById('restart');
         this.timeSelect = document.getElementById('timeSelect');
@@ -48,6 +53,7 @@ class TypingTest {
         this.updateCharsPerLine();
         this.statsTimer = null;
         this.themeSelect = document.getElementById('themeSelect');
+        this.lastSentenceIndices = null;
 
         this.typingArea = document.querySelector('.typing-area');
 
@@ -85,6 +91,9 @@ class TypingTest {
         const timeDisplayElement = document.getElementById('time');
         if (timeDisplayElement) {
             timeDisplayElement.textContent = this.timeLimit + 's';
+        }
+        if (this.timeBarFill) {
+            this.timeBarFill.style.width = '0%';
         }
 
         this.initializeEventListeners();
@@ -464,6 +473,10 @@ class TypingTest {
             if (this.timeDisplay) {
                 this.timeDisplay.textContent = timeLeft + 's';
             }
+            if (this.timeBarFill) {
+                const ratio = Math.max(0, Math.min(1, timeElapsed / this.timeLimit));
+                this.timeBarFill.style.width = (ratio * 100) + '%';
+            }
         }
     }
 
@@ -494,6 +507,10 @@ class TypingTest {
         clearInterval(this.timer);
         clearInterval(this.statsTimer);
         this.isTestActive = false;
+
+        if (this.timeBarFill) {
+            this.timeBarFill.style.width = '100%';
+        }
 
         if (window.typeCraftSounds) {
             window.typeCraftSounds.playComplete();
@@ -760,9 +777,13 @@ class TypingTest {
         this.isTestActive = false;
         this.wpmHistory = [];
         this.lastWpmUpdate = null;
-        this.timeDisplay.textContent = this.timeLimit + 's';
-        this.wpmDisplay.textContent = '0';
-        this.accuracyDisplay.textContent = '0%';
+        if (this.timeDisplay) this.timeDisplay.textContent = this.timeLimit + 's';
+        if (this.wpmDisplay) this.wpmDisplay.textContent = '0';
+        if (this.accuracyDisplay) this.accuracyDisplay.textContent = '0%';
+
+        if (this.timeBarFill) {
+            this.timeBarFill.style.width = '0%';
+        }
 
         this.statsContainer.classList.remove('visible');
 
