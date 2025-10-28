@@ -425,6 +425,10 @@ class TypingTest {
         }
 
         if (timeLeft <= 0) {
+            // Play sound IMMEDIATELY when test ends
+            if (window.typeCraftSounds) {
+                window.typeCraftSounds.playComplete();
+            }
             this.endTest();
         } else {
             if (this.timeBarFill) {
@@ -456,10 +460,6 @@ class TypingTest {
         clearInterval(this.timer);
         clearInterval(this.statsTimer);
         this.isTestActive = false;
-
-        if (window.typeCraftSounds) {
-            window.typeCraftSounds.playComplete();
-        }
 
         // Calculate actual time elapsed in minutes
         const actualTimeElapsed = this.startTime ?
