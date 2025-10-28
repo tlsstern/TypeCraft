@@ -193,6 +193,59 @@ button:hover {
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+.timebar-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 6px 0 2px 0;
+}
+
+.mc-timebar {
+    width: 100%;
+    max-width: 900px;
+    height: 14px;
+    background: rgba(0, 0, 0, 0.55);
+    border: 2px solid rgba(0, 0, 0, 0.8);
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.06);
+    position: relative;
+    overflow: hidden;
+}
+
+.mc-timebar-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    /* Minecraft loading bar vibe: segmented neon green */
+    background-image:
+        repeating-linear-gradient(
+            to right,
+            #6fe26f 0,
+            #6fe26f 24px,
+            #49b949 24px,
+            #49b949 28px
+        );
+    filter: saturate(1.2) brightness(1.05);
+    transition: width 0.2s linear;
+}
+
+@media (max-width: 480px) {
+    .mc-timebar {
+        height: 12px;
+    }
+    .mc-timebar-fill {
+        background-image:
+            repeating-linear-gradient(
+                to right,
+                #6fe26f 0,
+                #6fe26f 18px,
+                #49b949 18px,
+                #49b949 22px
+            );
+    }
+}
+
 #text-display {
     font-size: 1.2rem;
     line-height: 1.6;
