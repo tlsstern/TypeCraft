@@ -513,6 +513,74 @@ h2 {
     }
 }
 
+/* Username Modal */
+.username-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+}
+
+.username-modal-content {
+    background: rgba(42, 42, 42, 0.95);
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+    animation: slideUp 0.3s ease;
+}
+
+.login-body[data-theme] .username-modal-content {
+    background: var(--header-bg, rgba(42, 42, 42, 0.95));
+}
+
+.username-modal-content h2 {
+    color: #FFFFFF;
+    margin-bottom: 10px;
+}
+
+.login-body[data-theme] .username-modal-content h2 {
+    color: var(--text-color, #fff);
+}
+
+.username-modal-content p {
+    color: #AAAAAA;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.login-body[data-theme] .username-modal-content p {
+    color: var(--char-color, #AAA);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
 @media (max-width: 480px) {
     .container {
         padding: 10px;
@@ -528,7 +596,7 @@ h2 {
     }
 
     .flip-card {
-        height: 580px;
+        height: 620px;
     }
 
     h2 {
@@ -538,5 +606,9 @@ h2 {
     .form-control {
         font-size: 13px;
         padding: 10px 12px;
+    }
+
+    .username-modal-content {
+        padding: 30px 20px;
     }
 }
