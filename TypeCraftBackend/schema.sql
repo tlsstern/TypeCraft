@@ -115,6 +115,8 @@ CREATE INDEX idx_typing_runs_user_id ON typing_runs(user_id);
 CREATE INDEX idx_typing_runs_created_at ON typing_runs(created_at DESC);
 CREATE INDEX idx_user_statistics_top_speed ON user_statistics(top_speed DESC);
 
+DROP FUNCTION IF EXISTS get_leaderboard(integer, integer);
+
 CREATE OR REPLACE FUNCTION get_leaderboard(
     limit_count INTEGER DEFAULT 10,
     offset_count INTEGER DEFAULT 0
