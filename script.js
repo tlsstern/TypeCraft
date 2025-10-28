@@ -2,29 +2,20 @@ class TypingTest {
     constructor() {
         this.words = [];
         this.textDisplay = document.getElementById('text-display');
-        this.wpmDisplay = document.getElementById('wpm');
+
+        // XP Bar elements
+        this.xpBarFill = document.getElementById('xpBarFill');
         this.accuracyDisplay = document.getElementById('accuracy');
 
         // Handle missing display elements gracefully
-        if (!this.wpmDisplay) {
-            console.warn('WPM display element not found');
+        if (!this.xpBarFill) {
+            console.warn('XP bar element not found');
         }
         if (!this.accuracyDisplay) {
             console.warn('Accuracy display element not found');
         }
-        this.timeDisplay = document.getElementById('time');
-        this.timeBar = document.getElementById('mcTimeBar');
-        this.timeBarFill = document.getElementById('mcTimeBarFill');
 
-        // Handle missing time display gracefully
-        if (!this.timeDisplay) {
-            console.warn('Time display element not found');
-        }
-        if (!this.timeBar || !this.timeBarFill) {
-            console.warn('Time bar elements not found');
-        }
         this.restartBtn = document.getElementById('restart');
-        this.timeSelect = document.getElementById('timeSelect');
         this.resultsModal = document.getElementById('resultsModal');
         this.wpmResult = document.getElementById('wpmResult');
         this.accuracyResult = document.getElementById('accuracyResult');
@@ -33,17 +24,15 @@ class TypingTest {
         this.incorrectCharsResult = document.getElementById('incorrectCharsResult');
         this.playAgainBtn = document.getElementById('playAgainBtn');
 
-        // Handle missing elements gracefully
-        if (!this.timeSelect) {
-            this.timeLimit = 30; // Default to 30 seconds
-        } else {
-            this.timeLimit = parseInt(this.timeSelect.value);
-        }
+        // Get time limit from localStorage or default to 60 seconds
+        const savedTime = localStorage.getItem('selectedTime');
+        this.timeLimit = savedTime ? parseInt(savedTime) : 60;
 
         this.currentIndex = 0;
         this.correctChars = 0;
         this.totalChars = 0;
         this.mistakes = new Set();
+        this.permanentErrors = 0; // Count of all mistakes made (never decreases)
         this.startTime = null;
         this.isTestActive = false;
         this.timer = null;
@@ -53,48 +42,10 @@ class TypingTest {
         this.updateCharsPerLine();
         this.statsTimer = null;
         this.themeSelect = document.getElementById('themeSelect');
-        this.lastSentenceIndices = null;
 
         this.typingArea = document.querySelector('.typing-area');
 
-        const savedTime = localStorage.getItem('selectedTime');
-        const savedTheme = localStorage.getItem('selectedTheme');
-
-        if (savedTime && this.timeSelect) {
-            this.timeSelect.value = savedTime;
-            this.timeLimit = parseInt(savedTime);
-        }
-
-        if (savedTheme && this.themeSelect) {
-            this.themeSelect.value = savedTheme;
-        }
         this.applyMinecraftTheme();
-
-        if (this.timeSelect) {
-            this.timeSelect.addEventListener('change', (e) => {
-                const selectedTime = e.target.value;
-                this.timeLimit = parseInt(selectedTime);
-                localStorage.setItem('selectedTime', selectedTime);
-                this.restartTest();
-            });
-        }
-
-        if (this.themeSelect) {
-            this.themeSelect.addEventListener('change', (e) => {
-                const selectedTheme = e.target.value;
-                localStorage.setItem('selectedTheme', selectedTheme);
-            });
-        }
-
-        // Don't create time display overlay in typing area
-
-        const timeDisplayElement = document.getElementById('time');
-        if (timeDisplayElement) {
-            timeDisplayElement.textContent = this.timeLimit + 's';
-        }
-        if (this.timeBarFill) {
-            this.timeBarFill.style.width = '0%';
-        }
 
         this.initializeEventListeners();
 
@@ -136,13 +87,6 @@ class TypingTest {
             this.updateCharsPerLine();
             this.renderText();
         });
-
-        this.statsContainer = document.querySelector('.stats');
-
-        // Handle missing stats container gracefully
-        if (this.statsContainer) {
-            this.statsContainer.classList.remove('visible');
-        }
 
         this.titleElement = document.querySelector('.title h1');
         this.originalTitle = this.titleElement.textContent;
@@ -235,14 +179,6 @@ class TypingTest {
             }
         });
 
-        if (this.timeSelect) {
-            this.timeSelect.addEventListener('mousedown', (e) => {
-                if (this.isTestActive) {
-                    e.preventDefault();
-                }
-            });
-        }
-
         if (this.themeSelect) {
             this.themeSelect.addEventListener('mousedown', (e) => {
                 if (this.isTestActive) {
@@ -256,12 +192,12 @@ class TypingTest {
     generateInitialText() {
         if (this.sentences && this.sentences.length > 0) {
             let initialSentences = [];
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < 10; i++) {
                 initialSentences.push(this.sentences[Math.floor(Math.random() * this.sentences.length)]);
             }
             this.currentText = initialSentences.join(' ');
         } else {
-            this.currentText = this.generateWords(100).join(' ');
+            this.currentText = this.generateWords(200).join(' ');
         }
 
         this.renderText();
@@ -292,42 +228,38 @@ class TypingTest {
         const currentChar = this.currentText[this.currentIndex];
 
         if (key === ' ') {
-            if (this.currentIndex > 0 && !this.currentText.slice(0, this.currentIndex).endsWith(' ')) {
-                if (currentChar === ' ') {
-                    this.correctChars++;
-                    this.currentIndex++;
-                    this.totalChars++;
-                } else {
-                    let nextSpaceIndex = this.currentText.indexOf(' ', this.currentIndex);
-                    if (nextSpaceIndex === -1) {
-                        nextSpaceIndex = this.currentText.length;
-                    }
-
-                    while (this.currentIndex < nextSpaceIndex) {
-                        this.mistakes.add(this.currentIndex);
-                        this.currentIndex++;
-                        this.totalChars++;
-                    }
-
-                    if (nextSpaceIndex < this.currentText.length) {
-                        this.currentIndex++;
-                        this.totalChars++;
-                    }
+            // Only allow space when expected
+            if (currentChar === ' ') {
+                this.correctChars++;
+                this.currentIndex++;
+                this.totalChars++;
+                if (window.typeCraftSounds) {
+                    window.typeCraftSounds.playCorrect();
                 }
-
-                this.renderText();
-                this.updateStats();
+            } else {
+                // Pressing space at wrong time counts as mistake
+                this.mistakes.add(this.currentIndex);
+                this.permanentErrors++; // Track permanent error
+                this.currentIndex++;
+                this.totalChars++;
+                if (window.typeCraftSounds) {
+                    window.typeCraftSounds.playIncorrect();
+                }
             }
+
+            this.renderText();
+            this.updateStats();
             return;
         }
 
         if (key.toLowerCase() === currentChar.toLowerCase()) {
             this.correctChars++;
             if (window.typeCraftSounds) {
-                window.typeCraftSounds.playType();
+                window.typeCraftSounds.playCorrect();
             }
         } else {
             this.mistakes.add(this.currentIndex);
+            this.permanentErrors++; // Track permanent error
             if (window.typeCraftSounds) {
                 window.typeCraftSounds.playIncorrect();
             }
@@ -340,8 +272,16 @@ class TypingTest {
             navigator.vibrate(10);
         }
 
-        if (this.currentIndex >= this.currentText.length - (this.charsPerLine * 2)) {
-            this.currentText += ' ' + this.generateWords(1)[0];
+        // Add more text when getting close to the end (within 3 lines)
+        if (this.currentIndex >= this.currentText.length - (this.charsPerLine * 3)) {
+            if (this.sentences && this.sentences.length > 0) {
+                // Add 2 more sentences
+                for (let i = 0; i < 2; i++) {
+                    this.currentText += ' ' + this.sentences[Math.floor(Math.random() * this.sentences.length)];
+                }
+            } else {
+                this.currentText += ' ' + this.generateWords(20).join(' ');
+            }
         }
 
         this.renderText();
@@ -353,30 +293,44 @@ class TypingTest {
         const words = this.currentText.split(' ');
         let lines = [];
         let currentLine = '';
+        let charCount = 0;
+        let startCharIndex = 0;
 
+        // Build all lines with character tracking
         for (let word of words) {
             if (currentLine.length == 0 || (currentLine + ' ' + word).length <= this.charsPerLine) {
                 currentLine += (currentLine.length > 0 ? ' ' : '') + word;
             } else {
-                lines.push(currentLine);
+                lines.push({ text: currentLine, startIndex: charCount });
+                charCount += currentLine.length + 1; // +1 for newline
                 currentLine = word;
-
-                if (lines.length >= 5) {
-                    break;
-                }
             }
         }
 
-        if (currentLine && lines.length < 4) {
-            lines.push(currentLine);
+        if (currentLine) {
+            lines.push({ text: currentLine, startIndex: charCount });
         }
 
-        const allChars = lines.join('\n').split('');
+        // Determine which lines to show (scroll effect)
+        let startLine = 0;
+        for (let i = 0; i < lines.length; i++) {
+            if (lines[i].startIndex <= this.currentIndex &&
+                (i === lines.length - 1 || lines[i + 1].startIndex > this.currentIndex)) {
+                startLine = Math.max(0, i - 1); // Show current line and one line before
+                break;
+            }
+        }
 
-        const visibleChars = allChars;
+        // Get up to 4 visible lines starting from startLine
+        const visibleLines = lines.slice(startLine, startLine + 4);
+        startCharIndex = visibleLines.length > 0 ? visibleLines[0].startIndex : 0;
+
+        // Join visible lines and render
+        const visibleText = visibleLines.map(line => line.text).join('\n');
+        const visibleChars = visibleText.split('');
 
         this.textDisplay.innerHTML = visibleChars.map((char, index) => {
-            const globalIndex = index;
+            const globalIndex = startCharIndex + index;
             let classes = ['char'];
 
             if (globalIndex < this.currentIndex) {
@@ -399,9 +353,7 @@ class TypingTest {
 
     handleBackspace(isCtrlPressed) {
         if (this.currentIndex > 0) {
-            if (window.typeCraftSounds) {
-                window.typeCraftSounds.playBackspace();
-            }
+            // No sound for backspace
 
             if (isCtrlPressed) {
                 let newIndex = this.currentIndex;
@@ -416,22 +368,24 @@ class TypingTest {
 
                 while (this.currentIndex > newIndex) {
                     this.currentIndex--;
+                    // Remove visual mistake indicator but don't decrease error count
                     if (this.mistakes.has(this.currentIndex)) {
                         this.mistakes.delete(this.currentIndex);
                     } else {
                         this.correctChars--;
                     }
-                    this.totalChars--;
+                    // Don't decrease totalChars - keep permanent record
                 }
             } else {
                 this.currentIndex--;
 
+                // Remove visual mistake indicator but don't decrease error count
                 if (this.mistakes.has(this.currentIndex)) {
                     this.mistakes.delete(this.currentIndex);
                 } else {
                     this.correctChars--;
                 }
-                this.totalChars--;
+                // Don't decrease totalChars - keep permanent record
             }
 
             this.renderText();
@@ -450,10 +404,6 @@ class TypingTest {
             window.typeCraftSounds.playStart();
         }
 
-        requestAnimationFrame(() => {
-            this.statsContainer.classList.add('visible');
-        });
-
         this.typingArea.focus();
 
         this.typingArea.setAttribute('tabindex', '-1');
@@ -467,16 +417,14 @@ class TypingTest {
         const timeElapsed = Math.floor((new Date() - this.startTime) / 1000);
         const timeLeft = this.timeLimit - timeElapsed;
 
+        // Update XP bar fill based on time progress
+        const progress = (timeElapsed / this.timeLimit) * 100;
+        if (this.xpBarFill) {
+            this.xpBarFill.style.width = Math.min(progress, 100) + '%';
+        }
+
         if (timeLeft <= 0) {
             this.endTest();
-        } else {
-            if (this.timeDisplay) {
-                this.timeDisplay.textContent = timeLeft + 's';
-            }
-            if (this.timeBarFill) {
-                const ratio = Math.max(0, Math.min(1, timeElapsed / this.timeLimit));
-                this.timeBarFill.style.width = (ratio * 100) + '%';
-            }
         }
     }
 
@@ -486,16 +434,6 @@ class TypingTest {
         const now = new Date();
         const timeElapsed = (now - this.startTime) / 1000 / 60;
         const wpm = Math.round((this.correctChars / 5) / timeElapsed) || 0;
-        const accuracy = this.totalChars > 0
-            ? Math.round((this.correctChars / this.totalChars) * 100)
-            : 0;
-
-        if (this.wpmDisplay) {
-            this.wpmDisplay.textContent = wpm;
-        }
-        if (this.accuracyDisplay) {
-            this.accuracyDisplay.textContent = accuracy + '%';
-        }
 
         if (this.isTestActive && (!this.lastWpmUpdate || (now - this.lastWpmUpdate) >= 1000)) {
             this.recordWPM();
@@ -504,23 +442,27 @@ class TypingTest {
     }
 
     async endTest() {
+        // Prevent double execution
+        if (!this.isTestActive) return;
+
         clearInterval(this.timer);
         clearInterval(this.statsTimer);
         this.isTestActive = false;
-
-        if (this.timeBarFill) {
-            this.timeBarFill.style.width = '100%';
-        }
 
         if (window.typeCraftSounds) {
             window.typeCraftSounds.playComplete();
         }
 
-        const timeElapsed = this.timeLimit / 60;
-        const finalWpm = Math.round((this.correctChars / 5) / timeElapsed);
+        // Calculate actual time elapsed in minutes
+        const actualTimeElapsed = this.startTime ?
+            (new Date() - this.startTime) / 1000 / 60 :
+            this.timeLimit / 60;
+
+        const finalWpm = Math.round((this.correctChars / 5) / actualTimeElapsed) || 0;
+        // Use permanent errors for final accuracy
         const finalAccuracy = this.totalChars > 0
-            ? Math.round((this.correctChars / this.totalChars) * 100)
-            : 0;
+            ? Math.round(((this.totalChars - this.permanentErrors) / this.totalChars) * 100)
+            : 100;
 
         const sessionData = {
             wpm: finalWpm,
@@ -528,7 +470,7 @@ class TypingTest {
             rawWpm: finalWpm,
             duration: this.timeLimit,
             charactersTyped: this.totalChars,
-            errors: this.totalChars - this.correctChars,
+            errors: this.permanentErrors, // Use permanent error count
             testType: this.timeLimit + 's',
             language: 'en'
         };
@@ -568,8 +510,8 @@ class TypingTest {
             this.wpmResult.textContent = finalWpm;
             this.accuracyResult.textContent = `${finalAccuracy}%`;
             this.totalCharsResult.textContent = this.totalChars;
-            this.correctCharsResult.textContent = this.correctChars;
-            this.incorrectCharsResult.textContent = this.totalChars - this.correctChars;
+            this.correctCharsResult.textContent = this.totalChars - this.permanentErrors;
+            this.incorrectCharsResult.textContent = this.permanentErrors;
 
             const userStatsSection = document.getElementById('userStatsSection');
             if (userStats && userStatsSection) {
@@ -766,28 +708,33 @@ class TypingTest {
             window.typeCraftSounds.playClick();
         }
 
-        this.closeResultsModal();
+        // Immediately hide modal and show container (no delay)
+        this.resultsModal.classList.remove('show');
+        this.resultsModal.style.display = 'none';
+        document.querySelector('.container').classList.remove('hide');
+
         clearInterval(this.timer);
         clearInterval(this.statsTimer);
         this.currentIndex = 0;
         this.correctChars = 0;
         this.totalChars = 0;
         this.mistakes = new Set();
+        this.permanentErrors = 0; // Reset permanent error count
         this.startTime = null;
         this.isTestActive = false;
         this.wpmHistory = [];
         this.lastWpmUpdate = null;
-        if (this.timeDisplay) this.timeDisplay.textContent = this.timeLimit + 's';
-        if (this.wpmDisplay) this.wpmDisplay.textContent = '0';
-        if (this.accuracyDisplay) this.accuracyDisplay.textContent = '0%';
 
-        if (this.timeBarFill) {
-            this.timeBarFill.style.width = '0%';
+        // Reset XP bar
+        if (this.xpBarFill) {
+            this.xpBarFill.style.width = '0%';
         }
 
-        this.statsContainer.classList.remove('visible');
-
+        // Generate and render new text immediately
         this.generateInitialText();
+
+        // Focus typing area
+        this.typingArea.focus();
     }
 
     applyMinecraftTheme() {
@@ -810,6 +757,13 @@ class TypingTest {
 
         const title = document.querySelector('.title h1');
         if (title) title.style.textShadow = '2px 2px 4px rgba(0,0,0,0.8)';
+
+        // Detect theme brightness for adaptive styling
+        const savedTheme = localStorage.getItem('selectedTheme') || 'dark';
+        const brightThemes = ['light', 'pastel', 'mint', 'sunshine', 'lavender'];
+        const isBright = brightThemes.includes(savedTheme);
+        document.body.setAttribute('data-theme-type', isBright ? 'bright' : 'dark');
+        document.body.setAttribute('data-theme', savedTheme);
     }
 
     recordWPM() {

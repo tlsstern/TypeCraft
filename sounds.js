@@ -7,6 +7,22 @@ class TypeCraftSounds {
 
         this.initialized = false;
 
+        // Preload audio files
+        this.audioFiles = {
+            orb: new Audio('sounds/orb.mp3'),
+            villagerDamage: new Audio('sounds/villager_damage_sound.mp3'),
+            levelUp: new Audio('sounds/levelup_sound.mp3'),
+            netherPortal: new Audio('sounds/netherportal_enter_sound.mp3')
+        };
+
+        // Set default volumes for audio files
+        Object.values(this.audioFiles).forEach(audio => {
+            audio.volume = 0.5;
+        });
+
+        // Track last played time to prevent overlap
+        this.lastPlayTime = {};
+
         this.loadSettings();
     }
 
@@ -36,6 +52,62 @@ class TypeCraftSounds {
         return this.masterVolume * this.sfxVolume;
     }
 
+    playAudioFile(audioKey, startTime = 0, minInterval = 50) {
+        if (!this.enabled) return;
+        this.loadSettings();
+
+        const audio = this.audioFiles[audioKey];
+        if (!audio) return;
+
+        // Prevent same sound from playing too rapidly
+        const now = Date.now();
+        if (this.lastPlayTime[audioKey] && (now - this.lastPlayTime[audioKey]) < minInterval) {
+            return;
+        }
+
+        // For typing sounds (orb/villagerDamage), ensure only one plays at a time
+        if (audioKey === 'orb' || audioKey === 'villagerDamage') {
+            // Stop the opposite sound if it's playing
+            const oppositeKey = audioKey === 'orb' ? 'villagerDamage' : 'orb';
+            if (this.currentlyPlaying && this.currentlyPlaying[oppositeKey]) {
+                this.currentlyPlaying[oppositeKey].pause();
+                this.currentlyPlaying[oppositeKey].currentTime = 0;
+                delete this.currentlyPlaying[oppositeKey];
+            }
+        }
+
+        // Stop any currently playing instance of this sound to prevent overlap
+        if (this.currentlyPlaying && this.currentlyPlaying[audioKey]) {
+            this.currentlyPlaying[audioKey].pause();
+            this.currentlyPlaying[audioKey].currentTime = 0;
+        }
+
+        // Clone and play to allow different sounds to overlap
+        const clone = audio.cloneNode();
+        clone.volume = this.getVolume();
+
+        // Set start time if specified (for trimming)
+        if (startTime > 0) {
+            clone.currentTime = startTime;
+        }
+
+        // Track currently playing sound
+        if (!this.currentlyPlaying) {
+            this.currentlyPlaying = {};
+        }
+        this.currentlyPlaying[audioKey] = clone;
+        this.lastPlayTime[audioKey] = now;
+
+        // Clean up reference when sound ends
+        clone.addEventListener('ended', () => {
+            if (this.currentlyPlaying[audioKey] === clone) {
+                delete this.currentlyPlaying[audioKey];
+            }
+        });
+
+        clone.play().catch(e => console.warn('Audio play failed:', e));
+    }
+
     playClick() {
         if (!this.initialized || !this.enabled) return;
         this.loadSettings();
@@ -61,51 +133,14 @@ class TypeCraftSounds {
     }
 
     playCorrect() {
-        if (!this.initialized || !this.enabled) return;
-        this.loadSettings();
-
-        const ctx = this.audioContext;
-        const volume = this.getVolume();
-
-        const oscillator = ctx.createOscillator();
-        const gainNode = ctx.createGain();
-
-        oscillator.connect(gainNode);
-        gainNode.connect(ctx.destination);
-
-        oscillator.type = 'sine';
-        oscillator.frequency.setValueAtTime(1200, ctx.currentTime);
-        oscillator.frequency.exponentialRampToValueAtTime(1000, ctx.currentTime + 0.1);
-
-        gainNode.gain.setValueAtTime(volume * 1, ctx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
-
-        oscillator.start(ctx.currentTime);
-        oscillator.stop(ctx.currentTime + 0.15);
+        // Play orb sound for correct characters
+        this.playAudioFile('orb');
     }
 
     playIncorrect() {
-        if (!this.initialized || !this.enabled) return;
-        this.loadSettings();
-
-        const ctx = this.audioContext;
-        const volume = this.getVolume();
-
-        const oscillator = ctx.createOscillator();
-        const gainNode = ctx.createGain();
-
-        oscillator.connect(gainNode);
-        gainNode.connect(ctx.destination);
-
-        oscillator.type = 'sawtooth';
-        oscillator.frequency.setValueAtTime(150, ctx.currentTime);
-        oscillator.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 0.1);
-
-        gainNode.gain.setValueAtTime(volume * 0.5, ctx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.12);
-
-        oscillator.start(ctx.currentTime);
-        oscillator.stop(ctx.currentTime + 0.12);
+        // Play villager damage sound for incorrect characters
+        // Start at 0.15s to trim the beginning for faster response
+        this.playAudioFile('villagerDamage', 0.15);
     }
 
     playType() {
@@ -193,32 +228,8 @@ class TypeCraftSounds {
     }
 
     playComplete() {
-        if (!this.initialized || !this.enabled) return;
-        this.loadSettings();
-
-        const ctx = this.audioContext;
-        const volume = this.getVolume();
-
-        const notes = [523.25, 659.25, 783.99, 1046.50];
-
-        notes.forEach((freq, index) => {
-            const oscillator = ctx.createOscillator();
-            const gainNode = ctx.createGain();
-
-            oscillator.connect(gainNode);
-            gainNode.connect(ctx.destination);
-
-            oscillator.type = 'sine';
-            oscillator.frequency.setValueAtTime(freq, ctx.currentTime);
-
-            const startTime = ctx.currentTime + (index * 0.1);
-            gainNode.gain.setValueAtTime(0, startTime);
-            gainNode.gain.linearRampToValueAtTime(volume * 0.3, startTime + 0.01);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.3);
-
-            oscillator.start(startTime);
-            oscillator.stop(startTime + 0.3);
-        });
+        // Play level up sound for test completion
+        this.playAudioFile('levelUp');
     }
 
     playStart() {
@@ -243,6 +254,11 @@ class TypeCraftSounds {
 
         oscillator.start(ctx.currentTime);
         oscillator.stop(ctx.currentTime + 0.2);
+    }
+
+    playNetherPortal() {
+        // Play nether portal sound for theme changes to nether/end
+        this.playAudioFile('netherPortal');
     }
 }
 

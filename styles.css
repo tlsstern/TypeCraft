@@ -963,6 +963,8 @@ select option {
     cursor: pointer;
     transition: all 0.3s ease;
     margin: 0 10px;
+    font-family: 'Minecraft', Arial, sans-serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 #backToMenu:hover,
