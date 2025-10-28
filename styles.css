@@ -517,6 +517,24 @@ button:hover {
 }
 
 .stat-value {
+<<<<<<<<< Temporary merge branch 1
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+    color: var(--text-color);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-family: 'Minecraft', Arial, sans-serif;
+}
+
+.stat-label {
+    color: var(--char-color);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    font-family: 'Minecraft', Arial, sans-serif;
+=========
     font-family: 'Minecraft', 'Minecraftia', monospace;
     font-size: 2rem;
     font-weight: bold;
@@ -536,6 +554,7 @@ button:hover {
     text-transform: uppercase;
     font-weight: 500;
     text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
+>>>>>>>>> Temporary merge branch 2
 }
 
 #playAgainBtn {
@@ -551,6 +570,11 @@ button:hover {
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
+<<<<<<<<< Temporary merge branch 1
+    font-family: 'Minecraft', Arial, sans-serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+=========
+>>>>>>>>> Temporary merge branch 2
 }
 
 #playAgainBtn:hover {
@@ -883,15 +907,27 @@ select option {
 }
 
 .modal-title h1 {
+<<<<<<<<< Temporary merge branch 1
+    font-size: 2.5rem;
+    letter-spacing: 3px;
+=========
     font-size: 2rem;
     letter-spacing: 2px;
+>>>>>>>>> Temporary merge branch 2
     text-transform: uppercase;
     position: relative;
     display: inline-block;
     color: var(--text-color);
+<<<<<<<<< Temporary merge branch 1
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+    transition: all 0.5s ease;
+    animation: gentlePulse 4s ease-in-out infinite;
+    font-family: 'Minecraft', Arial, sans-serif;
+=========
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
     transition: all 0.5s ease;
     animation: gentlePulse 4s ease-in-out infinite;
+>>>>>>>>> Temporary merge branch 2
 }
 
 .modal-title h1::after {
@@ -962,6 +998,11 @@ select option {
     cursor: pointer;
     transition: all 0.3s ease;
     margin: 0 10px;
+<<<<<<<<< Temporary merge branch 1
+    font-family: 'Minecraft', Arial, sans-serif;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+=========
+>>>>>>>>> Temporary merge branch 2
 }
 
 #backToMenu:hover,

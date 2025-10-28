@@ -96,11 +96,6 @@ class TypingTest {
     async initializeTest() {
         this.textDisplay.innerHTML = '<span class="loading-text">Loading text...</span>';
 
-        // Reset time bar to empty
-        if (this.timeBarFill) {
-            this.timeBarFill.style.width = '0%';
-        }
-
         await this.fetchSourceText();
 
         this.generateInitialText();
@@ -420,8 +415,6 @@ class TypingTest {
     }
 
     updateTime() {
-        if (!this.isTestActive) return; // Safety check
-
         const timeElapsed = Math.floor((new Date() - this.startTime) / 1000);
         const timeLeft = this.timeLimit - timeElapsed;
 
@@ -462,6 +455,7 @@ class TypingTest {
         // Now clear intervals
         clearInterval(this.timer);
         clearInterval(this.statsTimer);
+        this.isTestActive = false;
 
         if (window.typeCraftSounds) {
             window.typeCraftSounds.playComplete();
@@ -506,11 +500,6 @@ class TypingTest {
     }
 
     async showResultsModal(finalWpm, finalAccuracy, finalWpmHistory) {
-        // Prevent showing results modal multiple times
-        if (this.resultsModal.style.display === 'flex' || this.resultsModal.classList.contains('show')) {
-            return;
-        }
-
         document.querySelector('.container').classList.add('hide');
 
         let userStats = null;
