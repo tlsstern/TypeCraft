@@ -10,6 +10,9 @@ const supabaseClient = createClient
   ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
   : null;
 
+// Expose supabaseClient globally for use in other modules
+window.supabaseClient = supabaseClient;
+
 async function checkAuthStatus() {
   if (localStorage.getItem("skipAuth") === "true") {
     isGuest = true;
