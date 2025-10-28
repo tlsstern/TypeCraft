@@ -26,6 +26,8 @@ class SupabaseDataHandler {
         }
 
         try {
+            console.log('Attempting to save typing run for user:', user.id);
+
             // Save the individual typing run
             const { data, error } = await supabaseClient
                 .from('typing_runs')
@@ -40,16 +42,27 @@ class SupabaseDataHandler {
                     test_type: runData.testType || '60s',
                     language: runData.language || 'en'
                 })
-                .select()
-                .single();
+                .select();
 
-            if (error) throw error;
+            if (error) {
+                console.error('Supabase insert error:', error);
+                // Check for foreign key constraint violation
+                if (error.code === '23503') {
+                    return { error: 'User account not found. Please sign out and sign in again.' };
+                }
+                throw error;
+            }
+
+            // Handle the case where no data is returned or multiple rows are returned
+            const runData_result = Array.isArray(data) ? data[0] : data;
+
+            console.log('Typing run saved successfully:', runData_result);
 
             // The trigger will automatically update user_statistics table
-            return { data, error: null };
+            return { data: runData_result, error: null };
         } catch (error) {
             console.error('Error saving typing run:', error);
-            return { error: error.message };
+            return { error: error.message || 'Failed to save typing run' };
         }
     }
 
@@ -70,7 +83,7 @@ class SupabaseDataHandler {
                 .from('user_statistics')
                 .select('*')
                 .eq('user_id', user.id)
-                .single();
+                .maybeSingle();
 
             if (error && error.code !== 'PGRST116') {
                 throw error;
