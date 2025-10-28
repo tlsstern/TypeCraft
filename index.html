@@ -45,6 +45,30 @@
             <h1 class="options-title">Options</h1>
 
             <div class="options-sections">
+                <!-- Theme Settings -->
+                <div class="options-section">
+                    <h2 class="section-title">Appearance</h2>
+                    <div class="setting-item">
+                        <label for="themeSelect">Theme</label>
+                        <select id="themeSelect" class="theme-dropdown">
+                            <option value="dark">Dark</option>
+                            <option value="light">Light</option>
+                            <option value="pastel">Pastel</option>
+                            <option value="mint">Mint</option>
+                            <option value="sunshine">Sunshine</option>
+                            <option value="lavender">Lavender</option>
+                            <option value="synthwave">Synthwave</option>
+                            <option value="matrix">Matrix</option>
+                            <option value="sunset">Sunset</option>
+                            <option value="ocean">Ocean</option>
+                            <option value="coffee">Coffee</option>
+                            <option value="terminal">Terminal</option>
+                            <option value="neon">Neon</option>
+                            <option value="forest">Forest</option>
+                        </select>
+                    </div>
+                </div>
+
                 <!-- Audio Settings -->
                 <div class="options-section">
                     <h2 class="section-title">Audio</h2>
@@ -84,6 +108,187 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="TypeCraftBackend/auth-check.js"></script>
     <script>
+        // Theme definitions
+        const themes = {
+            dark: {
+                '--bg-color': '#1a1a1a',
+                '--text-color': '#fff',
+                '--header-bg': '#2a2a2a',
+                '--typing-area-bg': '#2a2a2a',
+                '--char-color': '#666',
+                '--correct-color': '#4caf50',
+                '--incorrect-color': '#f44336',
+                '--cursor-color': '#fff',
+                '--button-bg': '#333',
+                '--button-hover-bg': '#444'
+            },
+            light: {
+                '--bg-color': '#f5f5f5',
+                '--text-color': '#2a2a2a',
+                '--header-bg': '#ffffff',
+                '--typing-area-bg': '#ffffff',
+                '--char-color': '#999999',
+                '--correct-color': '#4caf50',
+                '--incorrect-color': '#f44336',
+                '--cursor-color': '#2196f3',
+                '--button-bg': '#e0e0e0',
+                '--button-hover-bg': '#d0d0d0'
+            },
+            pastel: {
+                '--bg-color': '#fce4ec',
+                '--text-color': '#5d4e60',
+                '--header-bg': '#fff0f5',
+                '--typing-area-bg': '#fff0f5',
+                '--char-color': '#c9b2c7',
+                '--correct-color': '#81c784',
+                '--incorrect-color': '#ef5350',
+                '--cursor-color': '#9c27b0',
+                '--button-bg': '#f8bbd0',
+                '--button-hover-bg': '#f48fb1'
+            },
+            mint: {
+                '--bg-color': '#e8f5e9',
+                '--text-color': '#1b5e20',
+                '--header-bg': '#f1f8e9',
+                '--typing-area-bg': '#f1f8e9',
+                '--char-color': '#81c784',
+                '--correct-color': '#43a047',
+                '--incorrect-color': '#e53935',
+                '--cursor-color': '#2e7d32',
+                '--button-bg': '#c8e6c9',
+                '--button-hover-bg': '#a5d6a7'
+            },
+            sunshine: {
+                '--bg-color': '#fff8e1',
+                '--text-color': '#f57c00',
+                '--header-bg': '#fffde7',
+                '--typing-area-bg': '#fffde7',
+                '--char-color': '#ffb74d',
+                '--correct-color': '#ffa726',
+                '--incorrect-color': '#d32f2f',
+                '--cursor-color': '#ff9800',
+                '--button-bg': '#ffe0b2',
+                '--button-hover-bg': '#ffcc80'
+            },
+            lavender: {
+                '--bg-color': '#ede7f6',
+                '--text-color': '#4527a0',
+                '--header-bg': '#f3e5f5',
+                '--typing-area-bg': '#f3e5f5',
+                '--char-color': '#9575cd',
+                '--correct-color': '#7e57c2',
+                '--incorrect-color': '#e91e63',
+                '--cursor-color': '#673ab7',
+                '--button-bg': '#d1c4e9',
+                '--button-hover-bg': '#b39ddb'
+            },
+            synthwave: {
+                '--bg-color': '#1a1a2e',
+                '--text-color': '#ff2d95',
+                '--header-bg': '#16213e',
+                '--typing-area-bg': '#16213e',
+                '--char-color': '#4d4d8d',
+                '--correct-color': '#00fff5',
+                '--incorrect-color': '#ff124f',
+                '--cursor-color': '#ff2d95',
+                '--button-bg': '#16213e',
+                '--button-hover-bg': '#1a1a2e'
+            },
+            matrix: {
+                '--bg-color': '#0d0d0d',
+                '--text-color': '#00ff41',
+                '--header-bg': '#1a1a1a',
+                '--typing-area-bg': '#1a1a1a',
+                '--char-color': '#005f00',
+                '--correct-color': '#00ff41',
+                '--incorrect-color': '#ff0000',
+                '--cursor-color': '#00ff41',
+                '--button-bg': '#1a1a1a',
+                '--button-hover-bg': '#2a2a2a'
+            },
+            sunset: {
+                '--bg-color': '#1a1517',
+                '--text-color': '#ff7b00',
+                '--header-bg': '#2a1f20',
+                '--typing-area-bg': '#2a1f20',
+                '--char-color': '#664d4d',
+                '--correct-color': '#ffd700',
+                '--incorrect-color': '#ff3333',
+                '--cursor-color': '#ff7b00',
+                '--button-bg': '#2a1f20',
+                '--button-hover-bg': '#3a2f30'
+            },
+            ocean: {
+                '--bg-color': '#1a1a2e',
+                '--text-color': '#00ffff',
+                '--header-bg': '#1f2937',
+                '--typing-area-bg': '#1f2937',
+                '--char-color': '#4d4d8d',
+                '--correct-color': '#00ffff',
+                '--incorrect-color': '#ff6b6b',
+                '--cursor-color': '#00ffff',
+                '--button-bg': '#1f2937',
+                '--button-hover-bg': '#2d3748'
+            },
+            coffee: {
+                '--bg-color': '#1a1412',
+                '--text-color': '#d4b483',
+                '--header-bg': '#2a201c',
+                '--typing-area-bg': '#2a201c',
+                '--char-color': '#665c57',
+                '--correct-color': '#d4b483',
+                '--incorrect-color': '#854442',
+                '--cursor-color': '#d4b483',
+                '--button-bg': '#2a201c',
+                '--button-hover-bg': '#3a302c'
+            },
+            terminal: {
+                '--bg-color': '#0a0f14',
+                '--text-color': '#98d1ce',
+                '--header-bg': '#1a1f24',
+                '--typing-area-bg': '#1a1f24',
+                '--char-color': '#4d5a5e',
+                '--correct-color': '#859900',
+                '--incorrect-color': '#dc322f',
+                '--cursor-color': '#98d1ce',
+                '--button-bg': '#1a1f24',
+                '--button-hover-bg': '#2a2f34'
+            },
+            neon: {
+                '--bg-color': '#0a0a1f',
+                '--text-color': '#00ffff',
+                '--header-bg': '#1a1a3c',
+                '--typing-area-bg': '#1a1a3c',
+                '--char-color': '#4d4d99',
+                '--correct-color': '#00ff00',
+                '--incorrect-color': '#ff00ff',
+                '--cursor-color': '#00ffff',
+                '--button-bg': '#1a1a3c',
+                '--button-hover-bg': '#2a2a4c'
+            },
+            forest: {
+                '--bg-color': '#1a2213',
+                '--text-color': '#90ee90',
+                '--header-bg': '#2a321f',
+                '--typing-area-bg': '#2a321f',
+                '--char-color': '#5c6657',
+                '--correct-color': '#90ee90',
+                '--incorrect-color': '#ff6b6b',
+                '--cursor-color': '#90ee90',
+                '--button-bg': '#2a321f',
+                '--button-hover-bg': '#3a422f'
+            }
+        };
+
+        function applyTheme(themeName) {
+            const theme = themes[themeName] || themes.dark;
+            Object.entries(theme).forEach(([property, value]) => {
+                document.documentElement.style.setProperty(property, value);
+            });
+            document.body.setAttribute('data-theme', themeName);
+        }
+    </script>
+    <script>
         document.querySelector('.singleplayer-btn').addEventListener('click', function () {
             window.location.href = 'typing.html';
         });
@@ -104,27 +309,39 @@
                 document.getElementById('sfxVolume').value = settings.sfxVolume;
                 document.querySelector('#sfxVolume + .slider-value').textContent = settings.sfxVolume + '%';
             }
+            if (settings.theme !== undefined) {
+                document.getElementById('themeSelect').value = settings.theme;
+            }
         }
 
         // Save settings to localStorage
         function saveSettings() {
             const settings = {
                 masterVolume: parseInt(document.getElementById('masterVolume').value),
-                sfxVolume: parseInt(document.getElementById('sfxVolume').value)
+                sfxVolume: parseInt(document.getElementById('sfxVolume').value),
+                theme: document.getElementById('themeSelect').value
             };
 
             localStorage.setItem('typeCraftSettings', JSON.stringify(settings));
+            localStorage.setItem('selectedTheme', settings.theme);
         }
 
         // Reset settings to default
         function resetSettings() {
             localStorage.removeItem('typeCraftSettings');
+            localStorage.setItem('selectedTheme', 'dark');
 
             // Reset UI
             document.getElementById('masterVolume').value = 70;
             document.querySelector('#masterVolume + .slider-value').textContent = '70%';
             document.getElementById('sfxVolume').value = 50;
             document.querySelector('#sfxVolume + .slider-value').textContent = '50%';
+            document.getElementById('themeSelect').value = 'dark';
+
+            // Apply dark theme
+            if (typeof applyTheme === 'function') {
+                applyTheme('dark');
+            }
         }
 
         // Initialize on page load
@@ -156,6 +373,12 @@
                 }
             });
 
+            // Theme selector change handler
+            const themeSelect = document.getElementById('themeSelect');
+            themeSelect.addEventListener('change', function () {
+                applyTheme(this.value);
+            });
+
             // Close modal when clicking outside
             optionsModal.addEventListener('click', function (e) {
                 if (e.target === optionsModal) {
@@ -184,6 +407,10 @@
 
             // Load settings on page load
             loadSettings();
+
+            // Apply saved theme on page load
+            const savedTheme = localStorage.getItem('selectedTheme') || 'dark';
+            applyTheme(savedTheme);
         });
     </script>
 </body>
