@@ -992,8 +992,8 @@ select option {
 #userDisplay span {
   font-family: "Minecraftia", "Courier New", monospace;
   font-size: 0.9rem;
-  color: #cccccc;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+  text-shadow: 1px 1px 2px rgba(54, 53, 53, 0.808);
   user-select: none;
 }
 
