@@ -35,28 +35,16 @@ async function checkAuthStatus() {
   }
 }
 
-async function updateUIForUser(user) {
-  // Fetch username from database
-  let displayName = user.email;
-
-  try {
-    const { data, error } = await supabaseClient
-      .from('usernames')
-      .select('username')
-      .eq('user_id', user.id)
-      .single();
-
-    if (!error && data) {
-      displayName = data.username;
-    }
-  } catch (error) {
-    console.error('Error fetching username:', error);
-  }
-
+function updateUIForUser(user) {
   const userDisplay = document.getElementById("userDisplay");
   if (userDisplay) {
+    // Get username from email (part before @)
+    const username = user.email.split('@')[0];
     userDisplay.innerHTML = `
-            <span>Welcome, ${displayName}</span>
+            <button class="user-profile" onclick="openProfileModal()">
+                <span class="user-icon material-icons">account_circle</span>
+                <span class="username">${username}</span>
+            </button>
         `;
   }
 
@@ -64,7 +52,7 @@ async function updateUIForUser(user) {
   const userEmailDisplay = document.getElementById("userEmailDisplay");
   if (accountSection && userEmailDisplay) {
     accountSection.style.display = "block";
-    userEmailDisplay.textContent = displayName;
+    userEmailDisplay.textContent = user.email;
   }
 
   enableAuthFeatures();
@@ -73,10 +61,21 @@ async function updateUIForUser(user) {
 function updateUIForGuest() {
   const userDisplay = document.getElementById("userDisplay");
   if (userDisplay) {
-    userDisplay.innerHTML = `
-            <a href="login.html" class="btn-login">Sign In</a>
-            <span>Guest Mode</span>
+    const hasSkippedAuth = localStorage.getItem("skipAuth") === "true";
+
+    if (hasSkippedAuth) {
+      // User chose to continue as guest
+      userDisplay.innerHTML = `
+            <button class="user-profile guest" onclick="openProfileModal()">
+                <span class="username">Guest</span>
+            </button>
         `;
+    } else {
+      // First time visitor, show sign in button
+      userDisplay.innerHTML = `
+            <button class="sign-in-btn" onclick="window.location.href='login.html'">Sign In</button>
+        `;
+    }
   }
 
   limitGuestFeatures();

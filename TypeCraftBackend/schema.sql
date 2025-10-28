@@ -1,17 +1,10 @@
 DROP TABLE IF EXISTS user_stats CASCADE; -- To remove old table
 DROP TABLE IF EXISTS typing_runs CASCADE;
 DROP TABLE IF EXISTS user_statistics CASCADE;
-DROP TABLE IF EXISTS usernames CASCADE;
-
-CREATE TABLE usernames (
-    user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
 
 CREATE TABLE typing_runs (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    user_id UUID REFERENCES usernames(user_id) ON DELETE CASCADE NOT NULL,
+    user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
     wpm INTEGER NOT NULL,
     accuracy DECIMAL(5,2) NOT NULL,
     raw_wpm INTEGER,
@@ -24,7 +17,8 @@ CREATE TABLE typing_runs (
 );
 
 CREATE TABLE user_statistics (
-    user_id UUID REFERENCES usernames(user_id) ON DELETE CASCADE PRIMARY KEY,
+    user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE PRIMARY KEY,
+    username VARCHAR(100),
     top_speed INTEGER DEFAULT 0,
     average_wpm DECIMAL(6,2) DEFAULT 0,
     average_accuracy DECIMAL(5,2) DEFAULT 0,
@@ -37,34 +31,20 @@ CREATE TABLE user_statistics (
 
 CREATE VIEW leaderboard AS
 SELECT
-    us.user_id,
-    un.username,
-    us.top_speed,
-    us.average_wpm,
-    us.average_accuracy,
-    us.total_runs,
-    ROW_NUMBER() OVER (ORDER BY us.top_speed DESC) as rank
-FROM user_statistics us
-JOIN usernames un ON us.user_id = un.user_id
-WHERE us.top_speed > 0
-ORDER BY us.top_speed DESC;
+    user_id,
+    username,
+    top_speed,
+    average_wpm,
+    average_accuracy,
+    total_runs,
+    ROW_NUMBER() OVER (ORDER BY top_speed DESC) as rank
+FROM user_statistics
+WHERE top_speed > 0
+ORDER BY top_speed DESC;
 
-ALTER TABLE usernames ENABLE ROW LEVEL SECURITY;
 ALTER TABLE typing_runs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE user_statistics ENABLE ROW LEVEL SECURITY;
 
--- Usernames policies
-CREATE POLICY "Everyone can view usernames" ON usernames
-    FOR SELECT USING (true);
-
-CREATE POLICY "Users can insert own username" ON usernames
-    FOR INSERT WITH CHECK (auth.uid() = user_id);
-
-CREATE POLICY "Users can update own username" ON usernames
-    FOR UPDATE USING (auth.uid() = user_id)
-    WITH CHECK (auth.uid() = user_id);
-
--- Typing runs policies
 CREATE POLICY "Users can view own typing runs" ON typing_runs
     FOR SELECT USING (auth.uid() = user_id);
 
@@ -93,6 +73,7 @@ RETURNS TRIGGER AS $$
 BEGIN
     INSERT INTO user_statistics (
         user_id,
+        username,
         top_speed,
         average_wpm,
         average_accuracy,
@@ -102,6 +83,7 @@ BEGIN
     )
     SELECT
         NEW.user_id,
+        NULL, -- Username will be updated separately via application
         MAX(wpm),
         AVG(wpm)::DECIMAL(6,2),
         AVG(accuracy)::DECIMAL(5,2),
@@ -129,50 +111,9 @@ AFTER INSERT OR UPDATE ON typing_runs
 FOR EACH ROW
 EXECUTE FUNCTION update_user_statistics();
 
-CREATE INDEX idx_usernames_username ON usernames(username);
 CREATE INDEX idx_typing_runs_user_id ON typing_runs(user_id);
 CREATE INDEX idx_typing_runs_created_at ON typing_runs(created_at DESC);
 CREATE INDEX idx_user_statistics_top_speed ON user_statistics(top_speed DESC);
-
--- Function to check if username is available
-CREATE OR REPLACE FUNCTION is_username_available(username_to_check VARCHAR)
-RETURNS BOOLEAN AS $$
-BEGIN
-    RETURN NOT EXISTS (
-        SELECT 1 FROM usernames WHERE username = username_to_check
-    );
-END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
-
--- Function to create/update username for current user
-CREATE OR REPLACE FUNCTION set_username(new_username VARCHAR)
-RETURNS BOOLEAN AS $$
-DECLARE
-    current_user_id UUID;
-BEGIN
-    current_user_id := auth.uid();
-
-    IF current_user_id IS NULL THEN
-        RAISE EXCEPTION 'User not authenticated';
-    END IF;
-
-    -- Check if username is already taken by another user
-    IF EXISTS (
-        SELECT 1 FROM usernames
-        WHERE username = new_username AND user_id != current_user_id
-    ) THEN
-        RAISE EXCEPTION 'Username already taken';
-    END IF;
-
-    -- Insert or update username
-    INSERT INTO usernames (user_id, username)
-    VALUES (current_user_id, new_username)
-    ON CONFLICT (user_id)
-    DO UPDATE SET username = new_username;
-
-    RETURN TRUE;
-END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
 
 CREATE OR REPLACE FUNCTION get_leaderboard(
     limit_count INTEGER DEFAULT 10,
@@ -185,23 +126,27 @@ RETURNS TABLE(
     top_speed INTEGER,
     average_wpm DECIMAL,
     average_accuracy DECIMAL,
-    total_runs INTEGER
+    total_runs INTEGER,
+    total_time_typed INTEGER
 ) AS $$
 BEGIN
     RETURN QUERY
     SELECT
         ROW_NUMBER() OVER (ORDER BY us.top_speed DESC) as rank,
         us.user_id,
-        un.username,
+        COALESCE(us.username, u.email, 'Anonymous') as username,
         us.top_speed,
         us.average_wpm,
         us.average_accuracy,
-        us.total_runs
+        us.total_runs,
+        us.total_time_typed
     FROM user_statistics us
-    JOIN usernames un ON us.user_id = un.user_id
+    INNER JOIN auth.users u ON us.user_id = u.id
     WHERE us.top_speed > 0
+        AND u.id IS NOT NULL
+        AND us.total_runs > 0
     ORDER BY us.top_speed DESC
     LIMIT limit_count
     OFFSET offset_count;
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
