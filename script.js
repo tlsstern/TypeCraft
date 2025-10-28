@@ -3,13 +3,14 @@ class TypingTest {
         this.words = [];
         this.textDisplay = document.getElementById('text-display');
 
-        // XP Bar elements
-        this.xpBarFill = document.getElementById('xpBarFill');
+        // Time Bar elements
+        this.timeBar = document.getElementById('mcTimeBar');
+        this.timeBarFill = document.getElementById('mcTimeBarFill');
         this.accuracyDisplay = document.getElementById('accuracy');
 
         // Handle missing display elements gracefully
-        if (!this.xpBarFill) {
-            console.warn('XP bar element not found');
+        if (!this.timeBar || !this.timeBarFill) {
+            console.warn('Time bar elements not found');
         }
         if (!this.accuracyDisplay) {
             console.warn('Accuracy display element not found');
@@ -417,14 +418,13 @@ class TypingTest {
         const timeElapsed = Math.floor((new Date() - this.startTime) / 1000);
         const timeLeft = this.timeLimit - timeElapsed;
 
-        // Update XP bar fill based on time progress
-        const progress = (timeElapsed / this.timeLimit) * 100;
-        if (this.xpBarFill) {
-            this.xpBarFill.style.width = Math.min(progress, 100) + '%';
-        }
-
         if (timeLeft <= 0) {
             this.endTest();
+        } else {
+            if (this.timeBarFill) {
+                const ratio = Math.max(0, Math.min(1, timeElapsed / this.timeLimit));
+                this.timeBarFill.style.width = (ratio * 100) + '%';
+            }
         }
     }
 
@@ -448,6 +448,10 @@ class TypingTest {
         clearInterval(this.timer);
         clearInterval(this.statsTimer);
         this.isTestActive = false;
+
+        if (this.timeBarFill) {
+            this.timeBarFill.style.width = '100%';
+        }
 
         if (window.typeCraftSounds) {
             window.typeCraftSounds.playComplete();
@@ -725,9 +729,9 @@ class TypingTest {
         this.wpmHistory = [];
         this.lastWpmUpdate = null;
 
-        // Reset XP bar
-        if (this.xpBarFill) {
-            this.xpBarFill.style.width = '0%';
+        // Reset time bar
+        if (this.timeBarFill) {
+            this.timeBarFill.style.width = '0%';
         }
 
         // Generate and render new text immediately

@@ -86,59 +86,58 @@ body.no-animations * {
     width: 100%;
 }
 
-/* Minecraft XP Bar */
-.xp-bar-container {
+/* Minecraft Time Bar */
+.timebar-wrapper {
     width: 100%;
-    max-width: 600px;
     display: flex;
     justify-content: center;
+    margin-bottom: 20px;
 }
 
-.xp-bar {
-    position: relative;
+.mc-timebar {
     width: 100%;
-    height: 24px;
-    background: linear-gradient(to bottom,
-        rgba(0, 0, 0, 0.8) 0%,
-        rgba(0, 0, 0, 0.6) 50%,
-        rgba(0, 0, 0, 0.8) 100%);
-    border: 2px solid rgba(0, 0, 0, 0.9);
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5),
-                0 0 0 1px rgba(255, 255, 255, 0.1);
+    max-width: 900px;
+    height: 14px;
+    background: rgba(0, 0, 0, 0.55);
+    border: 2px solid rgba(0, 0, 0, 0.8);
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.06);
+    position: relative;
     overflow: hidden;
 }
 
-.xp-bar-fill {
+.mc-timebar-fill {
     position: absolute;
-    left: 0;
     top: 0;
+    left: 0;
     height: 100%;
-    width: 0%;
-    background: linear-gradient(to bottom,
-        #7FFF00 0%,
-        #5FD700 40%,
-        #4CAF50 60%,
-        #3F9C42 100%);
-    box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.3),
-                inset 0 2px 4px rgba(255, 255, 255, 0.3);
-    transition: width 0.3s ease;
+    width: 100%;
+    /* Minecraft loading bar vibe: segmented neon green */
+    background-image:
+        repeating-linear-gradient(
+            to right,
+            #6fe26f 0,
+            #6fe26f 24px,
+            #49b949 24px,
+            #49b949 28px
+        );
+    filter: saturate(1.2) brightness(1.05);
+    transition: width 0.2s linear;
 }
 
-.xp-bar-level {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #7FFF00;
-    font-family: 'Minecraft', 'Minecraftia', monospace;
-    font-size: 14px;
-    font-weight: bold;
-    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8),
-                 -1px -1px 0 rgba(0, 0, 0, 0.8),
-                 1px -1px 0 rgba(0, 0, 0, 0.8),
-                 -1px 1px 0 rgba(0, 0, 0, 0.8);
-    z-index: 10;
-    pointer-events: none;
+@media (max-width: 480px) {
+    .mc-timebar {
+        height: 12px;
+    }
+    .mc-timebar-fill {
+        background-image:
+            repeating-linear-gradient(
+                to right,
+                #6fe26f 0,
+                #6fe26f 18px,
+                #49b949 18px,
+                #49b949 22px
+            );
+    }
 }
 
 .stats {
@@ -518,22 +517,18 @@ button:hover {
 }
 
 .stat-value {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     font-weight: bold;
-    margin-bottom: 0.3rem;
-    color: var(--text-color);
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    font-family: 'Minecraft', Arial, sans-serif;
+    margin-bottom: 0.2rem;
+    color: #000000;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.3);
 }
 
 .stat-label {
-    color: var(--char-color);
-    font-size: 0.85rem;
-    font-weight: 500;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+    color: #AAAAAA;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-    font-family: 'Minecraft', Arial, sans-serif;
 }
 
 #playAgainBtn {
@@ -549,8 +544,6 @@ button:hover {
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-family: 'Minecraft', Arial, sans-serif;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 #playAgainBtn:hover {
@@ -588,18 +581,6 @@ button:hover {
 
 .stats-container .stat-card:nth-child(5) {
     animation-delay: 0.8s;
-}
-
-/* Primary stat cards (WPM and Accuracy) */
-.stat-card.primary {
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.stat-card.primary .stat-value {
-    font-size: 2.2rem;
-    color: var(--correct-color);
-    text-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
 }
 
 .restart-container {
@@ -883,16 +864,15 @@ select option {
 }
 
 .modal-title h1 {
-    font-size: 2.5rem;
-    letter-spacing: 3px;
+    font-size: 2rem;
+    letter-spacing: 2px;
     text-transform: uppercase;
     position: relative;
     display: inline-block;
     color: var(--text-color);
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
     transition: all 0.5s ease;
     animation: gentlePulse 4s ease-in-out infinite;
-    font-family: 'Minecraft', Arial, sans-serif;
 }
 
 .modal-title h1::after {
@@ -963,8 +943,6 @@ select option {
     cursor: pointer;
     transition: all 0.3s ease;
     margin: 0 10px;
-    font-family: 'Minecraft', Arial, sans-serif;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 #backToMenu:hover,
