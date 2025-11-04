@@ -864,7 +864,7 @@ The Painting Albanian is one of the many items found in Minecraft
 The Painting de_aztec is one of the many items found in Minecraft
 The Painting Kebab med tre pepperoni is one of the many items found in Minecraft
 The Painting Meditative is one of the many items found in Minecraft
-The Painting Paradisträd is one of the many items found in Minecraft
+The Painting Paradistrad is one of the many items found in Minecraft
 The Painting Target Successfully Bombed is one of the many items found in Minecraft
 The Painting Wasteland is one of the many items found in Minecraft
 The Painting Graham is one of the many items found in Minecraft
