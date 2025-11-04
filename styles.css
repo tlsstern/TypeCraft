@@ -517,12 +517,11 @@ button:hover {
 }
 
 .stat-value {
-<<<<<<<<< Temporary merge branch 1
     font-size: 1.8rem;
     font-weight: bold;
     margin-bottom: 0.3rem;
-    color: var(--text-color);
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    color: white;
+    text-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
     font-family: 'Minecraft', Arial, sans-serif;
 }
 
@@ -534,27 +533,6 @@ button:hover {
     text-transform: uppercase;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     font-family: 'Minecraft', Arial, sans-serif;
-=========
-    font-family: 'Minecraft', 'Minecraftia', monospace;
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 0.3rem;
-    color: #7FFF00;
-    text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.8),
-                 -1px -1px 0 rgba(0, 0, 0, 0.8),
-                 1px -1px 0 rgba(0, 0, 0, 0.8),
-                 -1px 1px 0 rgba(0, 0, 0, 0.8);
-}
-
-.stat-label {
-    font-family: 'Minecraft', 'Minecraftia', monospace;
-    color: #FFFFFF;
-    font-size: 0.9rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    font-weight: 500;
-    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
->>>>>>>>> Temporary merge branch 2
 }
 
 #playAgainBtn {
@@ -570,11 +548,8 @@ button:hover {
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
-<<<<<<<<< Temporary merge branch 1
     font-family: 'Minecraft', Arial, sans-serif;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-=========
->>>>>>>>> Temporary merge branch 2
 }
 
 #playAgainBtn:hover {
@@ -622,7 +597,7 @@ button:hover {
 
 .stat-card.primary .stat-value {
     font-size: 2.2rem;
-    color: var(--correct-color);
+    color: white;
     text-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
 }
 
@@ -907,27 +882,16 @@ select option {
 }
 
 .modal-title h1 {
-<<<<<<<<< Temporary merge branch 1
     font-size: 2.5rem;
     letter-spacing: 3px;
-=========
-    font-size: 2rem;
-    letter-spacing: 2px;
->>>>>>>>> Temporary merge branch 2
     text-transform: uppercase;
     position: relative;
     display: inline-block;
     color: var(--text-color);
-<<<<<<<<< Temporary merge branch 1
     text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
     transition: all 0.5s ease;
     animation: gentlePulse 4s ease-in-out infinite;
     font-family: 'Minecraft', Arial, sans-serif;
-=========
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-    transition: all 0.5s ease;
-    animation: gentlePulse 4s ease-in-out infinite;
->>>>>>>>> Temporary merge branch 2
 }
 
 .modal-title h1::after {
@@ -998,11 +962,8 @@ select option {
     cursor: pointer;
     transition: all 0.3s ease;
     margin: 0 10px;
-<<<<<<<<< Temporary merge branch 1
     font-family: 'Minecraft', Arial, sans-serif;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-=========
->>>>>>>>> Temporary merge branch 2
 }
 
 #backToMenu:hover,
@@ -1143,7 +1104,6 @@ select option {
 }
 
 #userDisplay span {
-    font-family: 'Minecraftia', 'Courier New', monospace;
     font-size: 0.9rem;
     color: #CCCCCC;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
@@ -2045,20 +2005,19 @@ select option {
 
 .stat-label {
     display: block;
-    font-family: 'Minecraftia', 'Courier New', monospace;
     font-size: 0.8rem;
-    color: #BBBBBB;
+    color: #AAAAAA;
     margin-bottom: 8px;
-    text-transform: uppercase;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .stat-value {
     display: block;
-    font-family: 'Minecraftia', 'Courier New', monospace;
-    font-size: 1.5rem;
-    color: #4CAF50;
-    font-weight: bold;
-    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+    font-family: 'Minecraft', Arial, sans-serif;
+    font-size: 2.2rem;
+    color: white;
+    font-weight: 200;
+    text-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
 }
 
 .profile-actions {

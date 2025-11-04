@@ -186,6 +186,12 @@ class TypingTest {
                     e.preventDefault();
                 }
             });
+
+            this.themeSelect.addEventListener('change', (e) => {
+                const selectedTheme = e.target.value;
+                localStorage.setItem('selectedTheme', selectedTheme);
+                this.applyMinecraftTheme();
+            });
         }
     }
 
@@ -425,6 +431,10 @@ class TypingTest {
         }
 
         if (timeLeft <= 0) {
+            // Play sound IMMEDIATELY when test ends
+            if (window.typeCraftSounds) {
+                window.typeCraftSounds.playComplete();
+            }
             this.endTest();
         } else {
             if (this.timeBarFill) {
@@ -456,10 +466,6 @@ class TypingTest {
         clearInterval(this.timer);
         clearInterval(this.statsTimer);
         this.isTestActive = false;
-
-        if (window.typeCraftSounds) {
-            window.typeCraftSounds.playComplete();
-        }
 
         // Calculate actual time elapsed in minutes
         const actualTimeElapsed = this.startTime ?
@@ -757,7 +763,18 @@ class TypingTest {
         document.documentElement.style.setProperty('--button-bg', 'rgba(0, 0, 0, 0.5)');
         document.documentElement.style.setProperty('--button-hover-bg', 'rgba(0, 0, 0, 0.7)');
 
-        document.body.style.backgroundImage = 'url("background/1.png")';
+        // Map theme names to background images
+        const themeBackgrounds = {
+            'cherry': 'background/1.png',
+            'end': 'background/end.jpg',
+            'nether': 'background/nether.png',
+            'overworld': 'background/overworld.png'
+        };
+
+        const savedTheme = localStorage.getItem('selectedTheme') || 'cherry';
+        const backgroundImage = themeBackgrounds[savedTheme] || themeBackgrounds['cherry'];
+
+        document.body.style.backgroundImage = `url("${backgroundImage}")`;
         document.body.style.fontFamily = '"Minecraft", Arial, sans-serif';
         document.body.style.backgroundSize = 'cover';
         document.body.style.backgroundPosition = 'center';
@@ -766,12 +783,8 @@ class TypingTest {
         const title = document.querySelector('.title h1');
         if (title) title.style.textShadow = '2px 2px 4px rgba(0,0,0,0.8)';
 
-        // Detect theme brightness for adaptive styling
-        const savedTheme = localStorage.getItem('selectedTheme') || 'dark';
-        const brightThemes = ['light', 'pastel', 'mint', 'sunshine', 'lavender'];
-        const isBright = brightThemes.includes(savedTheme);
-        document.body.setAttribute('data-theme-type', isBright ? 'bright' : 'dark');
         document.body.setAttribute('data-theme', savedTheme);
+        document.body.setAttribute('data-theme-type', 'dark');
     }
 
     recordWPM() {

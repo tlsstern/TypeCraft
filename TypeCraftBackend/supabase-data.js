@@ -1,20 +1,20 @@
 
 class SupabaseDataHandler {
     constructor() {
-        if (!supabaseClient) {
+        if (!window.supabaseClient) {
             console.error('Supabase client not initialized');
         }
     }
 
     async getCurrentUser() {
-        if (!supabaseClient) return null;
+        if (!window.supabaseClient) return null;
 
-        const { data: { session } } = await supabaseClient.auth.getSession();
+        const { data: { session } } = await window.supabaseClient.auth.getSession();
         return session?.user || null;
     }
 
     async saveTypingRun(runData) {
-        if (!supabaseClient) {
+        if (!window.supabaseClient) {
             console.error('Cannot save run: Supabase client not initialized');
             return { error: 'Supabase not initialized' };
         }
@@ -29,7 +29,7 @@ class SupabaseDataHandler {
             console.log('Attempting to save typing run for user:', user.id);
 
             // Save the individual typing run
-            const { data, error } = await supabaseClient
+            const { data, error } = await window.supabaseClient
                 .from('typing_runs')
                 .insert({
                     user_id: user.id,
@@ -67,7 +67,7 @@ class SupabaseDataHandler {
     }
 
     async getUserStats() {
-        if (!supabaseClient) {
+        if (!window.supabaseClient) {
             console.error('Cannot get stats: Supabase client not initialized');
             return { error: 'Supabase not initialized' };
         }
@@ -79,7 +79,7 @@ class SupabaseDataHandler {
         }
 
         try {
-            const { data, error } = await supabaseClient
+            const { data, error } = await window.supabaseClient
                 .from('user_statistics')
                 .select('*')
                 .eq('user_id', user.id)
@@ -97,7 +97,7 @@ class SupabaseDataHandler {
     }
 
     async getTypingHistory(limit = 10) {
-        if (!supabaseClient) {
+        if (!window.supabaseClient) {
             console.error('Cannot get history: Supabase client not initialized');
             return { error: 'Supabase not initialized' };
         }
@@ -109,7 +109,7 @@ class SupabaseDataHandler {
         }
 
         try {
-            const { data, error } = await supabaseClient
+            const { data, error } = await window.supabaseClient
                 .from('typing_runs')
                 .select('*')
                 .eq('user_id', user.id)
@@ -126,14 +126,14 @@ class SupabaseDataHandler {
     }
 
     async getLeaderboard(limit = 10, offset = 0) {
-        if (!supabaseClient) {
+        if (!window.supabaseClient) {
             console.error('Cannot get leaderboard: Supabase client not initialized');
             return { error: 'Supabase not initialized' };
         }
 
         try {
             // Use the RPC function for paginated leaderboard
-            const { data, error } = await supabaseClient
+            const { data, error } = await window.supabaseClient
                 .rpc('get_leaderboard', {
                     limit_count: limit,
                     offset_count: offset
@@ -149,7 +149,7 @@ class SupabaseDataHandler {
     }
 
     async saveTypingSession(sessionData) {
-        if (!supabaseClient) {
+        if (!window.supabaseClient) {
             console.error('Cannot save session: Supabase client not initialized');
             return { error: 'Supabase not initialized' };
         }
