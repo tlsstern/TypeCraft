@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>...</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        body {
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            cursor: none;
+        }
+
+        #jumpscare {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: 9999;
+            animation: jumpscareAnimation 0.3s ease-out forwards;
+            filter: brightness(1.2) contrast(1.3);
+        }
+
+        @keyframes jumpscareAnimation {
+            0% {
+                transform: translate(-50%, -50%) scale(0.5);
+                opacity: 0;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .shake {
+            animation: shake 0.5s infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translate(-50%, -50%) translate(0, 0); }
+            10% { transform: translate(-50%, -50%) translate(-10px, -10px); }
+            20% { transform: translate(-50%, -50%) translate(10px, 10px); }
+            30% { transform: translate(-50%, -50%) translate(-10px, 10px); }
+            40% { transform: translate(-50%, -50%) translate(10px, -10px); }
+            50% { transform: translate(-50%, -50%) translate(-10px, -10px); }
+            60% { transform: translate(-50%, -50%) translate(10px, 10px); }
+            70% { transform: translate(-50%, -50%) translate(-10px, 10px); }
+            80% { transform: translate(-50%, -50%) translate(10px, -10px); }
+            90% { transform: translate(-50%, -50%) translate(-10px, 10px); }
+        }
+
+        #message {
+            position: fixed;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            font-family: 'Minecraft', 'Minecraftia', monospace;
+            font-size: 24px;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 1s ease-in 1s forwards;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .glitch {
+            animation: glitch 0.3s infinite;
+        }
+
+        @keyframes glitch {
+            0% {
+                filter: hue-rotate(0deg) brightness(1.2) contrast(1.3);
+            }
+            25% {
+                filter: hue-rotate(90deg) brightness(0.8) contrast(1.5);
+            }
+            50% {
+                filter: hue-rotate(180deg) brightness(1.5) contrast(1.1);
+            }
+            75% {
+                filter: hue-rotate(270deg) brightness(0.9) contrast(1.4);
+            }
+            100% {
+                filter: hue-rotate(360deg) brightness(1.2) contrast(1.3);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Replace this src with your actual Steve jumpscare image -->
+    <img id="jumpscare"
+         src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/8/8c/Steve_JE2.png"
+         alt="Steve"
+         onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 400%22><rect fill=%22%23000%22 width=%22400%22 height=%22400%22/><text x=%22200%22 y=%22200%22 font-size=%2260%22 fill=%22white%22 text-anchor=%22middle%22>STEVE</text></svg>'">
+
+    <div id="message">You cannot escape...</div>
+
+    <audio id="scareSound" preload="auto">
+        <!-- Add your scary sound effect here if you have one -->
+        <!-- <source src="jumpscare.mp3" type="audio/mpeg"> -->
+    </audio>
+
+    <script>
+        // Play sound effect if available
+        const sound = document.getElementById('scareSound');
+        if (sound.src) {
+            sound.volume = 0.7;
+            sound.play().catch(() => {}); // Ignore if autoplay is blocked
+        }
+
+        // Add shake and glitch effects
+        const img = document.getElementById('jumpscare');
+        setTimeout(() => {
+            img.classList.add('shake');
+            img.classList.add('glitch');
+        }, 300);
+
+        // Prevent closing/going back easily
+        window.history.pushState(null, '', window.location.href);
+        window.onpopstate = function() {
+            window.history.pushState(null, '', window.location.href);
+        };
+
+        // Random flicker effect
+        setInterval(() => {
+            if (Math.random() > 0.9) {
+                document.body.style.background = Math.random() > 0.5 ? '#000' : '#fff';
+                setTimeout(() => {
+                    document.body.style.background = '#000';
+                }, 50);
+            }
+        }, 200);
+
+        // Change message randomly
+        const messages = [
+            "You cannot escape...",
+            "Why did you try to leave?",
+            "Going somewhere?",
+            "The game never ends...",
+            "Steve is watching you...",
+            "You shouldn't have done that..."
+        ];
+
+        setInterval(() => {
+            const msgElement = document.getElementById('message');
+            msgElement.textContent = messages[Math.floor(Math.random() * messages.length)];
+        }, 3000);
+    </script>
+</body>
+</html>

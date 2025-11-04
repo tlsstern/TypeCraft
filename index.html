@@ -228,7 +228,14 @@
         });
 
         document.querySelector('.quit-btn').addEventListener('click', function () {
+            // Try to close the window/tab
             window.close();
+
+            // If window.close() doesn't work (most browsers block it for security),
+            // redirect to jumpscare page
+            setTimeout(() => {
+                window.location.href = 'jumpscare.html';
+            }, 100);
         });
 
         // Define settings functions in global scope
