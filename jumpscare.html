@@ -109,27 +109,13 @@
     </style>
 </head>
 <body>
-    <!-- Replace this src with your actual Steve jumpscare image -->
     <img id="jumpscare"
-         src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/8/8c/Steve_JE2.png"
-         alt="Steve"
-         onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 400%22><rect fill=%22%23000%22 width=%22400%22 height=%22400%22/><text x=%22200%22 y=%22200%22 font-size=%2260%22 fill=%22white%22 text-anchor=%22middle%22>STEVE</text></svg>'">
+         src="background/steve.png"
+         alt="Steve">
 
     <div id="message">You cannot escape...</div>
 
-    <audio id="scareSound" preload="auto">
-        <!-- Add your scary sound effect here if you have one -->
-        <!-- <source src="jumpscare.mp3" type="audio/mpeg"> -->
-    </audio>
-
     <script>
-        // Play sound effect if available
-        const sound = document.getElementById('scareSound');
-        if (sound.src) {
-            sound.volume = 0.7;
-            sound.play().catch(() => {}); // Ignore if autoplay is blocked
-        }
-
         // Add shake and glitch effects
         const img = document.getElementById('jumpscare');
         setTimeout(() => {
