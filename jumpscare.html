@@ -116,20 +116,17 @@
     <div id="message">You cannot escape...</div>
 
     <script>
-        // Add shake and glitch effects
         const img = document.getElementById('jumpscare');
         setTimeout(() => {
             img.classList.add('shake');
             img.classList.add('glitch');
         }, 300);
 
-        // Prevent closing/going back easily
         window.history.pushState(null, '', window.location.href);
         window.onpopstate = function() {
             window.history.pushState(null, '', window.location.href);
         };
 
-        // Random flicker effect
         setInterval(() => {
             if (Math.random() > 0.9) {
                 document.body.style.background = Math.random() > 0.5 ? '#000' : '#fff';
@@ -139,14 +136,15 @@
             }
         }, 200);
 
-        // Change message randomly
         const messages = [
             "You cannot escape...",
             "Why did you try to leave?",
             "Going somewhere?",
             "The game never ends...",
             "Steve is watching you...",
-            "You shouldn't have done that..."
+            "You shouldn't have done that...",
+            "Gianluca will come",
+            "Hodecräbs will rain over you"
         ];
 
         setInterval(() => {
